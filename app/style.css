@@ -1,3 +1,7 @@
+em {
+    font-style: italic;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -48,5 +52,9 @@ a {
 }
 
 a:hover, a:focus {
+    text-decoration: underline;
+}
+
+.project-title {
     text-decoration: underline;
 }
