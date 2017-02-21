@@ -7,7 +7,7 @@ em {
 }
 
 body {
-    background-color: #fffdf7;
+    background-color: #fffefa;
     font-family: georgia;
     margin: 0 7px;
 }
@@ -54,6 +54,15 @@ a {
 
 a:hover, a:focus {
     text-decoration: underline;
+}
+
+.social-media-links .fa {
+    color: black;
+    margin-right: 2px;
+}
+
+.social-media-links li:hover .fa {
+    color: #22d;
 }
 
 .project-title {
