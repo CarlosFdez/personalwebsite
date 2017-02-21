@@ -61,8 +61,25 @@ a:hover, a:focus {
     margin-right: 2px;
 }
 
-.social-media-links li:hover .fa {
-    color: #22d;
+.social-media-links a {
+    display: inline-block;
+    line-height: 2em;
+    height: 2em;
+    padding: 0 8px;
+    margin: 0.5em 5px 0.5em 0;
+
+    color: black;
+    background-color: #ecedea
+}
+
+.social-media-links a:hover {
+    text-decoration: none;
+    color: #eee;
+    background-color: #444;
+}
+
+.social-media-links a:hover .fa {
+    color: #eee;
 }
 
 .project-title {
