@@ -3,51 +3,86 @@
 <head>
     <title>Carlos Fernandez</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png"/>
     <link href="css/reset.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
     <link href="css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="content">
     <header>
-        <h1>Carlos "Supe" Fernandez</h1>
+        <div class="content">
+            <h1>Carlos "Supe" Fernandez</h1>
+        </div>
     </header>
-    <p>
-        I'm a software developer.
-        While I'm mostly a web developer, I'm flexible and can do pretty much anything to varying degrees.
-        When I'm not programming, I play video games or make silly videos about them.
-    </p>
-    <p>
+    <main>
+        <p>
+            Hello and welcome. I'm a software developer living in South Florida.
+            Most of my experience has been in web development, but I'm flexible and can do pretty much anything.
+            When I'm not programming, I'm playing video games or making stupid videos about them.
+        </p>
+        <p>
 
-    </p>
-    <div class="social-media-links">
-        <a href="https://github.com/CarlosFdez"><span class="fa fa-github" aria-hidden="true"></span> Github</a>
-        <a href="https://twitter.com/MeSoSupe"><span class="fa fa-twitter" aria-hidden="true"></span> Twitter</a>
-        <a href="https://www.youtube.com/channel/UCNxCpInDAfcdp-PHZO4PtOA"><span class="fa fa-youtube-play" aria-hidden="true"></span> Youtube</a>
-    </div>
-    <p>
-        You can also contact me at <a href="mailto:me@supetroupe.com">me@supetroupe.com</a>.
-    </p>
+        </p>
+        <div class="social-media-links">
+            <a href="https://github.com/CarlosFdez"><span class="fa fa-github" aria-hidden="true"></span> Github</a>
+            <a href="https://twitter.com/MeSoSupe"><span class="fa fa-twitter" aria-hidden="true"></span> Twitter</a>
+            <a href="https://www.youtube.com/channel/UCNxCpInDAfcdp-PHZO4PtOA"><span class="fa fa-youtube-play" aria-hidden="true"></span> Youtube</a>
+        </div>
+        <p>
+            You can also contact me at <a href="mailto:me@supetroupe.com">me@supetroupe.com</a>.
+        </p>
 
-    <h2>Special Projects</h2>
-    <ul class="project-list">
-        <li>
-            <a class="project-title" href="https://carlosfdez.github.io/videocrop/">VideoCrop</a><br>
-            <p>
-                A simple video player that can crop without retranscoding that runs as a desktop application.
-                I created it to crop my source footage and reduce hard drive usage before I begin video editing.
-                Written in <em>C++</em> and <em>Qt</em>.
-            </p>
-        </li>
-        <li>
-            <a class="project-title" href="https://github.com/CarlosFdez/SpueBox">SpueBox</a><br>
-            <p>
-                A discord bot that can play music from various online sources (including Youtube) in voice chat.
-                Created as a toy for my friends to use.
-                Written in <em>Python</em>.
-            </p>
-        </li>
-    </ul>
-</div>
+        <h2>Programming Projects</h2>
+        <p>
+            I've created a few applications in my free times for personal reasons. These are some of my favorites.
+        </p>
+        <ul class="project-list">
+            <li>
+                <a class="project-title" href="https://carlosfdez.github.io/videocrop/">VideoCrop</a><br>
+                <p>
+                    When I record videos, I have a large number of footage I need to sift through before editing.
+                    I created a video preview and cropping tool that that can cut without a retranscode.
+                    It allows me to reduce my footage and hard disk usage before I begin video editing.
+                    This was my first attempt at a native desktop application.
+                    Written in <em>C++</em> and <em>Qt</em>.
+                </p>
+            </li>
+            <li>
+                <a class="project-title" href="https://github.com/CarlosFdez/SpueBox">SpueBox</a><br>
+                <p>
+                    A custom bot for the <a href="https://discordapp.com/">discord</a> chat client.
+                    It's used primarily to play audio clips from various online sources (including Youtube) in voice chat rooms.
+                    Written in <em>Python</em> using the <em><a href="https://github.com/Rapptz/discord.py">discord.py</a></em> library.
+                </p>
+            </li>
+            <li>
+                <a class="project-title" href="https://github.com/kamegami13/MonsterHunter4UDatabase">MonsterHunter4UDatabase</a>
+                <p>
+                    Contribution: Added a universal search to an existed Android application written in Java that provides data about
+                    the game <em>Monster Hunter 4 Ultimate</em>. Also contributed a few other bug fixes and tweaks.
+                </p>
+            </li>
+            <li>
+                <a class="project-title" href="https://github.com/sarenji/pokebattle-sim">PokeBattle Sim</a>
+                <p>
+                    Contribution: Helped with a failed Pokemon Battle Simulator for those that wanted quick online matches
+                    without the time burden of creating teams using the actual game.
+                    The simulator was written in <em>CoffeeScript</em> running on <em>NodeJS</em>, and used Backbone for the front end.
+                    Project owners lost interest especially with <a href="http://pokemonshowdown.com/">Pokemon Showdown</a> maintaining a large user share.
+                </p>
+            </li>
+
+        </ul>
+
+        <h2>About this site</h2>
+        <p>
+            This is a regular static website built using common html5 and css.
+            It is hosted using nginx on an Ubuntu instance in Digital Ocean.
+            The icons used were created by <a href="http://fontawesome.io/">Font Awesome</a>.
+        </p>
+    </main>
+    <footer>
+        &copy; 2017 Carlos Fernandez
+    </footer>
 </body>
 </html>

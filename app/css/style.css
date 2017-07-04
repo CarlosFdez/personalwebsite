@@ -7,30 +7,8 @@ em {
 }
 
 body {
-    background-color: #fcfefc;
+    background-color: #fefefb;
     font-family: georgia;
-    margin: 0 7px;
-}
-
-#content {
-    max-width: 700px;
-    margin: 0 auto;
-    font-size: 16px;
-}
-
-p {
-    font-size: 1em;
-    line-height: 1.5em;
-    margin-bottom: 1.5em;
-}
-
-ul {
-    margin-bottom: 1.5em;
-}
-
-li {
-    font-size: 1em;
-    line-height: 1.5em;
 }
 
 h1 {
@@ -48,6 +26,45 @@ h2 {
     line-height: 1em;
     margin-bottom: 1em;
 }
+
+header .content, main, footer {
+    max-width: 800px;
+    padding: 0 7px;
+    margin: 0 auto;
+    font-size: 16px;
+}
+
+header {
+    overflow: auto; /* handle the margin of inner h1 */
+    background-color: #fbfbf4;
+    border-bottom: 1px solid #c6c6b9;
+}
+
+main {
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
+
+footer {
+    font-size: 0.8em;
+    margin-bottom: 1.5em;
+}
+
+p {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+ul {
+    margin-bottom: 1.5em;
+}
+
+li {
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
 
 a {
     text-decoration: none;
