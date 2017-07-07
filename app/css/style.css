@@ -6,9 +6,70 @@ em {
     box-sizing: border-box;
 }
 
+/* Idea from https://css-tricks.com/transitions-only-after-page-load/ */
+.loading * {
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
 body {
     background-color: #fefefb;
     font-family: georgia;
+    font-size: 16px;
+}
+
+header .content, main, footer {
+    max-width: 800px;
+    padding: 0 7px;
+    margin: 0 auto;
+}
+
+header {
+    overflow: auto; /* handle the margin of inner h1 */
+    background-color: #fbfbf4;
+    border-bottom: 1px solid #c6c6b9;
+
+    transition: all 0.2s ease-in-out;
+}
+
+/* note: web mode fixed header */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+header.scrolling {
+    font-size: 1.5em;
+    padding: 0.5em 0;
+}
+
+header, .header-gap {
+    font-size: 2em;
+    line-height: 1em;
+    padding: 0.75em 0;
+}
+
+.header-gap::before {
+    content: "\007C\00a0\00a0";
+}
+
+main::before {
+    display: block;
+    height: 200px;
+}
+
+main {
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
+
+footer {
+    font-size: 0.8em;
+    margin-bottom: 1.5em;
 }
 
 h1 {
@@ -22,32 +83,9 @@ h1 {
 h2 {
     /** Note: fitting into 2 lines (3em normal), divided by font-size its 2em */
     font-size: 1.5em;
-    margin-top: 1em; /* 1.5 / 1.5 = 1 */
     line-height: 1em;
+    margin-top: 1em; /* 1.5 / 1.5 = 1 */
     margin-bottom: 1em;
-}
-
-header .content, main, footer {
-    max-width: 800px;
-    padding: 0 7px;
-    margin: 0 auto;
-    font-size: 16px;
-}
-
-header {
-    overflow: auto; /* handle the margin of inner h1 */
-    background-color: #fbfbf4;
-    border-bottom: 1px solid #c6c6b9;
-}
-
-main {
-    margin-top: 1.5em;
-    margin-bottom: 3em;
-}
-
-footer {
-    font-size: 0.8em;
-    margin-bottom: 1.5em;
 }
 
 p {
@@ -65,7 +103,6 @@ li {
     line-height: 1.5em;
 }
 
-
 a {
     text-decoration: none;
     color: #22d;
@@ -73,6 +110,10 @@ a {
 
 a:hover, a:focus {
     text-decoration: underline;
+}
+
+main a {
+    white-space: nowrap; /* more readable on one line */
 }
 
 .social-media-links .fa {
