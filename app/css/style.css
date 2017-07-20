@@ -76,10 +76,13 @@ header {
     font-size: 1.75em;
     line-height: 1em;
     padding: 0.75em 0;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 header .content, main .content, footer .content {
-    max-width: 800px;
+    max-width: 880px;
     padding: 0 7px;
     margin: 0 auto;
 }
@@ -107,20 +110,31 @@ header .content, main .content, footer .content {
     }
 }
 
-main {
-    margin-top: 1.5em;
-}
-main > section {
-    padding: 1em 0;
+main > section > .content {
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 main > section:nth-child(odd) {
-    /* inherit from body */
+    /** body background color **/
+    background-color: hsl(70,10%,98%);
+
+    background: linear-gradient(to bottom,
+            hsl(70,10%,97%),
+            hsl(70,10%,98%) 40%,
+            hsl(70,10%,98%) 60%,
+            hsl(70,10%,97%));
 }
 main > section:nth-child(even) {
-    background-color: hsl(70,5%,93%);
     border-width: 1px 0;
     border-style: solid;
+
+    background-color: hsl(70,5%,93%);
     border-color: hsl(70,5%,90%);
+    background: linear-gradient(to bottom,
+        hsl(70,5%,92%),
+        hsl(70,5%,94%) 40%,
+        hsl(70,5%,94%) 60%,
+        hsl(70,5%,92%));
 }
 main a {
     white-space: nowrap; /* more readable on one line */
