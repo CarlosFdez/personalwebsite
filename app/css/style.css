@@ -39,11 +39,10 @@ li {
 }
 
 a {
-    text-decoration: none;
-    color: #22d;
+    color: inherit;
+    text-decoration: inherit;
 }
-
-a:hover, a:focus {
+a:hover {
     text-decoration: underline;
 }
 
@@ -137,6 +136,7 @@ main > section:nth-child(even) {
         hsl(70,5%,92%));
 }
 main a {
+    color: #22d;
     white-space: nowrap; /* more readable on one line */
 }
 
