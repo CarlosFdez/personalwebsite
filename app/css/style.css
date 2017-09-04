@@ -86,7 +86,7 @@ header .content, main .content, footer .content {
     margin: 0 auto;
 }
 
-/* note: moving header */
+/* implement moving header on sufficiently large browsers */
 @media screen and (min-width: 550px) {
     header {
         position: fixed;
@@ -109,9 +109,15 @@ header .content, main .content, footer .content {
     }
 }
 
+main > section {
+    overflow: hidden; /* prevent margin collapse between sections */
+}
+main > section:last-child > .content {
+    margin-bottom: 6em;
+}
 main > section > .content {
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-top: 3em;
+    margin-bottom: 3em;
 }
 main > section:nth-child(odd) {
     /** body background color **/
@@ -135,6 +141,7 @@ main > section:nth-child(even) {
         hsl(70,5%,94%) 60%,
         hsl(70,5%,92%));
 }
+
 main a {
     color: #22d;
     white-space: nowrap; /* more readable on one line */
