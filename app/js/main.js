@@ -3,6 +3,7 @@
 /**
  * Written by Carlos Fernandez.
  * I could have made it even simpler if I used libraries but then it would have taken longer to load.
+ * TODO: Minimize+Uglify and make a source map available
  */
 
 // adds a class to an element if the element does not have the class
@@ -42,57 +43,55 @@ window.addEventListener('scroll', function(e) {
 });
 
 // A function that scrolls to a given Y coordinate gradually.
-// I could possibly make this generic but most animations should be CSS so I won't bother for now.
+// I could possibly make this generic but most other animations should be CSS instead so I won't bother for now.
 var scrollInfo = null;
 function animatedScrollTo(scrollToY, animationTimeSeconds) {
-    if (scrollInfo && scrollInfo._interval && !scrollInfo._complete) {
-        scrollInfo._complete = true;
+    // Cancel the previous scrolling operation if we need to start a new one
+    if (scrollInfo && scrollInfo._interval && !scrollInfo.complete) {
+        scrollInfo.complete = true;
         window.clearInterval(scrollInfo._interval);
     }
 
+    // Calculate how long the wait interval is for the given FPS
+    var frameRate = 60;
+    var frameTimeMs = 1000.0 / frameRate;
+
+    // Replace scrollInfo with a new object that represents the current scroll operation
     scrollInfo = {};
     scrollInfo.scrollTo = scrollToY;
     scrollInfo.lastPosition = window.scrollY; // store last position to handle subpixels
-    scrollInfo.scrollDifference = scrollToY - window.scrollY;
+    scrollInfo.scrollDifference = scrollInfo.scrollTo - window.scrollY; 
     scrollInfo.scrollPixelsPerSecond = scrollInfo.scrollDifference / animationTimeSeconds;
-    scrollInfo._complete = false;
+    scrollInfo.complete = false;
+    scrollInfo.tick = function(elapsedTimeMs) {
+        if (this.complete) return;
 
-    var _that = scrollInfo; // create a closure so we refer to this one until we rewrite it
-    var waitTimeMs = 10;
-    scrollInfo._interval = window.setInterval(function() {
-        // this shouldn't happen but just in case
-        if (_that._complete) {
-            window.clearInterval(_that._interval);
-            return;
-        }
+        var amountToMove = (this.scrollPixelsPerSecond / 1000.0) * elapsedTimeMs;
+        var newPosition = this.lastPosition + amountToMove;
 
-        // if the user manually scrolls, we need to manually correct lastPosition.
-        // lastPosition exists to handle subpixels normally
-        if (Math.abs(_that.lastPosition - window.scrollY) > 1) {
-            _that.lastPosition = window.scrollY;
-        }
-
-        var amountToMove = _that.scrollPixelsPerSecond / 1000.0 * waitTimeMs;
-        var newPosition = _that.lastPosition + amountToMove;
-
-        // avoid overshoot
-        if (amountToMove > 0) {
-            // we're moving down, so don't go below (greater than) newPosition
-            newPosition = Math.min(newPosition, scrollToY);
-        } else {
-            // we're moving up, so don't go above (less than) newPosition
-            newPosition = Math.max(newPosition, scrollToY);
-        }
+        // clip animation (avoid overshooting). If increasing we use min, if decreasing we use max.
+        var clipFunction = (amountToMove > 0) ? Math.min : Math.max;
+        newPosition = clipFunction(newPosition, this.scrollTo);
 
         window.scrollTo(window.scrollX, newPosition);
-        _that.lastPosition = newPosition;
+        this.lastPosition = newPosition;
 
         // check if we're done. If we are, complete it
-        if (newPosition == scrollToY) {
-            window.clearInterval(_that._interval);
-            _that._complete = true;
+        if (newPosition == this.scrollTo) {
+            this.complete = true;
         }
-    }, waitTimeMs);
+    }
+
+    // create a closure so we always refer to this scrollInfo one until we rewrite it
+    var localScrollInfo = scrollInfo; 
+    localScrollInfo._interval = window.setInterval(function() {
+        localScrollInfo.tick(frameTimeMs);
+
+        if (localScrollInfo.complete) {
+            window.clearInterval(localScrollInfo._interval);
+            return;
+        }
+    }, frameTimeMs);
 }
 
 // attach an event to anything that performs a scroll
@@ -100,17 +99,16 @@ var elementsThatCauseScroll = document.getElementsByClassName("performScroll");
 for (var i = 0; i < elementsThatCauseScroll.length; i++) {
     var element = elementsThatCauseScroll[i];
     element.addEventListener("click", function(evt) {
-        // can't use the same element as outside
-        var element = evt.currentTarget;
-
-        // TODO: implement dynamic scrollTo. Right now the only existing one is to 0 so we do 0.
-        animatedScrollTo(0, 0.1);
+        // TODO: check element to calculate position. Right now the only existing one is to 0 so we hardcode 0.
+        var position = 0;
+        var duration = 0.1;
+        animatedScrollTo(position, duration);
 
         evt.preventDefault();
     })
 }
 
-// remove "loading" from body at the very end of everything."
+// remove "loading" from body at the very end of everything.
 // idea from https://css-tricks.com/transitions-only-after-page-load/
 window.setTimeout(function() {
     removeClass(document.body, "loading");
