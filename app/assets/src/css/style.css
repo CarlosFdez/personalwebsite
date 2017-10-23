@@ -80,6 +80,14 @@ header {
     overflow: hidden;
 }
 
+header nav {
+    float: right;
+}
+
+header nav a {
+    display: inline-block;
+}
+
 header .content, main .content, footer .content {
     max-width: 880px;
     padding: 0 7px;
