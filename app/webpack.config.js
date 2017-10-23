@@ -1,4 +1,6 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -21,7 +23,7 @@ module.exports = {
                 use: 'ts-loader'
             },
             {
-                // all imported css gets redirected to the extract text
+                // all imported css gets redirected to the plugin
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
@@ -36,7 +38,8 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("app.css")
+        new ExtractTextPlugin("app.css"),
+        new UglifyJSPlugin({ sourceMap: true })
     ],
 
 

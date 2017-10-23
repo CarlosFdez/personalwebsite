@@ -3,7 +3,6 @@
 /**
  * Written by Carlos Fernandez.
  * I could have made it even simpler if I used libraries but then it would have taken longer to load.
- * TODO: Minimize+Uglify and make a source map available
  */
 
 // adds a class to an element if the element does not have the class
