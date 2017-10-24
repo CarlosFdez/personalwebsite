@@ -23,6 +23,14 @@ module.exports = {
                 use: 'ts-loader'
             },
             {
+                // all imported scss gets parsed then redirected to the plugin
+                test: /\.(scss|sass)$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "sass-loader"
+                })
+            },
+            {
                 // all imported css gets redirected to the plugin
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({

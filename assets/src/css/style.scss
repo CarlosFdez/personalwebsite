@@ -1,0 +1,39 @@
+/* Idea from https://css-tricks.com/transitions-only-after-page-load/ */
+.loading * {
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
+.social-media-links .fa {
+    color: black;
+    margin-right: 2px;
+}
+
+.social-media-links a {
+    display: inline-block;
+    line-height: 2em;
+    height: 2em;
+    margin-top: -0.25em;
+    margin-bottom: 1.25em;
+
+    padding: 0 8px;
+    color: black;
+    background-color: #ecedea
+}
+
+.social-media-links a:hover {
+    text-decoration: none;
+    color: #eee;
+    background-color: #444;
+}
+
+.social-media-links a:hover .fa {
+    color: #eee;
+}
+
+.project-title {
+    text-decoration: underline;
+}

@@ -1,3 +1,5 @@
 import './reset.css';
-import './style.css';
+import './core.scss';
+import './layout.scss';
+import './style.scss';
 import './font-awesome.min.css';
