@@ -1,3 +1,8 @@
+# Move from default locations
+# idea from http://capistranorb.com/documentation/faq/how-can-i-set-capistrano-configuration-paths/
+set :deploy_config_path, 'cap/deploy.rb'
+set :stage_config_path, 'cap/stages'
+
 # Load DSL and set up stages
 require "capistrano/setup"
 
@@ -35,4 +40,4 @@ install_plugin Capistrano::SCM::Git
 # require "capistrano/passenger"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
-Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
+Dir.glob("capistrano/tasks/*.rake").each { |r| import r }
