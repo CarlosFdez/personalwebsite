@@ -1,17 +1,30 @@
+@import '_variables';
+@import '_mixins';
+
+html, body {
+    // min-height does not allow flexbox to fill for some reason
+    height: 100%;
+}
+
 body {
-    background-color: hsl(70,10%,98%);
+    background-color: $body-color;
     font-family: georgia;
     font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+body > main {
+    flex: 1;
 }
 
 header {
     overflow: auto; /* handle the margin of inner h1 */
     /*background-color: #fbfbf4; */
-    background-color: hsl(230,20%,30%);
-    border-bottom: 1px solid hsl(230,20%,25%);
+    background-color: $key-color;
+    border-bottom: 1px solid $key-border-color;
     color: #eee;
-
-    transition: all 0.2s ease-in-out;
 
     font-size: 1.75em;
     line-height: 1em;
@@ -19,6 +32,9 @@ header {
 
     white-space: nowrap;
     overflow: hidden;
+
+    // animation for scrolling header
+    transition: all 0.2s ease-in-out;
 }
 
 header nav {
@@ -27,12 +43,6 @@ header nav {
     a {
         display: inline-block;
     }
-}
-
-header .content, main .content, footer .content {
-    max-width: 880px;
-    padding: 0 7px;
-    margin: 0 auto;
 }
 
 /* implement moving header on sufficiently large browsers */
@@ -58,49 +68,9 @@ header .content, main .content, footer .content {
     }
 }
 
-main > section {
-    overflow: hidden; /* prevent margin collapse between sections */
-}
-main > section:last-child > .content {
-    margin-bottom: 6em;
-}
-main > section > .content {
-    margin-top: 3em;
-    margin-bottom: 3em;
-}
-main > section:nth-child(odd) {
-    /** body background color **/
-    background-color: hsl(70,10%,98%);
-
-    background: linear-gradient(
-        to bottom,
-        hsl(70,10%,97%),
-        hsl(70,10%,98%) 40%,
-        hsl(70,10%,98%) 60%,
-        hsl(70,10%,97%));
-}
-main > section:nth-child(even) {
-    border-width: 1px 0;
-    border-style: solid;
-
-    background-color: hsl(70,5%,93%);
-    border-color: hsl(70,5%,90%);
-    background: linear-gradient(
-        to bottom,
-        hsl(70,5%,92%),
-        hsl(70,5%,94%) 40%,
-        hsl(70,5%,94%) 60%,
-        hsl(70,5%,92%));
-}
-
-main a {
-    color: #22d;
-    white-space: nowrap; /* more readable on one line */
-}
-
 footer {
-    background-color: hsl(230,20%,30%);
-    border-top: 1px solid hsl(230,20%,25%);
+    background-color: $key-color;
+    border-top: 1px solid $key-border-color;
     color: #eee;
 
     font-size: 1em;
@@ -115,4 +85,9 @@ footer {
     aside {
         float: right;
     }
+}
+
+header .content, main .content, footer .content {
+    @extend .mix-centered-content;
+    padding: 0 $side-buffer;
 }

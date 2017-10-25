@@ -1,9 +1,11 @@
-em {
-    font-style: italic;
-}
+// reset.css is third party imported.
+// These are additional resets of our own to establish base styles
 
 * {
     box-sizing: border-box;
+}
+em {
+    font-style: italic;
 }
 
 h1 {
@@ -40,7 +42,22 @@ li {
 a {
     color: inherit;
     text-decoration: inherit;
+    
+    &:hover {
+        text-decoration: underline;
+    }
 }
-a:hover {
-    text-decoration: underline;
+
+/* Idea from https://css-tricks.com/transitions-only-after-page-load/ */
+.loading * {
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
+p a {
+    color: #22d;
+    white-space: nowrap; /* more readable on one line */
 }

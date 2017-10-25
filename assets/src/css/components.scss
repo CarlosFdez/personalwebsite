@@ -1,0 +1,44 @@
+// todo: once the abstraction becomes more obvious, split these up
+
+@import '_variables';
+
+.alternating-sections {
+    > section {
+        // prevent margin collapse between sections
+        overflow: hidden; 
+    }
+
+    > section > .content {
+        margin-top: 3em;
+        margin-bottom: 3em;
+    }
+
+    > section:last-child > .content {
+        margin-bottom: 6em;
+    }
+
+    > section:nth-child(odd) {
+        background-color: $body-color;
+
+        background: linear-gradient(
+            to bottom,
+            hsl(70,10%,97%),
+            $body-color 40%,
+            $body-color 60%,
+            hsl(70,10%,97%));
+    }
+
+    > section:nth-child(even) {
+        border-width: 1px 0;
+        border-style: solid;
+
+        background-color: $body-off-color;
+        border-color: hsl(70,5%,90%);
+        background: linear-gradient(
+            to bottom,
+            hsl(70,5%,92%),
+            $body-off-color 40%,
+            $body-off-color 60%,
+            hsl(70,5%,92%));
+    }
+}

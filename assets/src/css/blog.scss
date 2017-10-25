@@ -1,0 +1,49 @@
+// BLOG SPECIFIC RULES
+
+@import '_variables';
+@import '_mixins';
+
+.article-list {
+    
+}
+
+.article-brief {
+    display: block;
+    text-decoration: none!important;
+
+    @extend .mix-centered-content;
+    padding: 1em $side-buffer;
+
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    transition: padding 0.1s ease-in-out;
+    
+    &:hover, &:focus {
+        cursor: pointer;
+        background-color: $body-off-color;
+
+        padding-left: 2px;
+        padding-right: ($side-buffer * 2) - 2;
+
+        .title {
+            text-decoration: underline;
+        }
+    }
+
+    .title {
+        margin: 0;
+    }
+
+    .brief {
+        margin-top: 1.5em;
+        line-height: 1.5em;
+    }
+}
+
+.article {
+    @extend .mix-centered-content;
+    padding: 0 $side-buffer;
+    margin-top: 3em;
+    margin-bottom: 6em;
+}

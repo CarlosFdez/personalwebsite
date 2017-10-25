@@ -1,0 +1,34 @@
+@import '_variables';
+
+.about-page {
+    .social-media-links .fa {
+        color: black;
+        margin-right: 2px;
+    }
+    
+    .social-media-links a {
+        display: inline-block;
+        line-height: 2em;
+        height: 2em;
+        margin-top: -0.25em;
+        margin-bottom: 1.25em;
+    
+        padding: 0 8px;
+        color: black;
+        background-color: #ecedea
+    }
+    
+    .social-media-links a:hover {
+        text-decoration: none;
+        color: #eee;
+        background-color: #444;
+    }
+    
+    .social-media-links a:hover .fa {
+        color: #eee;
+    }
+    
+    .project-title {
+        text-decoration: underline;
+    }
+}
