@@ -1,8 +1,14 @@
 // files starting with _ don't become css
 
-// blah blah
+// The main mixin for "content". Content is centered with a set width
 .mix-centered-content {
     max-width: 880px;
     margin: 0 auto;
 }
 
+// Mixin for content that's on its own
+// adds the expected header/footer separation while preserving styles
+.mix-single-body-content {
+    margin-top: 3em;
+    margin-bottom: 6em;
+}

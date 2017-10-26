@@ -19,7 +19,7 @@ body > main {
     flex: 1;
 }
 
-header {
+body > header {
     overflow: auto; /* handle the margin of inner h1 */
     /*background-color: #fbfbf4; */
     background-color: $key-color;
@@ -37,7 +37,7 @@ header {
     transition: all 0.2s ease-in-out;
 }
 
-header nav {
+body > header nav {
     float: right;
 
     a {
@@ -46,18 +46,19 @@ header nav {
 }
 
 /* implement moving header on sufficiently large browsers */
-@media screen and (min-width: 550px) {
-    header {
+@media screen and (min-width: $desktop-cutoff) {
+    body > header {
         position: fixed;
         top: 0;
         width: 100%;
+        z-index: 100;
     }
 
-    header.scrolling {
+    body > header.scrolling {
         font-size: 1.5em;
     }
 
-    header, .header-gap {
+    body > header, .header-gap {
         font-size: 1.75em;
         line-height: 1em;
         padding: 0.75em 0;
@@ -68,7 +69,7 @@ header nav {
     }
 }
 
-footer {
+body > footer {
     background-color: $key-color;
     border-top: 1px solid $key-border-color;
     color: #eee;
@@ -87,7 +88,7 @@ footer {
     }
 }
 
-header .content, main .content, footer .content {
+body > header .content, body > main .content, body > footer .content {
     @extend .mix-centered-content;
     padding: 0 $side-buffer;
 }

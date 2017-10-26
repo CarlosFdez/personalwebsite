@@ -4,27 +4,35 @@
 @import '_mixins';
 
 .article-list {
-    
+    @extend .mix-single-body-content;
+    @extend .mix-centered-content;
+}
+
+.article-brief .date, .article .date {
+    color: #222;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    .fa {
+        margin-right: 0.2em;
+    }
 }
 
 .article-brief {
     display: block;
     text-decoration: none!important;
 
-    @extend .mix-centered-content;
     padding: 1em $side-buffer;
-
     margin-top: 1em;
     margin-bottom: 1em;
+    
+    border-radius: 3px;
 
-    transition: padding 0.1s ease-in-out;
+    position: relative;
+    transition: all 0.1s ease-in-out;
     
     &:hover, &:focus {
         cursor: pointer;
         background-color: $body-off-color;
-
-        padding-left: 2px;
-        padding-right: ($side-buffer * 2) - 2;
 
         .title {
             text-decoration: underline;
@@ -36,14 +44,32 @@
     }
 
     .brief {
-        margin-top: 1.5em;
+        margin-top: 0.75em;
         line-height: 1.5em;
     }
 }
 
 .article {
+    // When article is used, its the only element
     @extend .mix-centered-content;
+    @extend .mix-single-body-content;
     padding: 0 $side-buffer;
-    margin-top: 3em;
-    margin-bottom: 6em;
+
+    header {
+        margin-bottom: 1.5em;
+    }
+
+    header h1 {
+        margin: 0;
+    }
+}
+
+// allow article hover animation on desktop mode
+@media screen and (min-width: $desktop-large-cutoff) {
+    .article-brief {
+        left: 0; // allow transition to work
+        &:hover, &:focus {
+            left: -$side-buffer;
+        }
+    }
 }
