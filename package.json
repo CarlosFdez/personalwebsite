@@ -4,8 +4,9 @@
   "description": "Main fileserver and processor for supetroupe.com",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env FLASK_APP=main.py flask run",
-    "start-dev": "cross-env FLASK_APP=main.py FLASK_DEBUG=1 flask run",
+    "start": "./node_modules/.bin/ts-node index.ts",
+    "start-dev": "./node_modules/.bin/ts-node index.ts",
+    "debug": "./node_modules/.bin/ts-node --inspect-brk=9229 index.ts",
     "build": "webpack",
     "build-dev": "webpack --watch"
   },
@@ -27,7 +28,9 @@
   "dependencies": {
     "@types/react": "^16.0.18",
     "@types/react-dom": "^16.0.2",
+    "express": "^4.16.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "ts-node": "^3.3.0"
   }
 }
