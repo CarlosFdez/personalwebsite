@@ -1,25 +1,14 @@
 {
-    "compilerOptions": {
-      "target": "es5",
-      "lib": [
-        "dom",
-        "es5",
-        "es2015",
-        "es2016",
-        "es2017"
-      ],
-      "module": "commonjs",
-      "declaration": false,
-      "noImplicitAny": false,
-      "suppressImplicitAnyIndexErrors": true,
-      "removeComments": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "noEmitHelpers": false,
-      "sourceMap": true,
-      "strictNullChecks": false,
-      "jsx": "react"
-    },
-    "compileOnSave": false,
-    "buildOnSave": false
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "sourceMap": true,
+    "jsx": "react",
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true
   }
+}

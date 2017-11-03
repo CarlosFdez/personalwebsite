@@ -4,7 +4,7 @@ var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './assets/src/app.js'
+        app: './assets/src/client.tsx'
     },
     output: {
         filename: '[name].js',
@@ -19,7 +19,7 @@ module.exports = {
         rules: [
             {
                 // typescript gets compiled
-                test: /\.ts$/,
+                test: /\.(ts|tsx)$/,
                 use: 'ts-loader'
             },
             {
@@ -51,5 +51,6 @@ module.exports = {
     ],
 
 
+    // in production, use just "source-map"
     devtool: "source-map"
 }

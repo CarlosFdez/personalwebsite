@@ -1,7 +1,7 @@
 @import '_variables';
 @import '_mixins';
 
-html, body {
+html, body, #website-root, .website-layout {
     // min-height does not allow flexbox to fill for some reason
     height: 100%;
 }
@@ -10,17 +10,19 @@ body {
     background-color: $body-color;
     font-family: georgia;
     font-size: 16px;
+}
 
+.website-layout {
     display: flex;
     flex-direction: column;
 }
 
-body > main {
+main {
     flex: 1;
 }
 
 // Structure for the header and the header gap
-body > header, .header-gap {
+.main-header, .header-gap {
     font-size: 1.75em;
     line-height: 1.5em;
     padding: 0.5em 0;
@@ -30,7 +32,7 @@ body > header, .header-gap {
     display: none; // only visible if scrolling is enabled
 }
 
-body > header {
+.main-header {
     overflow: auto; /* handle the margin of inner h1 */
     /*background-color: #fbfbf4; */
     background-color: $key-color;
@@ -44,7 +46,7 @@ body > header {
     transition: all 0.2s ease-in-out;
 }
 
-body > header nav {
+.main-header nav {
     float: right;
 
     a {
@@ -64,7 +66,7 @@ body > header nav {
 
 /* implement moving header on sufficiently large browsers */
 @media screen and (min-width: $desktop-cutoff) {
-    body > header {
+    .main-header {
         position: fixed;
         top: 0;
         width: 100%;
@@ -85,7 +87,7 @@ body > header nav {
     }
 }
 
-body > footer {
+.main-footer {
     background-color: $key-color;
     border-top: 1px solid $key-border-color;
     color: #eee;
@@ -104,7 +106,7 @@ body > footer {
     }
 }
 
-body > header .content, body > main .content, body > footer .content {
+.main-header .content, main .content, .main-footer .content {
     @extend .mix-centered-content;
     padding: 0 $side-buffer;
 }
