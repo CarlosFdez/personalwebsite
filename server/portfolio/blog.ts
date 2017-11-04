@@ -1,32 +1,63 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as Remarkable from 'remarkable';
 import { promisify } from 'util';
 import { PortfolioItemEngine } from './core';
 
+var md = new Remarkable();
+
+// todo: move to a location the client and server can access
 function getIdFromSlug(slug : string) : string {
     let [idStr, ..._] = slug.split('-', 1);
     idStr = idStr.replace(/^0+/, '');
     return idStr;
 }
 
-interface BlogItem {
+interface BlogDiskItem {
     // path on disk
     path: string;
-    entry: BlogEntry;
+    entry: BlogEntryBrief;
 }
 
-// data that can be shown to a 
-interface BlogEntry {
+
+interface BlogEntryBase {
     id : string;
-    metadata: object;
+    title: string;
+    published: Date;
 }
+
+/**
+ * Represents a blog post summary
+ */
+interface BlogEntryBrief extends BlogEntryBase {
+    content: string;
+}
+
+/**
+ * Represents a fully loaded blog entry
+ */
+interface BlogEntry extends BlogEntryBase {
+    /**
+     * Contains the data for the blog entry 
+     */
+    content: string;
+}
+
 
 export class BlogEngine implements PortfolioItemEngine {
-    itemMap : { [id: string] : BlogItem };
+    itemMap : { [id: string] : BlogDiskItem };
     rootDir : string;
 
-    getItem(itemId : string) {
-        return this.itemMap[itemId].entry;
+    *loadItems() {
+        for (var i in this.itemMap) {
+            yield this.itemMap[i].entry;
+        }
+    }
+
+    async loadItem(itemId : string) : Promise<BlogEntry> {
+        let brief = this.itemMap[itemId].entry;
+        let content = md.render();
+        return { ...brief, content: content };
     }
 
     getAsset(itemId : string, relativeUrl : string) {
@@ -50,18 +81,26 @@ export class BlogEngine implements PortfolioItemEngine {
         let folders = await fs.readdir(this.rootDir);
         for (let name of folders) {
             let itemPath = path.join(this.rootDir, name);
-            let metaPath = path.join(itemPath, "meta.json");
-            if (!(await fs.pathExists(metaPath)))
+            let metaPath = path.join(itemPath, 'meta.json');
+            let briefPath = path.join(itemPath, 'brief.txt');
+            if (!(await fs.pathExists(metaPath))) {
                 continue;
+            }
 
-            let data = await fs.readJson(metaPath);
+            let meta = await fs.readJson(metaPath);
+            let brief = "No article brief provided";
+            try {
+                brief = await fs.readFile(briefPath, 'utf8')
+            } catch(err) {}
 
             let id = getIdFromSlug(name);
             this.itemMap[id] = {
                 path: itemPath,
                 entry: {
                     id: id.toString(),
-                    metadata: data
+                    title: meta.title,
+                    published: new Date(meta.published),
+                    content: brief
                 }
             };
             console.log(`Imported blog entry ${id} ${name}`);

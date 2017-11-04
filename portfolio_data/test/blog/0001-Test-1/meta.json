@@ -1,7 +1,5 @@
 {
     "title": "Test 1",
-    "date": {
-        "published": "2017-10-27T16:25:00.000Z",
-        "edited": "2017-10-27T16:48:00.000Z"
-    }
+    "published": "2017-10-27T16:25:00.000Z",
+	"brief": "A simple test"
 }

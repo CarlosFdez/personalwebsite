@@ -1,44 +1,9 @@
 // todo: rearrange everything into proper folders
 import * as React from "react";
-import { 
-    Route, Link, Switch, RouteComponentProps
-} from 'react-router-dom';
-
-import "isomorphic-fetch";
+import { Route, NavLink, Switch } from 'react-router-dom';
 
 import { HomePage } from './home';
-import { BlogList, BlogArticle } from "./blog";
-
-import { getStore } from "../store";
-
-/**
- * A wrapper over fetch that throws an exception if the response is not ok.
- * @param input 
- * @param init 
- */
-async function fetchHandled(input: RequestInfo, init?: RequestInit) {
-    let response = await fetch(input, init);
-    if (!response.ok) {
-        throw new Error(response.statusText);
-    }
-    return response;
-}
-
-class BlogPage extends React.Component {
-    render() {
-        return (
-            <b>Hello I am blog page</b>
-        )
-    }
-}
-
-class BlogArticlePage extends React.Component {
-    render() {
-        return (
-            <b>Hello I am blog article page</b>
-        )
-    }
-}
+import { BlogPage, BlogArticlePage } from "./blog";
 
 const NotFound = () => (
     <div>
@@ -54,8 +19,8 @@ export class PortfolioSite extends React.Component<object, object> {
                     <div className="content">
                         <a href="#" className="performScroll">Carlos Fernandez</a>  
                         <nav>
-                            <Link to="/">Home</Link>
-                            <Link to="/blog">Blog</Link>
+                            <NavLink exact to="/" activeClassName="selected">Home</NavLink>
+                            <NavLink to="/blog" activeClassName="selected">Blog</NavLink>
                         </nav>
                     </div>
                 </header>
@@ -63,7 +28,8 @@ export class PortfolioSite extends React.Component<object, object> {
                 <main>
                     <Switch>
                         <Route exact path="/" component={HomePage}/>
-                        <Route path="/blog" component={BlogPage}/>
+                        <Route exact path="/blog" component={BlogPage}/>
+                        <Route path="/blog/:id" component={BlogArticlePage}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </main>

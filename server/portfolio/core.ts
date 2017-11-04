@@ -11,6 +11,20 @@ export class PortfolioAsset {
 
 export interface PortfolioItemEngine {
     load(rootDir : string) : Promise<void>;
+
+    /**
+     * Loads the full list of portfolio items.
+     * These portfolio items may not contain full information.
+     * 
+     */
+    loadItems() : IterableIterator<any>;
+
+    /**
+     * Loads a portfolio object that can be sent to the front end.
+     * This is a complete load, showing full detail.
+     */
+    loadItem(itemId: string) : Promise<any>;
+
     getAsset(itemId : string, relativeUrl : string) : PortfolioAsset;
 }
 

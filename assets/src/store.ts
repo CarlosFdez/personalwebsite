@@ -4,9 +4,8 @@
  */
 
 class Store {
-    // used for bodies that 
-    renderedHtml: string;
-    isServerRendered: boolean; // set client side if it is server rendered
+    blogArticles: object[]
+    blogArticle: object
 }
 
 let store : Store;
