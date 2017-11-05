@@ -4,43 +4,15 @@ import * as Remarkable from 'remarkable';
 import { promisify } from 'util';
 import { PortfolioItemEngine } from './core';
 
-var md = new Remarkable();
+import { BlogEntryBrief, BlogEntry } from '../../lib/apiclient';
+import { getIntIdFromSlug } from '../../lib/slug'
 
-// todo: move to a location the client and server can access
-function getIdFromSlug(slug : string) : string {
-    let [idStr, ..._] = slug.split('-', 1);
-    idStr = idStr.replace(/^0+/, '');
-    return idStr;
-}
+var md = new Remarkable();
 
 interface BlogDiskItem {
     // path on disk
     path: string;
     entry: BlogEntryBrief;
-}
-
-
-interface BlogEntryBase {
-    id : string;
-    title: string;
-    published: Date;
-}
-
-/**
- * Represents a blog post summary
- */
-interface BlogEntryBrief extends BlogEntryBase {
-    content: string;
-}
-
-/**
- * Represents a fully loaded blog entry
- */
-interface BlogEntry extends BlogEntryBase {
-    /**
-     * Contains the data for the blog entry 
-     */
-    content: string;
 }
 
 
@@ -55,7 +27,12 @@ export class BlogEngine implements PortfolioItemEngine {
     }
 
     async loadItem(itemId : string) : Promise<BlogEntry> {
-        let brief = this.itemMap[itemId].entry;
+        let item = this.itemMap[itemId];
+        if (!item) {
+            return null;
+        }
+        
+        let brief = item.entry;
         let content = md.render();
         return { ...brief, content: content };
     }
@@ -93,7 +70,7 @@ export class BlogEngine implements PortfolioItemEngine {
                 brief = await fs.readFile(briefPath, 'utf8')
             } catch(err) {}
 
-            let id = getIdFromSlug(name);
+            let id = getIntIdFromSlug(name);
             this.itemMap[id] = {
                 path: itemPath,
                 entry: {

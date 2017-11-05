@@ -12,7 +12,8 @@
 
     {% if initialState %}
     <script type="text/javascript">
-        window.__INITIAL_STATE = {{ initialState | dump | safe}}
+        // http://redux.js.org/docs/recipes/ServerRendering.html
+        window.__PRELOADED_STATE__ = {{ initialState | dump | safe}}
     </script>
     {% endif %}
     <script src="/assets/app.js" type="text/javascript"></script>

@@ -6,7 +6,7 @@ import { promisify } from 'util';
 import { getPortfolio } from './portfolio';
 import { registerApiRoutes, registerRoutes } from './routes'
 
-import ApiClient from '../lib/apiclient';
+import { ApiClient } from '../lib/apiclient';
 
 
 // simple configuration data.
@@ -28,16 +28,17 @@ nunjucks.configure(path.join(__dirname, 'templates'), {
 });
 
 app.use('/assets', express.static(assets_location));
-app.use(function (err, req, res, next) {
-    // todo: if err.statusCode is 403 or something else, do that instead
-    console.error(err.stack);
-    res.status(500).send('Something broke!')
-});
 
 // register the routes listed in the routes file
 registerApiRoutes(app, portfolio);
 registerRoutes(app, portfolio, apiClient);
 
+// Register the global error handler at the end after all the routes
+app.use(function (err, req, res, next) {
+    // todo: if err.statusCode is 403 or something else, do that instead
+    console.error(err.stack);
+    res.status(500).send('Something broke!')
+});
 
 async function startServer(port : number) {
     await portfolio.loadAll();

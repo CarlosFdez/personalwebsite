@@ -1,5 +1,7 @@
 import "isomorphic-fetch";
 
+import * as types from './types';
+
 /**
  * A wrapper over fetch that throws an exception if the response is not ok.
  * @param input 
@@ -13,7 +15,7 @@ async function fetchHandled(input: RequestInfo, init?: RequestInit) {
     return response;
 }
 
-export default class ApiClient {
+export class ApiClient {
     constructor(private basePath : string) {}
 
     private pathTo(subPath) {
@@ -28,11 +30,13 @@ export default class ApiClient {
         return await res.json();
     }
 
-    async getBlogBriefs() {
-        return await this.fetchJson("/api/blog");
+    async getBlogBriefs() : Promise<types.BlogEntryBrief[]> {
+        let res = await this.fetchJson("/api/blog");
+        return res.items;
     }
 
-    async getBlogArticle(id : string) {
-        return await this.fetchJson(`/api/blog/${id}`);
+    async getBlogArticle(id : string) : Promise<types.BlogEntry> {
+        let res = await this.fetchJson(`/api/blog/${id}`);
+        return res.item;
     }
 }

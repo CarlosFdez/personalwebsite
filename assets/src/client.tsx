@@ -11,21 +11,34 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter} from 'react-router-dom';
+import { Provider } from 'react-redux'
+
+import { createStore, applyMiddleware } from "redux";
+import thunk from 'redux-thunk';
+
 
 import './css';
 import './js/main.js';
 
-import { createStore } from "./store";
 import { PortfolioSite } from "./components";
+import { reducer } from "./store";
+
+// Grab the state from the injected global variable, and then allow garbage collection
+// http://redux.js.org/docs/recipes/ServerRendering.html
+const preloadedState = window['__PRELOADED_STATE__'];
+delete window['__PRELOADED_STATE__'];
+
+let store = createStore(reducer, preloadedState, applyMiddleware(thunk));
 
 const supportsHistory = 'pushState' in window.history;
 
-let initialState = window['__INITIAL_STATE'];
-let store = createStore(initialState);
-
 // This is the client side start script, so we use BrowserRouter
 ReactDOM.hydrate(
-    <BrowserRouter forceRefresh={!supportsHistory}>
-        <PortfolioSite/>
-    </BrowserRouter>,
+    <Provider store={store}>
+        <BrowserRouter forceRefresh={!supportsHistory}>
+            <PortfolioSite/>
+        </BrowserRouter>
+    </Provider>,
     document.getElementById("website-root"), () => {});
+    
+

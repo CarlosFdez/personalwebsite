@@ -2,8 +2,9 @@
 import * as React from "react";
 import { Route, NavLink, Switch } from 'react-router-dom';
 
-import { HomePage } from './home';
-import { BlogPage, BlogArticlePage } from "./blog";
+import { HomePage } from './pages/home';
+import { BlogPage } from './pages/blog';
+import { BlogArticlePage } from './pages/blogarticle';
 
 const NotFound = () => (
     <div>

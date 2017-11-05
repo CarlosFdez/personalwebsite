@@ -9,6 +9,7 @@
     "sourceMap": true,
     "jsx": "react",
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true
   }
 }
