@@ -27,14 +27,24 @@ export class BlogEngine implements PortfolioItemEngine {
     }
 
     async loadItem(itemId : string) : Promise<BlogEntry> {
-        let item = this.itemMap[itemId];
-        if (!item) {
+        let itemMeta = this.itemMap[itemId];
+        if (!itemMeta) {
             return null;
         }
         
-        let brief = item.entry;
-        let content = md.render();
-        return { ...brief, content: content };
+        let brief = itemMeta.entry;
+        let result =  { ...brief, content: '' }
+
+        try {
+            let contentPath = path.join(itemMeta.path, "content.md");
+            let fileData = await fs.readFile(contentPath, "utf8");
+            result.content = md.render(fileData);
+        } catch (err) { 
+            console.error(err);
+            /* do nothing, no content loaded */
+        }
+
+        return result;
     }
 
     getAsset(itemId : string, relativeUrl : string) {
