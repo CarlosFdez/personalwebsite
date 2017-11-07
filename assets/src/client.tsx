@@ -8,37 +8,57 @@
  * Gets exported as app.js
  */
 
+// begin by importing the libraries we're using
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from 'react-redux'
-
-import { createStore, applyMiddleware } from "redux";
 import thunk from 'redux-thunk';
+import logger from 'redux-logger'
 
+import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 
+// ... then import our own stuff for the webpack
 import './css';
 import './js/main.js';
-
 import { PortfolioSite } from "./components";
 import { reducer } from "./store";
 
-// Grab the state from the injected global variable, and then allow garbage collection
+
+// Grab the state from the serverside injected global variable, and then allow garbage collection
 // http://redux.js.org/docs/recipes/ServerRendering.html
 const preloadedState = window['__PRELOADED_STATE__'];
 delete window['__PRELOADED_STATE__'];
 
-let store = createStore(reducer, preloadedState, applyMiddleware(thunk));
+const history = createHistory();
+const historyMiddleware = routerMiddleware(history);
+
+let store = createStore(
+    reducer,
+    preloadedState,
+    applyMiddleware(thunk, historyMiddleware, logger));
 
 const supportsHistory = 'pushState' in window.history;
 
-// This is the client side start script, so we use BrowserRouter
-ReactDOM.hydrate(
-    <Provider store={store}>
-        <BrowserRouter forceRefresh={!supportsHistory}>
-            <PortfolioSite/>
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById("website-root"), () => {});
-    
+// This is the client side start script, so we use a client side router
+if (supportsHistory) {
+    ReactDOM.hydrate(
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                <PortfolioSite/>
+            </ConnectedRouter>
+        </Provider>,
+        document.getElementById("website-root"), () => {});
+} else {
+    ReactDOM.hydrate(
+        <Provider store={store}>
+            <BrowserRouter forceRefresh={true}>
+                <PortfolioSite/>
+            </BrowserRouter>
+        </Provider>,
+        document.getElementById("website-root"), () => {});
+}
 

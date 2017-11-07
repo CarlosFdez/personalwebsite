@@ -1,19 +1,71 @@
 // todo: rearrange everything into proper folders
 import * as React from "react";
-import { Route, NavLink, Switch } from 'react-router-dom';
+import { withRouter, Route, NavLink, Switch } from 'react-router-dom';
+import { connect, Dispatch } from 'react-redux'
+import { AppState } from '../store';
 
 import { HomePage } from './pages/home';
 import { BlogPage } from './pages/blog';
 import { BlogArticlePage } from './pages/blogarticle';
 
-const NotFound = () => (
-    <div>
-        Page not found (todo: complete this page)
-    </div>
+import { HttpError } from '../../../lib/apiclient'
+
+const ApplicationError = () => (
+    <section className="content">
+        <h1>Error</h1>
+        <p>
+            Unfortunately it seems something broke.
+        </p>
+    </section>
 )
 
-export class PortfolioSite extends React.Component<object, object> {
+const NotFound = () => (
+    <section className="content">
+        <h1>Page not found</h1>
+        <p>
+            It seems you may have taken a wrong turn, or were led into a dead end.<br/>
+            I suggest <a href="javascript:history.back()">going back the way you came.</a>
+        </p>
+        <p>Officially we call this a 404 error</p>
+    </section>
+)
+
+const PortfolioRoutes = () => (
+    <Switch>
+        <Route exact path="/" component={HomePage}/>
+        <Route exact path="/blog" component={BlogPage}/>
+        <Route path="/blog/:id" component={BlogArticlePage}/>
+        <Route component={NotFound}/>
+    </Switch>
+);
+
+interface PortfolioSiteProps {
+    error?: any
+}
+
+// without withRouter, connect prevents react-router from working...
+@withRouter
+@connect((state : AppState) => ({ error: state.error }))
+export class PortfolioSite extends React.Component<PortfolioSiteProps> {
     render() {
+        let error = this.props.error;
+
+        // We set the mainElement if redux has been sent an error
+        var mainElement;
+        if (error && error instanceof HttpError) {
+            let statusCode = error.statusCode;
+            if (statusCode == 404) {
+                mainElement = <NotFound/>;
+            } else {
+                mainElement = <ApplicationError/>;
+            }
+        } else if (error) {
+            mainElement = <ApplicationError/>
+        } else {
+            // if there is no error at all, use the normal routing
+            mainElement = <PortfolioRoutes/>;
+        }
+
         return (
             <div className="website-layout">
                 <header className="main-header">
@@ -27,12 +79,7 @@ export class PortfolioSite extends React.Component<object, object> {
                 </header>
                 <div className="header-gap"></div>
                 <main>
-                    <Switch>
-                        <Route exact path="/" component={HomePage}/>
-                        <Route exact path="/blog" component={BlogPage}/>
-                        <Route path="/blog/:id" component={BlogArticlePage}/>
-                        <Route component={NotFound}/>
-                    </Switch>
+                    { mainElement }
                 </main>
                 <footer className="main-footer">
                     <div className="content">
@@ -49,3 +96,4 @@ export class PortfolioSite extends React.Component<object, object> {
         );
     }
 }
+

@@ -19,7 +19,16 @@ export function loaded<T>(data : T) {
  */
 export class AppState {
     error = null
+
+    /** 
+     * Should be false when the application begins loading,
+     * but should become true after a location change event.
+     * This is used to ignore the first LOCATION_CHANGE event.
+     */
+    finishedInitialLoad = false
+
     article = new Loadable<api.BlogEntry>(null)
+    
     articleList = new Loadable<api.BlogEntryBrief[]>([])
 }
 

@@ -2,6 +2,13 @@ import "isomorphic-fetch";
 
 import * as types from './types';
 
+export class HttpError extends Error {
+    constructor(message : string, public statusCode : number) {
+        super(message)
+        Error.captureStackTrace(this, HttpError);
+    }
+}
+
 /**
  * A wrapper over fetch that throws an exception if the response is not ok.
  * @param input 
@@ -10,10 +17,11 @@ import * as types from './types';
 async function fetchHandled(input: RequestInfo, init?: RequestInit) {
     let response = await fetch(input, init);
     if (!response.ok) {
-        throw new Error(response.statusText);
+        throw new HttpError(response.statusText, response.status);
     }
     return response;
 }
+
 
 export class ApiClient {
     constructor(private basePath : string) {}
@@ -31,7 +39,7 @@ export class ApiClient {
     }
 
     async getBlogBriefs() : Promise<types.BlogEntryBrief[]> {
-        let res = await this.fetchJson("/api/blog");
+        let res = await this.fetchJson("/api/blog/");
         return res.items;
     }
 

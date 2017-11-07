@@ -33,13 +33,6 @@ app.use('/assets', express.static(assets_location));
 registerApiRoutes(app, portfolio);
 registerRoutes(app, portfolio, apiClient);
 
-// Register the global error handler at the end after all the routes
-app.use(function (err, req, res, next) {
-    // todo: if err.statusCode is 403 or something else, do that instead
-    console.error(err.stack);
-    res.status(500).send('Something broke!')
-});
-
 async function startServer(port : number) {
     await portfolio.loadAll();
     app.listen(port, () => {

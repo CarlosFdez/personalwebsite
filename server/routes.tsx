@@ -9,7 +9,7 @@ import { AppState, reducer, initialState } from "../assets/src/store";
 
 
 import { Portfolio } from './portfolio'
-import { ApiClient } from '../lib/apiclient';
+import { ApiClient, HttpError } from '../lib/apiclient';
 import { PortfolioSite } from '../assets/src/components'
 import { loaded } from '../assets/src/store';
 
@@ -57,6 +57,13 @@ export function registerApiRoutes(app : express.Application, portfolio : Portfol
     // api fallthrough. Show 404
     app.get('/api/*', (req, res) => {
         res.sendStatus(404);
+    });
+
+    // Register the api global error handler at the end after all the routes
+    app.use("/api/", function (err, req, res, next) {
+        // todo: if err.statusCode is 403 or something else, do that instead
+        console.error(err.stack);
+        res.status(500).send('Something broke!');
     });
 }
 
@@ -117,5 +124,13 @@ export function registerRoutes(app : express.Application, portfolio, api: ApiCli
         serverRender(req, res);
     });
 
+    // Register the global error handler at the end after all the routes
+    app.use(function (err, req, res, next) {
+        // todo: if err.statusCode is 403 or something else, do that instead
+        console.error(err.stack);
+        res.status(500);
 
+        let error = new HttpError("Something broke", 500);
+        serverRender(req, res, { error: error});
+    });
 }
