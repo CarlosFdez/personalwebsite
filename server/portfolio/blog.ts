@@ -1,42 +1,52 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as Remarkable from 'remarkable';
+import * as Remarkable  from 'remarkable';
 import { promisify } from 'util';
 import { PortfolioItemEngine } from './core';
 
-import { BlogEntryBrief, BlogEntry } from '../../lib/apiclient';
+import { BlogEntry, BlogEntryFull } from '../../lib/apiclient';
 import { getIntIdFromSlug } from '../../lib/slug'
+
+import { connect } from '../db'
 
 var md = new Remarkable();
 
-interface BlogDiskItem {
-    // path on disk
-    path: string;
-    entry: BlogEntryBrief;
-}
+export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull> {
 
+    constructor(public rootDir: string) {}
 
-export class BlogEngine implements PortfolioItemEngine {
-    itemMap : { [id: string] : BlogDiskItem };
-    rootDir : string;
+    async* _loadItemsBase(sortingDict) {
+        let connection = await connect();
+        let collection = connection.collection('blog');
 
-    *loadItems() {
-        for (var i in this.itemMap) {
-            yield this.itemMap[i].entry;
+        let cursor = collection.find({}).sort(sortingDict);
+        while (await cursor.hasNext()) {
+            yield (await cursor.next()) as BlogEntry;
         }
     }
 
-    async loadItem(itemId : string) : Promise<BlogEntry> {
-        let itemMeta = this.itemMap[itemId];
-        if (!itemMeta) {
+    loadItems() {
+        return this._loadItemsBase({id: 1});
+    }
+
+    loadItemsReverse() {
+        return this._loadItemsBase({id: -1});
+    }
+
+    async loadItem(itemId : string) : Promise<BlogEntryFull> {
+        let connection = await connect();
+        let collection = connection.collection('blog');
+        let item = await collection.findOne({ id: itemId });
+        
+        if (!item) {
             return null;
         }
         
-        let brief = itemMeta.entry;
+        let brief = item as BlogEntry;
         let result =  { ...brief, content: '' }
 
         try {
-            let contentPath = path.join(itemMeta.path, "content.md");
+            let contentPath = path.join(this.rootDir, brief.localId, "content.md");
             let fileData = await fs.readFile(contentPath, "utf8");
             result.content = md.render(fileData);
         } catch (err) { 
@@ -47,13 +57,17 @@ export class BlogEngine implements PortfolioItemEngine {
         return result;
     }
 
-    getAsset(itemId : string, relativeUrl : string) {
-        let item = this.itemMap[itemId];
+    async getAsset(itemId : string, relativeUrl : string) {
+        let connection = await connect();
+        let collection = connection.collection('blog');
+        let item = await collection.findOne({ id: itemId });
+        
         if (!item) {
             return null;
         }
 
-        let basePath = path.join(item.path, 'assets/');
+
+        let basePath = path.join(this.rootDir, item.localId, 'assets/');
         
         return { 
             itemRoot : path.resolve(basePath),
@@ -61,10 +75,10 @@ export class BlogEngine implements PortfolioItemEngine {
         };
     }
 
-    async load(rootDir : string) {
-        this.rootDir = rootDir;
-        this.itemMap = {};
-
+    /**
+     * Inner function to read blog folders asynchronously
+     */
+    async *_readFolders() : AsyncIterableIterator<BlogEntry> {
         let folders = await fs.readdir(this.rootDir);
         for (let name of folders) {
             let itemPath = path.join(this.rootDir, name);
@@ -81,16 +95,33 @@ export class BlogEngine implements PortfolioItemEngine {
             } catch(err) {}
 
             let id = getIntIdFromSlug(name);
-            this.itemMap[id] = {
-                path: itemPath,
-                entry: {
-                    id: id.toString(),
-                    title: meta.title,
-                    published: new Date(meta.published),
-                    content: brief
-                }
+            yield {
+                localId: name,
+                id: id.toString(),
+                title: meta.title,
+                published: new Date(meta.published),
+                brief: brief
             };
             console.log(`Imported blog entry ${id} ${name}`);
         }
+    }
+
+    async build() {
+        let connection = await connect();
+        try {
+            await connection.dropCollection('blog');
+        } catch (err) {
+            // NamepaceNotFound
+            if (err.code != 26) throw err;
+        }
+
+        let collection = connection.collection('blog');
+
+        let reader = this._readFolders();
+        let promises : Promise<any>[] = [];
+        for await (let entry of reader) {
+            promises.push(collection.insertOne(entry));
+        }
+        await promises;
     }
 }

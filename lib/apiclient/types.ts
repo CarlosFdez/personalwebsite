@@ -1,22 +1,26 @@
-export interface BlogEntryBase {
-    id : string;
-    title: string;
-    published: Date;
-}
 
 /**
- * Represents a blog post summary
+ * Represents a blog post summary. This is what is stored in the database
  */
-export interface BlogEntryBrief extends BlogEntryBase {
-    content: string;
+export interface BlogEntry {
+    /**
+     * id for the blog entry in the file system. This is the folder name
+     */
+    localId: string;
+
+    id : string;
+
+    title: string;
+    published: Date;
+    brief: string;
 }
 
 /**
  * Represents a fully loaded blog entry
  */
-export interface BlogEntry extends BlogEntryBase {
+export interface BlogEntryFull extends BlogEntry {
     /**
-     * Contains the data for the blog entry 
+     * Contains the data for the blog entry if fully loaded
      */
     content: string;
 }

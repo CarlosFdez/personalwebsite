@@ -16,13 +16,20 @@ export function getPortfolio(dataDirectory : string) {
 }
 
 
+
 export class Portfolio {
-    blog = new BlogEngine();
+    blog: BlogEngine;
 
-    constructor(public rootDirectory : string) {}
+    constructor(public rootDirectory : string) {
+        this.blog = new BlogEngine(path.join(rootDirectory, "blog"));
+    }
 
-    async loadAll() {
-        let engineRoot = path.join(this.rootDirectory, "blog");
-        await this.blog.load(engineRoot);
+    /**
+     * Builds the portfolio by indexing everything
+     */
+    async build() {
+        console.log("Building blog ...")
+        await this.blog.build();
+        console.log("✔️ Blog built ");
     }
 }

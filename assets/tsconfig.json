@@ -1,17 +1,10 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es2016",
+    "target": "es5",
     "lib": [
       "es2015",
-      "es2016",
-      "es2017",
-      "esnext",
-      "esnext.asynciterable",
       "dom"
-    ],
-    "types": [
-      "isomorphic-fetch"
     ],
     "module": "commonjs",
     "sourceMap": true,
@@ -19,9 +12,5 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "experimentalDecorators": true
-  },
-  "include": [
-    "server/**/*",
-    "lib/**/*"
-  ]
+  }
 }

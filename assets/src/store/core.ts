@@ -29,7 +29,7 @@ export class AppState {
 
     article = new Loadable<api.BlogEntry>(null)
     
-    articleList = new Loadable<api.BlogEntryBrief[]>([])
+    articleList = new Loadable<api.BlogEntry[]>([])
 }
 
 /**

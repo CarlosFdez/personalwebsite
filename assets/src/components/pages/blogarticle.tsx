@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect, Dispatch } from 'react-redux'
 import { RouteComponentProps} from 'react-router';
 
-import { BlogEntry } from '../../../../lib/apiclient'
+import { BlogEntryFull } from '../../../../lib/apiclient'
 import { getIdFromSlug } from '../../../../lib/slug'
 import { AppState, Loadable } from '../../store';
 
@@ -24,7 +24,7 @@ const BlogArticle = (props) => (
 )
 
 interface BlogArticlePageProps extends RouteComponentProps<any> {
-    article: Loadable<BlogEntry>,
+    article: Loadable<BlogEntryFull>,
     dispatch: Dispatch<any>
 }
 

@@ -1,11 +1,10 @@
-import "isomorphic-fetch";
+import * as fetch from "isomorphic-fetch";
 
 import * as types from './types';
 
 export class HttpError extends Error {
     constructor(message : string, public statusCode : number) {
         super(message)
-        Error.captureStackTrace(this, HttpError);
     }
 }
 
@@ -38,7 +37,7 @@ export class ApiClient {
         return await res.json();
     }
 
-    async getBlogBriefs() : Promise<types.BlogEntryBrief[]> {
+    async getBlogBriefs() : Promise<types.BlogEntry[]> {
         let res = await this.fetchJson("/api/blog/");
         return res.items;
     }

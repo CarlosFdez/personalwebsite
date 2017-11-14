@@ -9,22 +9,22 @@ export class PortfolioAsset {
     relativePath : string;
 }
 
-export interface PortfolioItemEngine {
-    load(rootDir : string) : Promise<void>;
-
+export interface PortfolioItemEngine<T, J=T> {
     /**
      * Loads the full list of portfolio items.
      * These portfolio items may not contain full information.
-     * 
      */
-    loadItems() : IterableIterator<any>;
+    loadItems() : AsyncIterableIterator<T>;
+    
+    /**
+     * Loads the full list of portfolio items.
+     * These portfolio items may not contain full information.
+     */
+    loadItemsReverse() : AsyncIterableIterator<T>;
 
     /**
      * Loads a portfolio object that can be sent to the front end.
      * This is a complete load, showing full detail.
      */
-    loadItem(itemId: string) : Promise<any>;
-
-    getAsset(itemId : string, relativeUrl : string) : PortfolioAsset;
+    loadItem(itemId: string) : Promise<J>;
 }
-

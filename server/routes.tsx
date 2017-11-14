@@ -33,13 +33,23 @@ function wrapAsync(fn: AsyncRequestHandler) : express.RequestHandler {
     }
 }
 
+/** Consumes an async iterator into memory */
+async function asyncToList<T>(iter : AsyncIterableIterator<T>) : Promise<T[]> {
+    let results = [];
+    for await (var item of iter) {
+        results.push(item);
+    }
+    return results;
+}
+
 
 export function registerApiRoutes(app : express.Application, portfolio : Portfolio) {
 
     app.get('/api/blog/', wrapAsync(async (req, res) => {
         var system = portfolio.blog;
-        var items = system.loadItems();
-        var data = { items: Array.from(items).reverse() };
+        var items = await asyncToList(system.loadItemsReverse());
+        
+        var data = { items: items };
         res.json(data);
     }));
 
@@ -103,6 +113,10 @@ export function registerRoutes(app : express.Application, portfolio, api: ApiCli
     app.get("/", (req, res) => {
         serverRender(req, res);
     })
+
+    app.get("/rss.xml", (req, res) => {
+        res.send("oops, not quite working yet");
+    });
 
     app.get("/blog", wrapAsync(async (req, res) => {
         var items = await api.getBlogBriefs();

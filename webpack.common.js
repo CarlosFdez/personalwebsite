@@ -1,6 +1,7 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var webpack = require('webpack');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
+// note: webpack is using the tsconfig in assets/tsconfig.json
 
 module.exports = {
     entry: {
@@ -48,9 +49,5 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin("app.css"),
         new UglifyJSPlugin({ sourceMap: true })
-    ],
-
-
-    // in production, use just "source-map"
-    devtool: "source-map"
+    ]
 }

@@ -86,6 +86,7 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps> {
                         &copy; 2017 Carlos Fernandez
 
                         <aside>
+                            <a href="/rss.xml"><span className="fa fa-rss" aria-hidden="true"/></a>
                             <a href="https://github.com/CarlosFdez"><span className="fa fa-github" aria-hidden="true"></span></a>
                             <a href="https://twitter.com/MeSoSupe"><span className="fa fa-twitter" aria-hidden="true"></span></a>
                             <a href="https://www.youtube.com/channel/UCNxCpInDAfcdp-PHZO4PtOA"><span className="fa fa-youtube-play" aria-hidden="true"></span></a>
