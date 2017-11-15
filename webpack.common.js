@@ -1,5 +1,7 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var webpack = require('webpack');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 // note: webpack is using the tsconfig in assets/tsconfig.json
 
@@ -8,7 +10,7 @@ module.exports = {
         app: './assets/src/client.tsx'
     },
     output: {
-        filename: '[name].js',
+        filename: '[name].js?[chunkhash]',
         path: __dirname + '/assets/build/'    
     },
 
@@ -47,7 +49,8 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("app.css"),
-        new UglifyJSPlugin({ sourceMap: true })
+        new ExtractTextPlugin("app.css?[chunkhash]"),
+        new UglifyJSPlugin({ sourceMap: true }),
+        new ManifestPlugin({ fileName: '../webpack-manifest.json' })
     ]
 }

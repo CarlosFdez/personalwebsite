@@ -1,17 +1,10 @@
 import * as express from 'express';
-import * as React from 'react';
-import { renderToString } from 'react-dom/server'
-import { StaticRouter } from 'react-router'
-
-import { createStore } from "redux";
-import { Provider } from 'react-redux'
-import { AppState, reducer, initialState } from "../assets/src/store";
-
 
 import { Portfolio } from './portfolio'
 import { ApiClient, HttpError } from '../lib/apiclient';
-import { PortfolioSite } from '../assets/src/components'
 import { loaded } from '../assets/src/store';
+
+import { serverRender, clientRender } from './render'
 
 // two functions are available: registerApiRoutes and registerRoutes
 
@@ -78,37 +71,6 @@ export function registerApiRoutes(app : express.Application, portfolio : Portfol
 }
 
 export function registerRoutes(app : express.Application, portfolio, api: ApiClient) {
-
-    /**
-     * Performs a server side rendering on the base page
-     * @param req 
-     * @param res 
-     */
-    function serverRender(req, res, data? : Partial<AppState>) {
-        var ctx = data || {};
-
-        let state : AppState = {...initialState, ...data};
-        let store = createStore<AppState>(reducer, state);
-        
-        const html = renderToString(
-            <Provider store={store}>
-                <StaticRouter location={req.url} context={ctx}>
-                    <PortfolioSite/>
-                </StaticRouter>
-            </Provider>);
-
-        res.render('base.html', { 
-            renderedHtml: html, 
-            initialState: store.getState() 
-        });
-    }
-
-    /** 
-     * Performs a client side render. Basically just exports the raw template.
-     * */
-    function clientRender(req : express.Request, res : express.Response) {
-        res.render("base.html");
-    }
 
     app.get("/", (req, res) => {
         serverRender(req, res);

@@ -2,8 +2,7 @@
 log
 node_modules/
 package-lock.json
-build/
 
-__pycache__
-*.pyc
-venv/
+# project specific
+assets/build/
+webpack-manifest.json

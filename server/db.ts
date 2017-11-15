@@ -14,6 +14,7 @@ let connectionPool : Promise<void | Db> = MongoClient.connect(url).catch(err => 
 export async function connect() : Promise<Db> {
     let connection: void | Db = await connectionPool;
     if (!connection) {
+        // todo: try reconnecting if this happens
         // todo: research is this the reason why void is a valid result?
         throw new Error("connection closed");
     }
