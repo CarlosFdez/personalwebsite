@@ -1,112 +1,56 @@
 import * as express from 'express';
 
-import { Portfolio } from './portfolio'
 import { ApiClient, HttpError } from '../lib/apiclient';
 import { loaded } from '../assets/src/store';
 
 import { serverRender, clientRender } from './render'
 
-// two functions are available: registerApiRoutes and registerRoutes
+import { AsyncRouter } from './lib/asyncrouter'
+import { slugRouteRule } from './lib/index'
 
-/** Creates an express rule to match :idName-rest-of-url */
-let slugRouteRule = (idName) => `:${idName}(\\d+)(-[-0-9A-Za-z]+)?`;
+import * as env from './environment';
 
-interface AsyncRequestHandler extends express.RequestHandler {
-    (req: express.Request, res : express.Response, next: express.NextFunction): Promise<any>;
-}
+let router = AsyncRouter();
 
-/**
- * Wraps an asynchronous request handler, transforming it to a synchronous one.
- * This catches uncaught errors from the async one and calls next(err)
- */
-function wrapAsync(fn: AsyncRequestHandler) : express.RequestHandler {
-    return (req, res, next) => {
-        let promise = fn(req, res, next);
-        promise.catch((err) => next(err));
-    }
-}
+const api = new ApiClient(`http://127.0.0.1:${env.settings.port}`);
 
-/** Consumes an async iterator into memory */
-async function asyncToList<T>(iter : AsyncIterableIterator<T>) : Promise<T[]> {
-    let results = [];
-    for await (var item of iter) {
-        results.push(item);
-    }
-    return results;
-}
+router.get("/", (req, res) => {
+    serverRender(req, res);
+})
+
+router.get("/rss.xml", (req, res) => {
+    res.send("oops, not quite working yet");
+});
+
+router.getAsync("/blog", async (req, res) => {
+    var items = await api.getBlogBriefs();
+    serverRender(req, res, { articleList: loaded(items) });
+});
+
+// matches slug strings. 25-I-dont-care will match 25 as the id
+router.getAsync(`/blog/${slugRouteRule('article_id')}`, async (req, res) => {
+    let id = req.params.article_id;
+    var data = await api.getBlogArticle(id);
+    serverRender(req, res, { article: loaded(data) });
+});
+
+// fallback global rendering.
+// This is most likely a 404, so we still use server side rendering
+router.use((req, res) => {
+    // todo: this is triggering on lookups for favicon.png
+    // rethink this? 
+    serverRender(req, res);
+});
+
+// Register the global error handler at the end after all the routes
+router.use((err, req, res, next) => {
+    // todo: if err.statusCode is 403 or something else, do that instead
+    console.error(err.stack);
+    res.status(500);
+
+    let error = new HttpError("Something broke", 500);
+    serverRender(req, res, { error: error});
+});
 
 
-export function registerApiRoutes(app : express.Application, portfolio : Portfolio) {
-
-    app.get('/api/blog/', wrapAsync(async (req, res) => {
-        var system = portfolio.blog;
-        var items = await asyncToList(system.loadItemsReverse());
-        
-        var data = { items: items };
-        res.json(data);
-    }));
-
-    app.get(`/api/blog/${slugRouteRule('id')}`, wrapAsync(async (req, res) => {
-        var system = portfolio.blog;
-        var itemData = await system.loadItem(req.params.id);
-        if (itemData == null) {
-            res.sendStatus(404);
-            return;
-        }
-        
-        res.json({ item: itemData });
-    }));
-
-    // api fallthrough. Show 404
-    app.get('/api/*', (req, res) => {
-        res.sendStatus(404);
-    });
-
-    // Register the api global error handler at the end after all the routes
-    app.use("/api/", function (err, req, res, next) {
-        // todo: if err.statusCode is 403 or something else, do that instead
-        console.error(err.stack);
-        res.status(500).send('Something broke!');
-    });
-}
-
-export function registerRoutes(app : express.Application, portfolio, api: ApiClient) {
-
-    app.get("/", (req, res) => {
-        serverRender(req, res);
-    })
-
-    app.get("/rss.xml", (req, res) => {
-        res.send("oops, not quite working yet");
-    });
-
-    app.get("/blog", wrapAsync(async (req, res) => {
-        var items = await api.getBlogBriefs();
-        serverRender(req, res, { articleList: loaded(items) });
-    }));
-
-    // matches slug strings. 25-I-dont-care will match 25 as the id
-    app.get(`/blog/${slugRouteRule('article_id')}`, wrapAsync(async (req, res) => {
-       let id = req.params.article_id;
-       var data = await api.getBlogArticle(id);
-       serverRender(req, res, { article: loaded(data) });
-    }));
-
-    // fallback global rendering.
-    // This is most likely a 404, so we still use server side rendering
-    app.use((req, res) => {
-        // todo: this is triggering on lookups for favicon.png
-        // rethink this? 
-        serverRender(req, res);
-    });
-
-    // Register the global error handler at the end after all the routes
-    app.use(function (err, req, res, next) {
-        // todo: if err.statusCode is 403 or something else, do that instead
-        console.error(err.stack);
-        res.status(500);
-
-        let error = new HttpError("Something broke", 500);
-        serverRender(req, res, { error: error});
-    });
-}
+export default router;

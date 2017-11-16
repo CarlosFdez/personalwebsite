@@ -7,7 +7,7 @@ import { PortfolioItemEngine } from './core';
 import { BlogEntry, BlogEntryFull } from '../../lib/apiclient';
 import { getIntIdFromSlug } from '../../lib/slug'
 
-import { connect } from '../db'
+import { connect } from '../lib/db'
 
 var md = new Remarkable();
 

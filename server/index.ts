@@ -4,28 +4,22 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { promisify } from 'util';
 
-import { getPortfolio } from './portfolio';
-import { registerApiRoutes, registerRoutes } from './routes'
+import routes from './routes'
+import apiroutes from './apiroutes';
 
 import { ApiClient } from '../lib/apiclient';
 
 import * as render from './render'
 
+import * as env from './environment'
+
 // shim to allow async iterators to work on the server
 (<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
 
 
-const isProduction = process.env.NODE_ENV == "production";
-console.log(`Running in ${(isProduction) ? 'production' : 'development'} mode`);
-
-let port = parseInt(process.env.PORT || process.argv[2]) || 5000;
-
-const portfolioEnv = (isProduction) ? 'prod' : 'dev'
-const portfolioLocation = path.join(__dirname, '../portfolio_data/', portfolioEnv);
+console.log(`Running in ${(env.settings.mode)} mode`);
 
 const app = express();
-const portfolio = getPortfolio(portfolioLocation);
-const apiClient = new ApiClient(`http://127.0.0.1:${port}`);
 
 const assetRoot = path.join(__dirname, '../assets/');
 const staticLocation = path.join(assetRoot, 'static/');
@@ -41,8 +35,8 @@ nunjucks.configure(path.join(__dirname, 'templates'), {
 });
 
 // register the routes listed in the routes file
-registerApiRoutes(app, portfolio);
-registerRoutes(app, portfolio, apiClient);
+app.use(apiroutes);
+app.use(routes);
 
 async function startServer(port : number) {
     console.log('Remember to rebuild the portfolio after every portfolio change');
@@ -52,4 +46,4 @@ async function startServer(port : number) {
     });
 }
 
-startServer(port);
+startServer(env.settings.port);

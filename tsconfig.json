@@ -11,7 +11,8 @@
       "dom"
     ],
     "types": [
-      "isomorphic-fetch"
+      "isomorphic-fetch",
+      "node"
     ],
     "module": "commonjs",
     "sourceMap": true,
