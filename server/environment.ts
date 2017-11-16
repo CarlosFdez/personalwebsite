@@ -10,7 +10,10 @@ export enum Mode {
 export const settings = {
     // process settings
     mode: (process.env.NODE_ENV == "production") ? Mode.Production : Mode.Development,
-    port: parseInt(process.env.PORT || process.argv[2]) || 5000
+    port: parseInt(process.env.PORT || process.argv[2]) || 5000,
 
-
+    /**
+     * Main url of the website. Used in certain areas like rss building
+     */
+    webroot: 'http://supetroupe.com'
 }

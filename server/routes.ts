@@ -1,4 +1,6 @@
+import * as path from 'path';
 import * as express from 'express';
+import * as fs from 'fs-extra';
 
 import { ApiClient, HttpError } from '../lib/apiclient';
 import { loaded } from '../assets/src/store';
@@ -18,8 +20,11 @@ router.get("/", (req, res) => {
     serverRender(req, res);
 })
 
-router.get("/rss.xml", (req, res) => {
-    res.send("oops, not quite working yet");
+router.getAsync("/rss.xml", async (req, res) => {
+    let rssPath = path.join(__dirname, '../assets/rss.xml');
+    let data = await fs.readFile(rssPath, 'utf8');
+    res.set('Content-Type', 'text/xml');
+    res.send(data);
 });
 
 router.getAsync("/blog", async (req, res) => {
