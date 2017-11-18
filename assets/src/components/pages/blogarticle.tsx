@@ -2,6 +2,8 @@ import * as React from "react";
 import { connect, Dispatch } from 'react-redux'
 import { RouteComponentProps} from 'react-router';
 
+import { DateLine } from '../common';
+
 import { BlogEntryFull } from '../../../../lib/apiclient'
 import { getIdFromSlug } from '../../../../lib/slug'
 import { AppState, Loadable } from '../../store';
@@ -13,10 +15,7 @@ const BlogArticle = (props) => (
         <div className="article">
             <header>
                 <h1 className="title">{ props.title }</h1>
-                <div className="date">
-                    <i className="fa fa-calendar" aria-hidden="true"></i>
-                    { props.published }
-                </div>
+                <DateLine date={ props.published }/>
             </header>
             <div dangerouslySetInnerHTML={{__html: props.content}}/>
         </div>

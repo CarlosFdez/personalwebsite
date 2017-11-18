@@ -1,7 +1,8 @@
 // header/footer color and any key interactables if any
 $key-color: hsl(230,20%,30%);
 $key-border-color: hsl(230,20%,25%);
-$key-selected-color: black; // change later
+$key-selected-color: hsl(238, 13%, 47%); // change later
+$key-hover-color: hsl(239, 19%, 54%);
 
 $body-color: hsl(70,10%,98%);
 $body-off-color: hsl(70,5%,93%);

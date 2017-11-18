@@ -1,12 +1,28 @@
 import * as React from "react";
 
+const SocialMediaButton = (props) => {
+    let icon = props.name.toLowerCase()
+    if (icon == "youtube") {
+        icon = "youtube-play";
+    }
+
+    return (
+        <a href={props.href} className="social-media-button">
+            <span className={`fa fa-${icon}`} aria-hidden="true"></span> {props.name}
+        </a>
+    )    
+}
+
 const Project = (props) => (
-    <li>
-        <a className="project-title" href={props.href}>{props.name}</a>
+    <a className="project" href={props.href}>
+        <span className="project-title">
+            {props.name}
+            <span className="href">{props.href}</span>
+        </span>
         <p>
             {props.children}
         </p>
-    </li>
+    </a>
 )
 
 export const HomePage = () => (
@@ -22,9 +38,9 @@ export const HomePage = () => (
                     I learned to program in highschool in 2004, and earned a bachelor's degree in Computer Science in 2013.
                 </p>
                 <div className="social-media-links">
-                    <a href="https://github.com/CarlosFdez"><span className="fa fa-github" aria-hidden="true"></span> Github</a>
-                    <a href="https://twitter.com/MeSoSupe"><span className="fa fa-twitter" aria-hidden="true"></span> Twitter</a>
-                    <a href="https://www.youtube.com/channel/UCNxCpInDAfcdp-PHZO4PtOA"><span className="fa fa-youtube-play" aria-hidden="true"></span> Youtube</a>
+                    <SocialMediaButton name="Github" href="https://github.com/CarlosFdez"/>
+                    <SocialMediaButton name="Twitter" href="https://twitter.com/MeSoSupe"/>
+                    <SocialMediaButton name="Youtube" href="https://www.youtube.com/channel/UCNxCpInDAfcdp-PHZO4PtOA"/>
                 </div>
                 <p>
                     You can contact me at <a href="mailto:me@supetroupe.com">me@supetroupe.com</a>.
@@ -36,9 +52,9 @@ export const HomePage = () => (
             <div className="content">
                 <h2>Personal Programming Projects</h2>
                 <p>
-                    These are a few of the projects I've created.
+                    These are a few of the projects I've created. Click any to view it.
                 </p>
-                <ul className="project-list">
+                <div className="project-list">
                     <Project name="VideoCrop" href="https://carlosfdez.github.io/videocrop/">
                         A graphical tool I created to assist with my video editing hobby.
                         Used to preview footage and cut on keyframes to avoid losing quality due to generational loss.
@@ -54,16 +70,16 @@ export const HomePage = () => (
                         A node library used to create chatbots for Twitch.
                         Wraps the existing <a href="https://docs.tmijs.org/">tmi.js</a> library to add command parsing.
                     </Project>
-                </ul>
+                </div>
             </div>
         </section>
         <section>
             <div className="content">
                 <h2>Programming Contributions</h2>
                 <p>
-                    These are a few of the projects I've contributed to.
+                    These are a few of the projects I've contributed to. Click any to view it.
                 </p>
-                <ul className="project-list">
+                <div className="project-list">
                     <Project name="MonsterHunter4UDatabase" href="https://github.com/kamegami13/MonsterHunter4UDatabase">
                         Added a universal search to an existing Android application written in Java that provides data about
                         the game <em>Monster Hunter 4 Ultimate</em>. Also contributed a few other bug fixes and tweaks.
@@ -71,10 +87,9 @@ export const HomePage = () => (
                     <Project name="PokeBattle Sim" href="https://github.com/sarenji/pokebattle-sim">
                         Participated in the development of a Pokemon battle system simulator for quick online matches and teambuilding.
                         The simulator was written in <em>CoffeeScript</em>, ran on <em>NodeJS</em>, and used <em>Backbone</em> for the front end.
-                        The biggest single project I did was a teambuilder written in an MVC style using Backbone.
                         The project was dropped due to growing responsibilities and competition from <a href="http://pokemonshowdown.com/">Pokemon Showdown</a>.
                     </Project>
-                </ul>
+                </div>
             </div>
         </section>
 
@@ -88,12 +103,6 @@ export const HomePage = () => (
                     The backend acts as a render server to support server side rendering.
                     <a href="https://code.visualstudio.com/">Visual Studio Code</a> text editor.
                     It is hosted using nginx on an Ubuntu instance in <a href="https://www.digitalocean.com/">Digital Ocean</a>.
-                </p>
-                <p>
-                    This website's <a href="assets/js/main.js" target="_blank">javascript</a> was written from scratch
-                    to demonstrate that I know how to work with the DOM.
-                    However, if the scope of this portfolio grows I may end up using one in the future.
-                    If I do, I'll use either JQuery or React.
                 </p>
                 <p>
                     The social network icons belong to <a href="http://fontawesome.io/">Font Awesome</a>.

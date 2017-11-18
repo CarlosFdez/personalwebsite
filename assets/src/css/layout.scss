@@ -22,14 +22,11 @@ main {
 }
 
 // Structure for the header and the header gap
+// This is so that the header and gap match in size
 .main-header, .header-gap {
     font-size: 1.75em;
     line-height: 1.5em;
     padding: 0.5em 0;
-}
-
-.header-gap {
-    display: none; // only visible if scrolling is enabled
 }
 
 .main-header {
@@ -52,19 +49,28 @@ main {
     a {
         display: inline-block;
         padding: 0 7px;
+        margin-left: 5px;
         text-decoration: none;
+
+        transition: background-color 0.2s ease-in-out;
 
         &:hover {
             text-decoration: none;
+            background-color: $key-hover-color;
         }
-    }
 
-    a.selected {
-        background-color: $key-selected-color;
+        &.selected {
+            background-color: $key-selected-color;
+            border-radius: 3px;
+        }
     }
 }
 
-/* implement moving header on sufficiently large browsers */
+.header-gap {
+    display: none; // only visible if scrolling header is enabled
+}
+
+/* enable scrolling header on sufficiently large browsers */
 @media screen and (min-width: $desktop-cutoff) {
     .main-header {
         position: fixed;
@@ -78,10 +84,11 @@ main {
     }
 
     .header-gap {
-        display: initial;
+        // unhide the gap (make it visible)
+        display: block;
 
         &::before {
-            // non breaking spaces
+            // non breaking spaces to add content to the gap
             content: "\00a0\00a0";
         }
     }
@@ -97,8 +104,16 @@ main {
 
     a {
         display: inline-block;
+        line-height: 1em;
         color: #eee;
-        margin-left: 10px;
+        margin-left: 5px;
+        padding: 5px;
+        border-radius: 3px;
+
+        &:hover {
+            text-decoration: none;
+            background-color: $key-selected-color;
+        }
     }
 
     aside {

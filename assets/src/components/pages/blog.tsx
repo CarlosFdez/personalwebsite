@@ -2,6 +2,8 @@ import * as React from "react";
 import { connect, Dispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 
+import { DateLine } from '../common'
+
 import { BlogEntry } from '../../../../lib/apiclient'
 import { AppState, Loadable } from '../../store';
 import { fetchBlogBriefs } from '../../store/actions'
@@ -11,10 +13,8 @@ import { createSlug } from '../../../../lib/slug'
 const BlogBrief = (props : BlogEntry) => (
     <Link className="article-brief" to={"/blog/"+createSlug(props.id, props.title)}>
         <h2 className="title">{props.title}</h2>
-        <div className="date">
-            <i className="fa fa-calendar" aria-hidden="true"></i>
-            { new Date(props.published).toDateString() }
-        </div>
+        
+        <DateLine date={ new Date(props.published) }/>
         <div className="brief">
             { props.brief }
         </div>

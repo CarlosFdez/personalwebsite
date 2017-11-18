@@ -20,6 +20,7 @@
 .article-brief {
     display: block;
     text-decoration: none!important;
+    background-color: $body-off-color;
 
     padding: 1em $side-buffer;
     margin-top: 1em;
@@ -28,14 +29,15 @@
     border-radius: 3px;
 
     position: relative;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.08s ease-in-out;
     
     &:hover, &:focus {
         cursor: pointer;
-        background-color: $body-off-color;
+        background-color: $key-color;
+        color: white;
 
-        .title {
-            text-decoration: underline;
+        .date {
+            color: white;
         }
     }
 
@@ -46,6 +48,17 @@
     .brief {
         margin-top: 0.75em;
         line-height: 1.5em;
+    }
+}
+
+// allow article hover animation on desktop mode
+@media screen and (min-width: $desktop-large-cutoff) {
+    .article-brief {
+        left: 0; // allow transition to work
+        &:hover, &:focus {
+            // note: left: causes a stuttering bug on mouse hover right side
+            left: -$side-buffer;
+        }
     }
 }
 
@@ -61,15 +74,5 @@
 
     header h1 {
         margin: 0;
-    }
-}
-
-// allow article hover animation on desktop mode
-@media screen and (min-width: $desktop-large-cutoff) {
-    .article-brief {
-        left: 0; // allow transition to work
-        &:hover, &:focus {
-            left: -$side-buffer;
-        }
     }
 }

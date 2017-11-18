@@ -1,0 +1,84 @@
+@import '_variables';
+
+.about-page .project {
+    display: block;
+    transition: 0.1s all ease-out;
+
+    .project-title {
+        text-decoration: underline;
+        line-height: 1.5em;
+
+        overflow-x: hidden;
+        white-space: nowrap;
+    }
+    
+    .href {
+        display: inline-block;
+        padding: 0 4px;
+        text-decoration: none;
+        font-size: 0.8em;
+        line-height: 1.5em;
+        background-color: $key-selected-color;
+        color: white;
+
+        opacity: 0;
+        margin-left: 0px; // animates
+        
+        // this is the fade out transition. This one is fast
+        transition: 0.05s all ease-in;
+    }
+
+    &:hover {
+        text-decoration: none;
+
+        // get rid of behavior below to remove the highlight effect
+        background-color: $key-color;
+        color: white;
+        margin: -$side-buffer;
+        padding: $side-buffer;
+        padding-bottom: 0;
+        margin-bottom: 0;
+
+        a {
+            color: $body-off-color;
+        }
+
+        .href {
+            opacity: 1;
+            margin-left: 10px;
+
+            // this is the fade in transition. This one is slow
+            transition: 0.3s all ease-out;
+        }
+    }
+}
+
+.social-media-links .social-media-button {
+    margin-right: 8px;
+}
+
+.social-media-button {
+    display: inline-block;
+    line-height: 2em;
+    height: 2em;
+    margin-top: -0.25em;
+    margin-bottom: 1.25em;
+
+    padding: 0 8px;
+    color: black;
+    background-color: #ecedea;
+
+    .fa {
+        color: black;
+        margin-right: 2px;
+    }
+
+    &:hover {
+        text-decoration: none;
+        color: #eee;
+        background-color: #444;
+        .fa {
+            color: #eee;
+        }
+    }
+}

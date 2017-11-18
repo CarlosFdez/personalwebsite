@@ -37,28 +37,31 @@ function getAsset(filename : string) {
  * @param res 
  */
 export function serverRender(req, res, data? : Partial<AppState>) {
-    var ctx = data || {};
+    clientRender(req, res);
+    return;
 
-    let state : AppState = {...initialState, ...data};
-    let store = createStore<AppState>(reducer, state);
+    // var ctx = data || {};
+
+    // let state : AppState = {...initialState, ...data};
+    // let store = createStore<AppState>(reducer, state);
     
-    const html = renderToString(
-        <Provider store={store}>
-            <StaticRouter location={req.url} context={ctx}>
-                <PortfolioSite/>
-            </StaticRouter>
-        </Provider>);
+    // const html = renderToString(
+    //     <Provider store={store}>
+    //         <StaticRouter location={req.url} context={ctx}>
+    //             <PortfolioSite/>
+    //         </StaticRouter>
+    //     </Provider>);
 
-    res.render('base.html', { 
-        renderedHtml: html, 
-        initialState: store.getState(),
-        getAsset: getAsset
-    });
+    // res.render('base.html', { 
+    //     renderedHtml: html, 
+    //     initialState: store.getState(),
+    //     getAsset: getAsset
+    // });
 }
 
 /** 
  * Performs a client side render. Basically just exports the raw template.
  * */
 export function clientRender(req : express.Request, res : express.Response) {
-    res.render("base.html");
+    res.render("base.html", { getAsset });
 }
