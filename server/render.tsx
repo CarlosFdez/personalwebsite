@@ -37,26 +37,23 @@ function getAsset(filename : string) {
  * @param res 
  */
 export function serverRender(req, res, data? : Partial<AppState>) {
-    clientRender(req, res);
-    return;
+    var ctx = data || {};
 
-    // var ctx = data || {};
-
-    // let state : AppState = {...initialState, ...data};
-    // let store = createStore<AppState>(reducer, state);
+    let state : AppState = {...initialState, ...data};
+    let store = createStore<AppState>(reducer, state);
     
-    // const html = renderToString(
-    //     <Provider store={store}>
-    //         <StaticRouter location={req.url} context={ctx}>
-    //             <PortfolioSite/>
-    //         </StaticRouter>
-    //     </Provider>);
+    const html = renderToString(
+        <Provider store={store}>
+            <StaticRouter location={req.url} context={ctx}>
+                <PortfolioSite/>
+            </StaticRouter>
+        </Provider>);
 
-    // res.render('base.html', { 
-    //     renderedHtml: html, 
-    //     initialState: store.getState(),
-    //     getAsset: getAsset
-    // });
+    res.render('base.html', { 
+        renderedHtml: html, 
+        initialState: store.getState(),
+        getAsset: getAsset
+    });
 }
 
 /** 
