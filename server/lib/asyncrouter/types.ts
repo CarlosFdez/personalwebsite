@@ -12,14 +12,14 @@ import { PathParams } from 'express-serve-static-core';
 /**
  * Represents an express handler that is asynchronous
  */
-export interface AsyncRequestHandler extends RequestHandler {
-    (req: Request, res : Response, next?: NextFunction): Promise<any>;
+export interface AsyncRequestHandler {
+    (req: Request, res : Response, next: NextFunction): Promise<any>;
 }
 
 /**
  * Represents an express error handler that is asynchronous
  */
-export interface AsyncErrorRequestHandler extends ErrorRequestHandler {
+export interface AsyncErrorRequestHandler {
     (err: any, req: Request, res : Response, next: NextFunction): Promise<any>;
 }
 
@@ -27,7 +27,9 @@ export interface AsyncErrorRequestHandler extends ErrorRequestHandler {
 export type AsyncAnyHandler = AsyncRequestHandler | AsyncErrorRequestHandler;
 
 export interface AsyncRouter extends Router {
+    getAsync(path : PathParams, ...handlers : AsyncRequestHandler[]);
     getAsync(path : PathParams, ...handlers : AsyncAnyHandler[]);
+
     postAsync(path : PathParams, ...handlers : AsyncAnyHandler[]);
     
     useAsync(...handlers : AsyncAnyHandler[]);

@@ -2,30 +2,23 @@ import * as path from 'path';
 import * as RSS from 'rss';
 import * as fs from 'fs-extra';
 
-import { PortfolioItemEngine, PortfolioAsset } from './core';
+import { PortfolioItemEngine, PortfolioAsset } from './types';
 import { BlogEngine } from './blog';
 import * as env from '../environment';
 
 import { createSlug } from '../../lib/slug'
 
-/**
- * Loads an initializes the portfolio system. 
- * The portfolio system reads data from the given directory and makes it available
- * to the rest of the application.
- * 
- * TODO: Currently it initializes on application start. 
- * Instead it should be able to update the directory without having to restart node.
- */
-export function getPortfolio(dataDirectory : string) {
-    let portfolio = new Portfolio(dataDirectory);
-    return portfolio;
-}
-
-
+export { createAssetRouter } from './assetrouter';
 
 export class Portfolio {
     blog: BlogEngine;
 
+    /**
+     * Initializes the portfolio system.
+     * The portfolio system reads data from the given directory and makes it available
+     * to the rest of the application.
+     * @param dataDirectory 
+     */
     constructor(public rootDirectory : string) {
         this.blog = new BlogEngine(path.join(rootDirectory, "blog"));
     }

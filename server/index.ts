@@ -4,14 +4,16 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { promisify } from 'util';
 
-import routes from './routes'
-import apiroutes from './apiroutes';
+import { Portfolio } from './portfolio';
+import routes from './routes';
+import * as apiroutes from './apiroutes';
 
 import { ApiClient } from '../lib/apiclient';
 
 import * as render from './render'
 
 import * as env from './environment'
+import { createAssetRouter } from './portfolio/assetrouter';
 
 // shim to allow async iterators to work on the server
 (<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
@@ -21,6 +23,7 @@ console.log(`Running in ${(env.settings.mode)} mode`);
 
 const app = express();
 
+// initialize basic routing. Route these with njinx instead for better performance
 const assetRoot = path.join(__dirname, '../assets/');
 const staticLocation = path.join(assetRoot, 'static/');
 const assetsLocation = path.join(assetRoot, 'build/');
@@ -34,8 +37,14 @@ nunjucks.configure(path.join(__dirname, 'templates'), {
     express: app
 });
 
+// initialize portfolio system now before we get to anything else
+const portfolioEnv = env.settings.mode;
+const portfolioLocation = path.join(__dirname, '../portfolio_data/', portfolioEnv);
+let portfolio = new Portfolio(portfolioLocation);
+
 // register the routes listed in the routes file
-app.use(apiroutes);
+app.use(apiroutes.createRoutes(portfolio));
+app.use(createAssetRouter(portfolio));
 app.use(routes);
 
 async function startServer(port : number) {
