@@ -62,13 +62,13 @@ export const HomePage = () => (
                         Written in <em>C++</em> and <em>Qt</em>.
                     </Project>
                     <Project name="SpueBox" href="https://github.com/CarlosFdez/SpueBox">
-                        A custom bot for the <a href="https://discordapp.com/">discord</a> chat client.
+                        A custom bot for the discord chat client.
                         It's used primarily to play audio clips from various online sources (including Youtube) in voice chat rooms.
-                        Written in <em>Python</em> using the <em><a href="https://github.com/Rapptz/discord.py">discord.py</a></em> library.
+                        Written in <em>Python</em> using the <em>discord.py</em> library.
                     </Project>
                     <Project name="tmibot.js" href="https://github.com/CarlosFdez/tmibot.js">
                         A node library used to create chatbots for Twitch.
-                        Wraps the existing <a href="https://docs.tmijs.org/">tmi.js</a> library to add command parsing.
+                        Wraps the existing <em>tmi.js</em> library to add command parsing.
                     </Project>
                 </div>
             </div>
@@ -87,7 +87,7 @@ export const HomePage = () => (
                     <Project name="PokeBattle Sim" href="https://github.com/sarenji/pokebattle-sim">
                         Participated in the development of a Pokemon battle system simulator for quick online matches and teambuilding.
                         The simulator was written in <em>CoffeeScript</em>, ran on <em>NodeJS</em>, and used <em>Backbone</em> for the front end.
-                        The project was dropped due to growing responsibilities and competition from <a href="http://pokemonshowdown.com/">Pokemon Showdown</a>.
+                        The project was dropped due to growing responsibilities and competition from <em>Pokemon Showdown</em>.
                     </Project>
                 </div>
             </div>
