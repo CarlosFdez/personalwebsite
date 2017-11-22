@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as express from 'express';
 import * as fs from 'fs-extra';
 
-import { ApiClient, HttpError } from '../lib/apiclient';
+import { ApiClient, HttpError } from '../apiclient';
 import { loaded } from '../assets/src/store';
 
 import { serverRender, clientRender } from './render'

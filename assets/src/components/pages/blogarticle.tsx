@@ -4,8 +4,8 @@ import { RouteComponentProps} from 'react-router';
 
 import { DateLine } from '../common';
 
-import { BlogEntryFull } from '../../../../lib/apiclient'
-import { getIdFromSlug } from '../../../../lib/slug'
+import { BlogEntryFull } from '../../../../apiclient'
+import { getIdFromSlug } from '../../../../shared/slug'
 import { AppState, Loadable } from '../../store';
 
 import { fetchBlogArticle } from '../../store/actions'

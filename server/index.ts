@@ -8,7 +8,7 @@ import { Portfolio } from './portfolio';
 import routes from './routes';
 import * as apiroutes from './apiroutes';
 
-import { ApiClient } from '../lib/apiclient';
+import { ApiClient } from '../apiclient';
 
 import * as render from './render'
 

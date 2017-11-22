@@ -4,8 +4,8 @@ import markademic from 'markademic';
 import { promisify } from 'util';
 import { PortfolioItemEngine, PortfolioAsset } from './types';
 
-import { BlogEntry, BlogEntryFull } from '../../lib/apiclient';
-import { getIntIdFromSlug } from '../../lib/slug'
+import { BlogEntry, BlogEntryFull } from '../../apiclient';
+import { getIntIdFromSlug } from '../../shared/slug'
 import { connect } from '../lib/db'
 import * as env from '../environment';
 

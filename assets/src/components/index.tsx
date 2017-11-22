@@ -8,7 +8,7 @@ import { HomePage } from './pages/home';
 import { BlogPage } from './pages/blog';
 import { BlogArticlePage } from './pages/blogarticle';
 
-import { HttpError } from '../../../lib/apiclient'
+import { HttpError } from '../../../apiclient'
 
 const PortfolioMain = (props) => {
     let error = props.error;

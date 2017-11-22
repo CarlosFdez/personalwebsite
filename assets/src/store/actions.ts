@@ -1,4 +1,4 @@
-import { ApiClient } from '../../../lib/apiclient'
+import { ApiClient } from '../../../apiclient'
 var api = new ApiClient('/');
 
 export function error(err) {

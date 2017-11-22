@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { DateLine } from '../common'
 
-import { BlogEntry } from '../../../../lib/apiclient'
+import { BlogEntry } from '../../../../apiclient'
 import { AppState, Loadable } from '../../store';
 import { fetchBlogBriefs } from '../../store/actions'
 
-import { createSlug } from '../../../../lib/slug'
+import { createSlug } from '../../../../shared/slug'
 
 const BlogBrief = (props : BlogEntry) => (
     <Link className="article-brief" to={"/blog/"+createSlug(props.id, props.title)}>

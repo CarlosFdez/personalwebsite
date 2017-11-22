@@ -6,7 +6,7 @@ import { PortfolioItemEngine, PortfolioAsset } from './types';
 import { BlogEngine } from './blog';
 import * as env from '../environment';
 
-import { createSlug } from '../../lib/slug'
+import { createSlug } from '../../shared/slug'
 
 export { createAssetRouter } from './assetrouter';
 

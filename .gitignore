@@ -6,3 +6,4 @@ package-lock.json
 # project specific
 assets/build/
 webpack-manifest.json
+rss.xml

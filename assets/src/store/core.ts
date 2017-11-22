@@ -1,7 +1,7 @@
 // core data types defined for store purposes
 // todo: this could maybe use some organizing
 
-import * as api from '../../../lib/apiclient'
+import * as api from '../../../apiclient'
 
 /**
  * Simple object that resolves to "data" and "loaded"
