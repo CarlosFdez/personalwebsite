@@ -41,24 +41,26 @@ main {
 
     // animation for scrolling header
     transition: all 0.2s ease-in-out;
-}
 
-.main-header nav {
-    float: right;
+    .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
-    a {
+    nav a {
         display: inline-block;
         padding: 0 7px;
         margin-left: 5px;
         text-decoration: none;
-
+    
         transition: background-color 0.2s ease-in-out;
-
+    
         &:hover {
             text-decoration: none;
             background-color: $key-hover-color;
         }
-
+    
         &.selected {
             background-color: $key-selected-color;
             border-radius: 3px;
@@ -102,6 +104,12 @@ main {
     font-size: 1em;
     line-height: 3em;
 
+    .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
     a {
         display: inline-block;
         line-height: 1em;
@@ -114,10 +122,6 @@ main {
             text-decoration: none;
             background-color: $key-selected-color;
         }
-    }
-
-    aside {
-        float: right;
     }
 }
 
