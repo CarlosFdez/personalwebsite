@@ -34,7 +34,16 @@ export class BlogArticlePage extends React.Component<BlogArticlePageProps> {
     constructor(props) {
         super(props);
     }
-    async componentDidMount() {
+
+    componentDidMount() {
+        this.tryLoadArticle();
+    }
+
+    componentDidUpdate() {
+        this.tryLoadArticle();
+    }
+
+    tryLoadArticle() {
         if (!this.props.article.loaded) {
             let id = this.props.match.params['id'];
             this.props.dispatch(fetchBlogArticle(id));
