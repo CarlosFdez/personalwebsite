@@ -1,21 +1,44 @@
 // mongo standard requires a global database object
 
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, MongoClientOptions } from 'mongodb';
 
 const url = 'mongodb://localhost:27017/personalwebsite';
 
 // each subscription to the same promise creates a new connection (Db object)
-let connectionPool : Promise<void | Db> = MongoClient.connect(url).catch(err => console.error(err));
+let connectionPool : Promise<void | Db>;
+
+let options : Partial<MongoClientOptions> = {
+    connectTimeoutMS: 5000,
+    reconnectTries: 4
+}
+
+/** Internal function to create the connection pool */
+function createConnectionPool() {
+    connectionPool = MongoClient.connect(url, options).catch(err => console.error(err));
+}
+
+// initialize the connection pool
+createConnectionPool();
 
 /**
  * Asynchronously connects to a mongo db instance located at
  * mongodb://localhost:27017/personalwebsite.
+ * @param retries Number of times to retry. Negative avoids reconstructing the connection pool.
  */
-export async function connect() : Promise<Db> {
+export async function connect(retries=0) : Promise<Db> {
     let connection: void | Db = await connectionPool;
-    if (!connection) {
-        // todo: try reconnecting if this happens
-        // todo: research is this the reason why void is a valid result?
+
+    // Note: isConnected() is an internal method, but mongo does not provide
+    // us any other way to determine if the connection is healthy 
+    // If we don't do this, then mongo will always throw "Topology was destroyed"
+    if (!connection || !(connection as any).serverConfig.isConnected()) {
+        // Retry a connection
+        if (retries >= 0) {
+            createConnectionPool();
+            return await connect(retries-1);
+        }
+
+        // If we get here, its a failed result.
         throw new Error("connection closed");
     }
     return connection;
