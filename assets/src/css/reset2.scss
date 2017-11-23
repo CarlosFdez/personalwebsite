@@ -8,6 +8,11 @@ em {
     font-style: italic;
 }
 
+body {
+    font-family: "Segoe UI", georgia;
+    font-size: 16px;
+}
+
 h1 {
     /** Note: fitting into 2 lines (3em normal), divided by font-size its 1.5em */
     font-size: 2em;
@@ -23,6 +28,8 @@ h2 {
     margin-top: 1em; /* 1.5 / 1.5 = 1 */
     margin-bottom: 1em;
 }
+
+/** todo: h3 and up need some styling */
 
 p {
     font-size: 1em;
