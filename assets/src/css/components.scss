@@ -42,3 +42,12 @@
             hsl(70,5%,92%));
     }
 }
+
+.date-line {
+    color: #222;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    .fa {
+        margin-right: 0.4em;
+    }
+}

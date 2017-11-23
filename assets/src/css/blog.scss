@@ -8,15 +8,6 @@
     @extend .mix-centered-content;
 }
 
-.article-brief .date, .article .date {
-    color: #222;
-    line-height: 1.5em;
-    margin-top: 0.5em;
-    .fa {
-        margin-right: 0.2em;
-    }
-}
-
 .article-brief {
     display: block;
     text-decoration: none!important;
@@ -36,7 +27,7 @@
         background-color: $key-color;
         color: white;
 
-        .date {
+        .date-line {
             color: white;
         }
     }
