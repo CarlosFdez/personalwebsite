@@ -97,12 +97,11 @@ export const HomePage = () => (
             <div className="content">
                 <h2>About this site</h2>
                 <p>
-                    This is my portfolio site written using NodeJs And React.
-                    Webpack is used to bundle the frontend, and express is used to serve files.
-                    The application is deployed to my own server using Capistrano.
-                    The backend acts as a render server to support server side rendering.
-                    <a href="https://code.visualstudio.com/">Visual Studio Code</a> text editor.
-                    It is hosted using nginx on an Ubuntu instance in <a href="https://www.digitalocean.com/">Digital Ocean</a>.
+                    This is my portfolio site written using NodeJs and React, deployed to my own server
+                    on  <a href="https://www.digitalocean.com/">Digital Ocean</a> using
+                    {' '} <a href="http://capistranorb.com/">Capistrano</a>.
+                    Feel free to look at my article about the process on my blog,
+                    available <a href="/blog/1-building-the-portfolio">here</a>.
                 </p>
                 <p>
                     The social network icons belong to <a href="http://fontawesome.io/">Font Awesome</a>.
