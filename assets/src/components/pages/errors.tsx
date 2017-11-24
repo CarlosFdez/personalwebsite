@@ -16,6 +16,6 @@ export const NotFound = () => (
             It seems you may have taken a wrong turn, or were led into a dead end.<br/>
             I suggest <a href="javascript:history.back()">going back the way you came.</a>
         </p>
-        <p>Officially we call this a 404 error</p>
+        <p>Officially we call this a 404 error...</p>
     </section>
 )

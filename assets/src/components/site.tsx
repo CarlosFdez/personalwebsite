@@ -12,7 +12,7 @@ import { HttpError } from '../../../apiclient'
 
 const PortfolioMain = (props) => {
     let error = props.error;
-    if (error instanceof HttpError && error.statusCode == 404) {
+    if (error && error['statusCode'] == 404) {
         return <NotFound/>;
     } else if (error) {
         return <ApplicationError/>;
