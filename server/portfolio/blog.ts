@@ -9,45 +9,36 @@ import { getIntIdFromSlug } from '../../shared/slug'
 import { connect } from '../lib/db'
 import * as env from '../environment';
 
+/** 
+ * Represents a class that loads the blog portion of the portfolio
+ */
 export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull> {
 
     constructor(public rootDir: string) {}
 
-    async* _loadItemsBase(sortingDict) {
-        let connection = await connect();
-        let collection = connection.collection('blog');
-
-        let cursor = collection.find({}).sort(sortingDict);
-        while (await cursor.hasNext()) {
-            yield (await cursor.next()) as BlogEntry;
-        }
-    }
-
     loadItems() {
-        return this._loadItemsBase({id: 1});
+        return this.loadItemsBase({_id: 1});
     }
 
     loadItemsReverse() {
-        return this._loadItemsBase({id: -1});
+        return this.loadItemsBase({_id: -1});
     }
 
+
+
     async loadItem(itemId : string) : Promise<BlogEntryFull> {
-        let connection = await connect();
-        let collection = connection.collection('blog');
-        let item = await collection.findOne({ id: itemId });
-        
+        let item = await this.loadRawItem(itemId);
         if (!item) {
             return null;
         }
-        
-        let brief = item as BlogEntry;
-        let result =  { ...brief, content: '' }
+
+        let result =  { ...item, content: '' }
 
         try {
             // todo: make a better more generalized way of getting this...
-            let itemUrl = `/blog/${brief.id}`;
+            let itemUrl = `/blog/${item._id}`;
 
-            let contentPath = path.join(this.rootDir, brief.localId, "content.md");
+            let contentPath = path.join(this.rootDir, item.localId, "content.md");
             let fileData = await fs.readFile(contentPath, "utf8");
             result.content = markademic({
                 input: fileData,
@@ -66,9 +57,7 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
      * based on the id and its relative URL
      */
     async getAsset(itemId : string, relativeUrl : string) : Promise<PortfolioAsset> {
-        let connection = await connect();
-        let collection = connection.collection('blog');
-        let item = await collection.findOne({ id: itemId });
+        let item = await this.loadRawItem(itemId);
         
         if (!item) {
             return null;
@@ -82,10 +71,47 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
         };
     }
 
+    async build() {
+        let connection = await connect();
+        try {
+            await connection.dropCollection('blog');
+        } catch (err) {
+            // NamepaceNotFound
+            if (err.code != 26) throw err;
+        }
+
+        let collection = connection.collection('blog');
+
+        let reader = this.readFolders();
+        let promises : Promise<any>[] = [];
+        for await (let entry of reader) {
+            promises.push(collection.insertOne(entry));
+        }
+        await promises;
+    }
+
+    // todo: private methods are tied to the persistance and are candidates for separation
+
+    private async* loadItemsBase(sortingDict) {
+        let connection = await connect();
+        let collection = connection.collection('blog');
+
+        let cursor = collection.find({}).sort(sortingDict);
+        while (await cursor.hasNext()) {
+            yield (await cursor.next()) as BlogEntry;
+        }
+    }
+
+    private async loadRawItem(itemId : string) : Promise<BlogEntry> {
+        let connection = await connect();
+        let collection = connection.collection('blog');
+        return await collection.findOne({ _id: parseInt(itemId) });
+    }
+
     /**
      * Inner function to read blog folders asynchronously
      */
-    async *_readFolders() : AsyncIterableIterator<BlogEntry> {
+    private async *readFolders() : AsyncIterableIterator<BlogEntry> {
         let folders = await fs.readdir(this.rootDir);
         for (let name of folders) {
             let itemPath = path.join(this.rootDir, name);
@@ -103,32 +129,13 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
 
             let id = getIntIdFromSlug(name);
             yield {
+                _id: getIntIdFromSlug(name),
                 localId: name,
-                id: id.toString(),
                 title: meta.title,
                 published: new Date(meta.published),
                 brief: brief
             };
             console.log(`Imported blog entry ${id} ${name}`);
         }
-    }
-
-    async build() {
-        let connection = await connect();
-        try {
-            await connection.dropCollection('blog');
-        } catch (err) {
-            // NamepaceNotFound
-            if (err.code != 26) throw err;
-        }
-
-        let collection = connection.collection('blog');
-
-        let reader = this._readFolders();
-        let promises : Promise<any>[] = [];
-        for await (let entry of reader) {
-            promises.push(collection.insertOne(entry));
-        }
-        await promises;
     }
 }

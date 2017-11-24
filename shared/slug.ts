@@ -2,9 +2,9 @@
  * Creates a slug url from a group of components, Uri encoded.
  * If you give it "2" and "Hello there", it returns "2-hello-there".
  * */
-export function createSlug(...items: string[]) {
+export function createSlug(...items: (string | number)[]) {
     return encodeURIComponent(items.map(
-        (i) => i.toLowerCase().replace(/("|')/, "").replace(" ", "-")
+        (i) => i.toString().toLowerCase().replace(/("|')/g, "").replace(/ /g, "-")
     ).join('-'));
 }
 

@@ -47,8 +47,8 @@ export class Portfolio {
             feed.item({
                 title: entry.title,
                 description: entry.brief,
-                url: `${env.settings.webroot}/blog/${createSlug(entry.id, entry.title)}`,
-                guid: entry.id,
+                url: `${env.settings.webroot}/blog/${createSlug(entry._id, entry.title)}`,
+                guid: entry._id.toString(),
                 date: entry.published
             });
         }

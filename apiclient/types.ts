@@ -3,13 +3,12 @@
  * Represents a blog post summary. This is what is stored in the database
  */
 export interface BlogEntry {
+    _id : number;
+    
     /**
      * id for the blog entry in the file system. This is the folder name
      */
     localId: string;
-
-    id : string;
-
     title: string;
     published: Date;
     brief: string;

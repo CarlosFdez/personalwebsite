@@ -11,7 +11,7 @@ import { fetchBlogBriefs } from '../../store/actions'
 import { createSlug } from '../../../../shared/slug'
 
 const BlogBrief = (props : BlogEntry) => (
-    <Link className="article-brief" to={"/blog/"+createSlug(props.id, props.title)}>
+    <Link className="article-brief" to={"/blog/"+createSlug(props._id, props.title)}>
         <h2 className="title">{props.title}</h2>
         
         <DateLine date={ new Date(props.published) }/>
@@ -56,7 +56,7 @@ export class BlogPage extends React.Component<BlogPageProps> {
 
         let data = this.props.articles.data
         let briefs = (data || []).map((item) => (
-            <BlogBrief key={item.id} {...item}/>
+            <BlogBrief key={item._id} {...item}/>
         ));
         return (
             <div className="article-list">

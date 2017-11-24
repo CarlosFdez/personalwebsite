@@ -3,7 +3,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import { getPortfolio } from './portfolio';
+import { Portfolio } from './portfolio';
 
 // shim to allow async iterators to work on the server
 (<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
@@ -42,7 +42,7 @@ let builder = (async function() {
         process.exit(0);
     }
     
-    const portfolio = getPortfolio(rootPath);
+    const portfolio = new Portfolio(rootPath);
     await portfolio.build();
 });
 
