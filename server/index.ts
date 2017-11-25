@@ -47,12 +47,16 @@ app.use(apiroutes.createRoutes(portfolio));
 app.use(createAssetRouter(portfolio));
 app.use(routes);
 
-async function startServer(port : number) {
+
+// Run server
+let port = env.settings.port;
+let server = app.listen(port, () => {
+    console.log(`Portfolio website running on port ${port}`);
     console.log('Remember to rebuild the portfolio after every portfolio change');
+    console.log();
+});
 
-    app.listen(port, () => {
-        console.log(`Portfolio running on port ${port}\n`);
-    });
-}
-
-startServer(env.settings.port);
+// shut down server on a SIGTERM (normal kill command)
+process.on('SIGTERM', function () {
+    server.close();
+});
