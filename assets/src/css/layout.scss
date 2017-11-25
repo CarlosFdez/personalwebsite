@@ -15,27 +15,29 @@ body {
     flex-direction: column;
 }
 
+.main-header, .main-footer {
+    flex: 0 0;
+}
+
 main {
     flex: 1;
 }
 
-// Structure for the header and the header gap
-// This is so that the header and gap match in size
-.main-header, .header-gap {
-    font-size: 1.75em;
-    line-height: 1.5em;
-    padding: 0.5em 0;
+.main-header {
+    // This is so that the header and gap match in size
+    .header-body, .header-gap {
+        font-size: 1.75em;
+        line-height: 1.5em;
+        padding: 0.5em 0;
+    }
 }
 
-.main-header {
-    overflow: auto; /* handle the margin of inner h1 */
-    /*background-color: #fbfbf4; */
+.main-header .header-body {
     background-color: $key-color;
     border-bottom: 1px solid $key-border-color;
     color: #eee;
 
-    white-space: nowrap;
-    overflow: hidden;
+    overflow-x: hidden;
 
     // animation for scrolling header
     transition: all 0.2s ease-in-out;
@@ -43,7 +45,12 @@ main {
     .content {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
+    }
+
+    .title, nav {
+        white-space: nowrap;
     }
 
     nav a {
@@ -72,7 +79,7 @@ main {
 
 /* enable scrolling header on sufficiently large browsers */
 @media screen and (min-width: $desktop-cutoff) {
-    .main-header {
+    .main-header .header-body {
         position: fixed;
         top: 0;
         width: 100%;

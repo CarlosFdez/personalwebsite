@@ -41,15 +41,17 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps> {
         return (
             <div className="website-layout">
                 <header className="main-header">
-                    <div className="content">
-                        <a href="#" className="performScroll">Carlos Fernandez</a>  
-                        <nav>
-                            <NavLink exact to="/" activeClassName="selected">Home</NavLink>
-                            <NavLink to="/blog" activeClassName="selected">Blog</NavLink>
-                        </nav>
+                    <div className="header-body">
+                        <div className="content">
+                            <a href="#" className="title performScroll">Carlos Fernandez</a>  
+                            <nav>
+                                <NavLink exact to="/" activeClassName="selected">Home</NavLink>
+                                <NavLink to="/blog" activeClassName="selected">Blog</NavLink>
+                            </nav>
+                        </div>
                     </div>
+                    <div className="header-gap"></div>
                 </header>
-                <div className="header-gap"></div>
                 <main>
                     <PortfolioMain error={error}/>
                 </main>
