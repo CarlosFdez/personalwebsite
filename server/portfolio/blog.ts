@@ -74,8 +74,8 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
         try {
             await connection.dropCollection('blog');
         } catch (err) {
-            // NamepaceNotFound
-            if (err.code != 26) throw err;
+            // most likely ns not found. Continue anyways
+            // note: production does not have error codes fsr
         }
 
         let collection = await connection.createCollection<BlogEntry>('blog');
