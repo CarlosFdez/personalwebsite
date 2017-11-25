@@ -24,8 +24,6 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
         return this.loadItemsBase({_id: -1});
     }
 
-
-
     async loadItem(itemId : string) : Promise<BlogEntryFull> {
         let item = await this.loadRawItem(itemId);
         if (!item) {
@@ -80,7 +78,7 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
             if (err.code != 26) throw err;
         }
 
-        let collection = connection.collection('blog');
+        let collection = await connection.createCollection<BlogEntry>('blog');
 
         let reader = this.readFolders();
         let promises : Promise<any>[] = [];
