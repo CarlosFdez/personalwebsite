@@ -52,7 +52,7 @@ export const HomePage = () => (
             <div className="content">
                 <h2>Personal Programming Projects</h2>
                 <p>
-                    These are a few of the projects I've created. Click any to view it.
+                    These are a few of the projects I've created. Click on any to view it.
                 </p>
                 <div className="project-list">
                     <Project name="VideoCrop" href="https://carlosfdez.github.io/videocrop/">
@@ -77,7 +77,7 @@ export const HomePage = () => (
             <div className="content">
                 <h2>Programming Contributions</h2>
                 <p>
-                    These are a few of the projects I've contributed to. Click any to view it.
+                    These are a few of the projects I've contributed to. Click on any to view it.
                 </p>
                 <div className="project-list">
                     <Project name="MonsterHunter4UDatabase" href="https://github.com/kamegami13/MonsterHunter4UDatabase">
@@ -104,8 +104,8 @@ export const HomePage = () => (
                     available <a href="/blog/1-building-the-portfolio">here</a>.
                 </p>
                 <p>
-                    The social network icons belong to <a href="http://fontawesome.io/">Font Awesome</a>.
-                    Frameworks were harmed in the making of this website.
+                    The icons used belong
+                    to <a href="http://fontawesome.io/">Font Awesome</a>.
                 </p>
             </div>
         </section>

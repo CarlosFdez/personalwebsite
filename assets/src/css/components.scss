@@ -22,10 +22,10 @@
 
         background: linear-gradient(
             to bottom,
-            hsl(70,10%,97%),
+            $body-border-color,
             $body-color 40%,
             $body-color 60%,
-            hsl(70,10%,97%));
+            $body-border-color);
     }
 
     > section:nth-child(even) {
@@ -33,13 +33,13 @@
         border-style: solid;
 
         background-color: $body-off-color;
-        border-color: hsl(70,5%,90%);
+        border-color: $body-off-border-color;
         background: linear-gradient(
             to bottom,
-            hsl(70,5%,92%),
+            $body-off-border-color,
             $body-off-color 40%,
             $body-off-color 60%,
-            hsl(70,5%,92%));
+            $body-off-border-color);
     }
 }
 

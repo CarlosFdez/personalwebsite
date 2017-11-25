@@ -15,7 +15,7 @@ The following are the supported npm commands. A command can be executed by runni
 - **portfolio *env***: (*All*) Indexes the portfolio data. The argument *env* dictates which subfolder of portfolio_data to import. Building the portfolio needs to be done every time data is changed. MongoDB needs to be installed in order for it to work.
 
 ### Running in Development mode
-First build the portfolio for dev mode by running `npm run portfolio dev`.Afterwards , build-dev and debug need to be running in two separate terminal windows. Have two terminals open and use `npm run build-dev` in one to build assets and `npm run start` in the other to run the express server.
+First build the portfolio for dev mode by running `npm run portfolio development`. Afterwards , build-dev and debug need to be running in two separate terminal windows. Have two terminals open and use `npm run build-dev` in one to build assets and `npm run start` in the other to run the express server.
 
 Afterwards open a web browser at `127.0.0.1:5000` to view it in all its glory.
 
@@ -46,3 +46,12 @@ The application uses capistrano to deploy the contents to a remote server. The f
 Webpack builds the contents of assets/src/ and deposits it into assets/build/. Afterwards, those assets can be accessed from the server under /assets/build/. Static assets are not processed by webpack and can be accessed from /assets/static.
 
 Both the server and client use the api client. The server uses it to load data for server side rendering. Reusing the api in the server makes it easier to ensure that results are equivalent on both server and client renders. 
+
+# TODO
+
+The portfolio isn't finished yet.
+
+- Handle images in articles when viewed on mobile (thinking click to zoom? Scrollbar on just image?)
+- Improve styling for articles
+- Link production portfolio data to a seperate repository instead of development
+- Clean up the old javascript still there from the original portfolio

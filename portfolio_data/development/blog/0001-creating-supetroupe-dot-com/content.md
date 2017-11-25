@@ -25,8 +25,7 @@ These goals don't require a fully dynamic CMS system like Wordpress, but they do
 
 After some deliberation, I settled on the following.
 - Typescript
-- React
-- Redux
+- React + Redux
 - React Router and React Router Redux
 - Webpack
 - NodeJS
@@ -34,7 +33,7 @@ After some deliberation, I settled on the following.
 
 I originally planned on a python server with flask, pjax, and jquery, a stack I was already very familar with. However, frontend development had many interesting evolutions in the past few years. Avoiding the unknown for the sake of comfort is how you become left behind in the software development world.
 
-React is a declarative approach to frontend development, and using a node backend allows us to *server side render* without needing another process. Server side rendering is required because we want google to cache it. Going this route will make it easier to add more dynamic front end behavior in future installments. 
+React is a declarative approach to frontend development, and using a node backend allows us to *server side render* without needing to use a separate process. Server side rendering is required because we want google to cache it. Going this route will make it easier to add more dynamic front end behavior in future installments. 
 
 
 ## Architecture and Design
@@ -52,7 +51,7 @@ Reusing the API makes it easier to guarantee that both the server and client wil
 
 This is the section where I thank the people that made this possible.
 
-I'd first like to thank [Alain Galvan](https://alain.xyz/) for allowing me to use own website as an example, and for answering my endless barrage of questions. Several of the ideas in my portfolio came from his, and the published [source code](https://github.com/alaingalvan/alain.xyz) of that website was an excellent resource for when I got stuck.
+I'd first like to thank [Alain Galvan](https://alain.xyz/) for allowing me to use his own website as an example, and for answering my endless barrage of questions. Several of the ideas in my portfolio came from his, and the published [source code](https://github.com/alaingalvan/alain.xyz) of that website was an excellent resource for when I got stuck.
 
 I'd also like to thank [Alain Meier](https://alainmeier.com/) and Francisco Marcano for many things, including helping me get started with frontend development and answering a lot of my questions. If it weren't for them I would only be a backend developer.
 
