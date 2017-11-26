@@ -1,7 +1,6 @@
 .vscode/
 log
 node_modules/
-package-lock.json
 
 # project specific
 assets/build/
