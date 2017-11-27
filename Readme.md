@@ -51,7 +51,6 @@ Both the server and client use the api client. The server uses it to load data f
 
 The portfolio isn't finished yet.
 
-- Handle images in articles when viewed on mobile (thinking click to zoom? Scrollbar on just image?)
 - Improve styling for articles
 - Link production portfolio data to a seperate repository instead of development
 - Clean up the old javascript still there from the original portfolio

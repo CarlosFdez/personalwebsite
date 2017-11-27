@@ -57,6 +57,7 @@ let server = app.listen(port, () => {
 });
 
 // shut down server on a SIGTERM (normal kill command)
-process.on('SIGTERM', function () {
-    server.close();
-});
+// or SIGINT (forced kill command)
+process
+    .on('SIGTERM', () => server.close())
+    .on('SIGINT', () => server.close());
