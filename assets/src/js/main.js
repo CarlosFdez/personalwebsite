@@ -5,42 +5,6 @@
  * I could have made it even simpler if I used libraries but then it would have taken longer to load.
  */
 
-// adds a class to an element if the element does not have the class
-function addClass(element, className) {
-    if ((element.className || "").indexOf(className) == -1) {
-        element.className = ((element.className || "") + " " + className).trim();
-    }
-}
-
-// removes a class to an element if the element has the class
-function removeClass(element, className) {
-    if ((element.className || "").indexOf(className) > -1) {
-        element.className = (element.className || "").replace(className, "").trim();
-    }
-}
-
-// Detect if the page has scrolled past any <header> elements and attach
-// a "scrolling" class to the header if it has
-function testHeaderScrolling() {
-    var elements = document.getElementsByTagName("header");
-
-    for (var i = 0; i < elements.length; i++) {
-        var header = elements[i];
-        var bottomEdge = header.offsetTop + header.offsetHeight;
-        if (window.scrollY >= bottomEdge) {
-            addClass(header, "scrolling");
-        } else {
-            removeClass(header, "scrolling");
-        }
-    }
-}
-
-// test for header scrolling on load and on scroll event
-testHeaderScrolling();
-window.addEventListener('scroll', function(e) {
-    testHeaderScrolling();
-});
-
 // A function that scrolls to a given Y coordinate gradually.
 // I could possibly make this generic but most other animations should be CSS instead so I won't bother for now.
 var scrollInfo = null;
@@ -106,9 +70,3 @@ for (var i = 0; i < elementsThatCauseScroll.length; i++) {
         evt.preventDefault();
     })
 }
-
-// remove "loading" from body at the very end of everything.
-// idea from https://css-tricks.com/transitions-only-after-page-load/
-window.setTimeout(function() {
-    removeClass(document.body, "loading");
-}, 0);

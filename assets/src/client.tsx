@@ -44,6 +44,8 @@ let store = createStore(
 const supportsHistory = 'pushState' in window.history;
 
 // This is the client side start script, so we use a client side router
+// ConnectedRouter is the normal one - used to capture navigation
+// BrowserRouter is a fallback for forced refreshing
 if (supportsHistory) {
     ReactDOM.hydrate(
         <Provider store={store}>

@@ -55,16 +55,20 @@ a {
     }
 }
 
+p a {
+    color: #22d;
+    white-space: nowrap; /* more readable on one line */
+}
+
+
+
 /* Idea from https://css-tricks.com/transitions-only-after-page-load/ */
+// todo: Add a new class to counter .loading, and add a not here.
+// I didn't do it yet because I don't know what I'd call it
 .loading * {
     transition: none !important;
     -webkit-transition: none !important;
     -moz-transition: none !important;
     -ms-transition: none !important;
     -o-transition: none !important;
-}
-
-p a {
-    color: #22d;
-    white-space: nowrap; /* more readable on one line */
 }

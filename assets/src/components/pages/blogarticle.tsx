@@ -10,7 +10,7 @@ import { AppState, Loadable } from '../../store';
 
 import { fetchBlogArticle } from '../../store/actions'
 
-const BlogArticle = (props) => (
+const BlogArticle = (props : BlogEntryFull) => (
     <section>
         <div className="article">
             <header>
@@ -51,6 +51,10 @@ export class BlogArticlePage extends React.Component<BlogArticlePageProps> {
     }
 
     render() {
+        if (!this.props.article.loaded) {
+            return null;
+        }
+
         return (
             <BlogArticle {...this.props.article.data}/>
         )
