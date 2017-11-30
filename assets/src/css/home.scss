@@ -1,8 +1,26 @@
 @import '_variables';
 
+.about-page .project-list {
+    // the goal is to flow with paragraph content (1.5em separation),
+    // Since the children to use 0.75em paddings, we have to pull them together.
+    margin: 1.5em 0;
+
+    .project:first-child {
+        margin-top: -0.75em;
+    }
+
+    .project:last-child {
+        margin-bottom: -0.75em;
+    }
+}
+
 .about-page .project {
     display: block;
     transition: 0.1s all ease-out;
+    
+    margin: 0 (-$side-buffer);
+    padding: 0.75em $side-buffer;
+    border-radius: 3px;
 
     .project-title {
         text-decoration: underline;
@@ -28,16 +46,16 @@
         transition: 0.05s all ease-in;
     }
 
+    .description {
+        line-height: 1.5em;
+    }
+
     &:hover {
         text-decoration: none;
 
         // get rid of behavior below to remove the highlight effect
         background-color: $key-color;
         color: white;
-        margin: -$side-buffer;
-        padding: $side-buffer;
-        padding-bottom: 0;
-        margin-bottom: 0;
 
         a {
             color: $body-off-color;

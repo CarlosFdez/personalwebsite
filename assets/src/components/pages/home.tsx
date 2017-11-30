@@ -13,15 +13,21 @@ const SocialMediaButton = (props) => {
     )    
 }
 
+const ProjectList = (props) => (
+    <div className="project-list">
+        {props.children}
+    </div>
+)
+
 const Project = (props) => (
     <a className="project" href={props.href}>
         <span className="project-title">
             {props.name}
             <span className="href">{props.href}</span>
         </span>
-        <p>
+        <div className="description">
             {props.children}
-        </p>
+        </div>
     </a>
 )
 
@@ -54,7 +60,7 @@ export const HomePage = () => (
                 <p>
                     These are a few of the projects I've created. Click on any to view it.
                 </p>
-                <div className="project-list">
+                <ProjectList>
                     <Project name="Portfolio" href="https://github.com/CarlosFdez/personalwebsite">
                         This is the website you're looking at. 
                         Look at the <em>about</em> section for more information.
@@ -74,7 +80,7 @@ export const HomePage = () => (
                         A node library used to create chatbots for Twitch.
                         Wraps the existing <em>tmi.js</em> library to add command parsing.
                     </Project>
-                </div>
+                </ProjectList>
             </div>
         </section>
         <section>
@@ -83,7 +89,7 @@ export const HomePage = () => (
                 <p>
                     These are a few of the projects I've contributed to. Click on any to view it.
                 </p>
-                <div className="project-list">
+                <ProjectList>
                     <Project name="MonsterHunter4UDatabase" href="https://github.com/kamegami13/MonsterHunter4UDatabase">
                         Added a universal search to an existing Android application written in Java that provides data about
                         the game <em>Monster Hunter 4 Ultimate</em>. Also contributed a few other bug fixes and tweaks.
@@ -93,7 +99,7 @@ export const HomePage = () => (
                         The simulator was written in <em>CoffeeScript</em>, ran on <em>NodeJS</em>, and used <em>Backbone</em> for the front end.
                         The project was dropped due to growing responsibilities and competition from <em>Pokemon Showdown</em>.
                     </Project>
-                </div>
+                </ProjectList>
             </div>
         </section>
 
