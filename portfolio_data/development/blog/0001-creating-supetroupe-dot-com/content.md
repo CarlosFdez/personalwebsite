@@ -18,7 +18,7 @@ I began by analyzing what was important.
 - Human friendly but permanent page urls and links
 - To show off my own programming ability as a piece of my portfolio
 
-These goals don't require a fully dynamic CMS system like Wordpress, but they do necessitate certain techniques such as server side rendering. I don't intend on making the application scale for the initial version, but I may consider it in a later version.
+These goals don't require a fully dynamic system like Wordpress, but they do necessitate certain techniques such as server side rendering. I don't intend on making the application scale for the initial version, but I may consider it in a later version.
 
 
 ## What I used
@@ -44,7 +44,7 @@ The application consists of three core parts: The render server, the API, and th
 
 The API receives its data from the portfolio system, which is fed by a directory of files indexed using MongoDb. A custom build process performs this indexing. The portfolio files are stored in a seperate github repository as a cheap backup and deployment system. This arrangement normally scales poorly but for a single portfolio it should remain manageable.
 
-Reusing the API makes it easier to guarantee that both the server and client will render correctly with less testing. 
+Reusing the API makes it easier to guarantee that both the server and client will render correctly with less testing required. 
 
 
 ## Special thanks
@@ -53,6 +53,6 @@ This is the section where I thank the people that made this possible.
 
 I'd first like to thank [Alain Galvan](https://alain.xyz/) for allowing me to use his own website as an example, and for answering my endless barrage of questions. Several of the ideas in my portfolio came from his, and the published [source code](https://github.com/alaingalvan/alain.xyz) of that website was an excellent resource for when I got stuck.
 
-I'd also like to thank [Alain Meier](https://alainmeier.com/) and Francisco Marcano for many things, including helping me get started with frontend development and answering a lot of my questions. If it weren't for them I would only be a backend developer.
+I'd also like to thank [Alain Meier](https://alainmeier.com/) for many things, including helping me get started with frontend development. If it weren't for him I would only be a backend developer.
 
-And finally, I'd like to thank the [reactiflux](https://www.reactiflux.com/) community and many React users out there kind enough to share insights on their own blogs. If it weren't for you it would have been much harder to learn React. 
+And finally, I'd like to thank Francisco Marcano, the [reactiflux](https://www.reactiflux.com/) community, and the many React users out there kind enough to share insights on their own blogs. If it weren't for you it would have been much harder to learn React. 

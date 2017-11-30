@@ -55,6 +55,10 @@ export const HomePage = () => (
                     These are a few of the projects I've created. Click on any to view it.
                 </p>
                 <div className="project-list">
+                    <Project name="Portfolio" href="https://github.com/CarlosFdez/personalwebsite">
+                        This is the website you're looking at. 
+                        Look at the <em>about</em> section for more information.
+                    </Project>
                     <Project name="VideoCrop" href="https://carlosfdez.github.io/videocrop/">
                         A graphical tool I created to assist with my video editing hobby.
                         Used to preview footage and cut on keyframes to avoid losing quality due to generational loss.
@@ -100,8 +104,12 @@ export const HomePage = () => (
                     This is my portfolio site written using NodeJs and React, deployed to my own server
                     on  <a href="https://www.digitalocean.com/">Digital Ocean</a> using
                     {' '} <a href="http://capistranorb.com/">Capistrano</a>.
-                    Feel free to look at my article about the process on my blog,
-                    available <a href="/blog/1-building-the-portfolio">here</a>.
+                    Feel free to read my <a href="/blog/1-building-the-portfolio">article about the process</a>
+                    {' '} on my blog.
+                    The portfolio is open source,
+                    and hosted on <a href="https://github.com/CarlosFdez">my github</a>.
+                    If you want to look at the source code, 
+                    it's available <a href="https://github.com/CarlosFdez/personalwebsite">here</a>.
                 </p>
                 <p>
                     The icons used belong
