@@ -47,10 +47,15 @@ Webpack builds the contents of assets/src/ and deposits it into assets/build/. A
 
 Both the server and client use the api client. The server uses it to load data for server side rendering. Reusing the api in the server makes it easier to ensure that results are equivalent on both server and client renders. 
 
-# TODO
+## Deployment
+The application is deployed via [Capistrano](http://capistranorb.com/documentation/getting-started/installation/). Therefore, a ruby environment needs to be installed on the development machine. Capistrano settings are driven by the `Capfile` and by the `cap/ `directory. To deploy, I run `cap production deploy` followed by `cap production build`.
 
-The portfolio isn't finished yet.
+I manage the application in production via [pm2](http://pm2.keymetrics.io/).
 
-- Improve styling for articles
+## TODO
+
+The portfolio isn't finished yet and is still an ongoing project.
+
+- Needs improved styling for articles
 - Link production portfolio data to a seperate repository instead of development
-- Clean up the old javascript still there from the original portfolio
+- It needs to be a better social network bridge. Either updates to the home or a /bridge path needs to be created.
