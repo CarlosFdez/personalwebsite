@@ -81,7 +81,7 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps, Portfolio
                 <header className={"main-header " + scrollingClass}>
                     <div className="header-body">
                         <div className="content">
-                            <a href="#" className="title performScroll">Carlos Fernandez</a>  
+                            <NavLink exact to="/" className="title">Carlos Fernandez</NavLink>  
                             <nav>
                                 <NavLink exact to="/" activeClassName="selected">Home</NavLink>
                                 <NavLink to="/blog" activeClassName="selected">Blog</NavLink>

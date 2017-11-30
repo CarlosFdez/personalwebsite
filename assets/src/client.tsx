@@ -23,7 +23,6 @@ import createHistory from 'history/createBrowserHistory'
 
 // ... then import our own stuff for the webpack
 import './css';
-import './js/main.js';
 import { PortfolioSite } from "./components";
 import { reducer } from "./store";
 
