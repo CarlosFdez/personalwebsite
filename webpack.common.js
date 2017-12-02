@@ -9,7 +9,8 @@ var autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
-        app: './assets/src/client.tsx'
+        app: './assets/src/client.tsx',
+        polyfill: 'babel-polyfill'
     },
 
     output: {

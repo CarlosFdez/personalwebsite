@@ -7,6 +7,39 @@
 
     <link rel="shortcut icon" type="image/png" href="/assets/static/LogoDiamond_48.png"/>
 
+    <script type="text/javascript">
+        // Load a polyfill if we're missing important elements
+        
+        // the loadScript is from https://philipwalton.com/articles/loading-polyfills-only-when-needed/
+        function loadScript(src, done) {
+            var js = document.createElement('script');
+            js.src = src;
+            js.onload = function() {
+                if (done) done();
+            };
+            js.onerror = function() {
+                if (done) done(new Error('Failed to load script ' + src));
+            };
+            document.head.appendChild(js);
+        }
+
+        var features = ['Promise', 'fetch', 'Symbol', 'Set'];
+        for (var i in features) {
+            if (!window[features[i]]) {
+                console.log("Loading polyfill");
+                loadScript("{{ getAsset('polyfill.js') }}", function (err) {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Loaded polyfill");
+                    }
+                });
+
+                break;
+            }
+        }
+    </script>
+
     <link href="{{ getAsset('app.css') }}" rel="stylesheet"/>
 </head>
 <body>
