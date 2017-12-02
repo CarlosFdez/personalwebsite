@@ -3,12 +3,28 @@
 <head>
     <title>Carlos Fernandez</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+
     <link rel="shortcut icon" type="image/png" href="/assets/static/LogoDiamond_48.png"/>
 
     <link href="{{ getAsset('app.css') }}" rel="stylesheet"/>
 </head>
 <body>
+    <!--[if lte IE 9]>
+    <div id="unsupported-browser">
+        <div class='content'>
+            <h2>Unfortunately, your web browser is not supported.</h2>
+            Internet Explorer 9 and below are not supported.<br>
+            Please update Internet Explorer or switch to 
+            <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a>
+            or <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>
+        </div>
+    </div>
+    <![endif]-->
+
+    <![if gt IE 9]>
     <div id="website-root">{{ renderedHtml | safe}}</div>
+    <![endif]>
 
     {% if initialState %}
     <script type="text/javascript">

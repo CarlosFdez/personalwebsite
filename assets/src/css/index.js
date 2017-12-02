@@ -1,6 +1,6 @@
 // when this folder is imported by webpack, this decides the bundle
 
-import './reset.css';
+import './normalize.css';
 import './reset2.scss';
 import './components.scss';
 import './layout.scss';

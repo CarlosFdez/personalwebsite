@@ -3,12 +3,15 @@ var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var webpack = require('webpack');
 var ManifestPlugin = require('webpack-manifest-plugin');
 
+var autoprefixer = require('autoprefixer');
+
 // note: webpack is using the tsconfig in assets/tsconfig.json
 
 module.exports = {
     entry: {
         app: './assets/src/client.tsx'
     },
+
     output: {
         filename: '[name].js?[chunkhash]',
         path: __dirname + '/assets/build/'    
@@ -35,10 +38,26 @@ module.exports = {
             },
             {
                 // all imported scss gets parsed then redirected to the plugin
-                test: /\.(scss|sass)$/,
+                test: /\.(scss|sass)$/, 
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: "css-loader!sass-loader"
+                    use: [
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                ident: 'postcss',
+                                plugins: () => [
+                                    autoprefixer
+                                ]
+                            }
+                        },
+                        {
+                            loader: "sass-loader"
+                        }
+                    ]
                 })
             },
             {
@@ -48,6 +67,7 @@ module.exports = {
             }
         ]
     },
+
     plugins: [
         new ExtractTextPlugin("app.css?[chunkhash]"),
         new UglifyJSPlugin({ sourceMap: true }),

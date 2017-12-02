@@ -13,6 +13,11 @@ body {
     font-size: 16px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font: inherit;
+    vertical-align: baseline;
+}
+
 h1 {
     /** Note: fitting into 2 lines (3em normal), divided by font-size its 1.5em */
     font-size: 2em;
@@ -34,6 +39,7 @@ h2 {
 p {
     font-size: 1em;
     line-height: 1.5em;
+    margin: 0;
     margin-bottom: 1.5em;
 }
 
@@ -67,8 +73,4 @@ p a {
 // I didn't do it yet because I don't know what I'd call it
 .loading * {
     transition: none !important;
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -ms-transition: none !important;
-    -o-transition: none !important;
 }
