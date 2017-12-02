@@ -1,29 +1,51 @@
-let scrollInfo = null;
+var frameRate = 60;
+var frameTimeMs = 1000.0 / frameRate;
 
-/**
- * A function that scrolls to a given Y coordinate gradually.
- */ 
-export function animatedScrollTo(scrollToY : number, animationTimeSeconds : number) {
-    // Cancel the previous scrolling operation if we need to start a new one
-    if (scrollInfo && scrollInfo._interval && !scrollInfo.complete) {
-        scrollInfo.complete = true;
-        window.clearInterval(scrollInfo._interval);
+class ScrollAnimator {
+    complete = false;
+    _interval = null;
+
+    lastPosition : number;
+    scrollPixelsPerSecond : number;
+
+    constructor(public scrollTo : number, durationSeconds : number) {
+        this.lastPosition = this.scrollY;
+
+        let scrollDifference = scrollTo - this.lastPosition; 
+        this.scrollPixelsPerSecond = scrollDifference / durationSeconds;
     }
 
-    // Calculate how long the wait interval is for the given FPS
-    var frameRate = 60;
-    var frameTimeMs = 1000.0 / frameRate;
-
-    // Replace scrollInfo with a new object that represents the current scroll operation
-    scrollInfo = {};
-    scrollInfo.scrollTo = scrollToY;
-    scrollInfo.lastPosition = window.scrollY; // store last position to handle subpixels
-    scrollInfo.scrollDifference = scrollInfo.scrollTo - window.scrollY; 
-    scrollInfo.scrollPixelsPerSecond = scrollInfo.scrollDifference / animationTimeSeconds;
-    scrollInfo.complete = false;
-    scrollInfo.tick = function(elapsedTimeMs) {
+    start() {
         if (this.complete) return;
 
+        this._interval = window.setInterval(() => {
+            if (!this.complete) {
+                this.tick(frameTimeMs);
+            }
+        }, frameTimeMs);
+    }
+
+    stop() {
+        if (this._interval && !this.complete) {
+            this.complete = true;
+            this._interval = null;
+            window.clearInterval(this._interval);
+        }
+    }
+
+    get scrollX() {
+        return (typeof window.scrollX === "undefined") ? 
+            window.pageXOffset : window.scrollX;
+    }
+
+    get scrollY() {
+        return (typeof window.scrollY === "undefined") ? 
+            window.pageYOffset : window.scrollY;
+    }
+
+    private tick(elapsedTimeMs) {
+        if (this.complete) return;
+        
         var amountToMove = (this.scrollPixelsPerSecond / 1000.0) * elapsedTimeMs;
         var newPosition = this.lastPosition + amountToMove;
 
@@ -39,15 +61,19 @@ export function animatedScrollTo(scrollToY : number, animationTimeSeconds : numb
             this.complete = true;
         }
     }
+}
 
-    // create a closure so we always refer to this scrollInfo one until we rewrite it
-    var localScrollInfo = scrollInfo; 
-    localScrollInfo._interval = window.setInterval(function() {
-        localScrollInfo.tick(frameTimeMs);
+let currentAnimation : ScrollAnimator;
 
-        if (localScrollInfo.complete) {
-            window.clearInterval(localScrollInfo._interval);
-            return;
-        }
-    }, frameTimeMs);
+/**
+ * A function that scrolls to a given Y coordinate gradually.
+ */ 
+export function animatedScrollTo(scrollToY : number, animationTimeSeconds : number) {
+    // Cancel the previous scrolling operation if we need to start a new one
+    if (currentAnimation) {
+        currentAnimation.stop();
+    }
+
+    currentAnimation = new ScrollAnimator(scrollToY, animationTimeSeconds);
+    currentAnimation.start();
 }

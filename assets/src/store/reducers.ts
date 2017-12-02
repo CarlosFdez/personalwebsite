@@ -12,12 +12,14 @@ export const reducer = (state=initialState, action) : AppState => {
     console.log(action);
     switch (action.type) {
         case LOCATION_CHANGED:
-            if (!state.finishedInitialLoad) {
-                // ignore location change on the first attempt
-                return {...state, finishedInitialLoad: true};
-            }
-
             let path : string = action.payload.pathname;
+
+            // ignore location change on the first attempt
+            // react-redux-router fires an event when the page first loads,
+            // but we want to keep the server state when that happens.
+            if (!state.finishedInitialLoad) {
+                return {...state, currentPath: path, finishedInitialLoad: true};
+            }
 
             // if the path is the same, also perform a scroll to top
             if (path == state.currentPath) {
