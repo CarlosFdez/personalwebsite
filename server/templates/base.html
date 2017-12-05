@@ -1,11 +1,29 @@
 <!doctype html>
 <html>
 <head>
-    <title>Carlos Fernandez</title>
+    <title>{{ meta.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 
+    <meta name="author" content="{{ meta.author }}"/>
+    <meta name="description" content="{{ meta.description }}"/>
+    <meta name="keywords" content="{{ meta.keywords.join(', ') }}"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@MeSoSupe"/>
+    <meta name="twitter:title" content="{{ meta.title }}"/>
+    <meta name="twitter:description" content="{{ meta.description }}"/>
+    <meta name="twitter:image" content="{{ getAbsoluteUrl('assets/static/LogoDiamond_192.png') }}"/>
+
+    <meta property="og:title" content="{{ meta.title }}"/>
+    <meta property="og:description" content="{{ meta.description }}"/>
+    <meta property="og:url" content="{{ CANONICAL }}">
+    <meta property="og:site_name" content="{{ meta.websiteName }}"/>
+    <meta property="og:image" content="{{ getAbsoluteUrl('assets/static/LogoDiamond_192.png') }}"/>
+
+    <link rel="canonical" itemprop="url" href="{{ awgawgawg }}}"/>
     <link rel="shortcut icon" type="image/png" href="/assets/static/LogoDiamond_48.png"/>
+    <link rel="alternate" type="application/rss+xml" title="{{meta.title}}" href="{{ getAbsoluteUrl('rss.xml') }}"/>
 
     <script type="text/javascript">
         // Load a polyfill if we're missing important elements

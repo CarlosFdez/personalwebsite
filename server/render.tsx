@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as express from 'express';
 import * as path from 'path';
+import * as url from 'url';
 
 import * as React from 'react';
 import { StaticRouter } from 'react-router'
@@ -11,32 +12,58 @@ import { AppState, reducer, initialState } from "../assets/src/store";
 
 import { PortfolioSite } from '../assets/src/components'
 
-// loads the manifest data synchronously.
-// Manifest data lets us capture the hash for cache busting
-var assetMap = {};
+/**
+ * Returns a function that returns the path to an asset in the build folder, using the manifest for cache busting
+ * @param manifestLocation
+ */
+function createAssetLoader(manifestLocation) {
+    // loads the manifest data synchronously.
+    // Manifest data lets us capture the hash for cache busting
+    var assetMap = {};
 
-try {
-    let location = path.join(__dirname, '../assets/webpack-manifest.json')
-    let data = fs.readFileSync(location, 'utf8');
-    assetMap = JSON.parse(data);
-    console.log("loaded webpack manifest for asset mapping");
-} catch (err) {
-    console.error("Failed to load webpack manifest for asset mapping");
-    console.error(err);
+    try {
+        let data = fs.readFileSync(manifestLocation, 'utf8');
+        assetMap = JSON.parse(data);
+        console.log("loaded webpack manifest for asset mapping");
+    } catch (err) {
+        console.error("Failed to load webpack manifest for asset mapping");
+        console.error(err);
+    }
+
+    return function getAsset(filename : string) {
+        filename = assetMap[filename] || filename;
+        return `/assets/build/${filename}`;
+    }
 }
 
-function getAsset(filename : string) {
-    filename = assetMap[filename] || filename;
-    return `/assets/build/${filename}`;
-}
+const getAsset = createAssetLoader(path.join(__dirname, '../assets/webpack-manifest.json'));
 
+/**
+ * Returns an absolute url from the hosting website
+ * @param relativeUrl 
+ */
+const getAbsoluteUrl = (relativeUrl) => (
+    url.resolve("http://supetroupe.com", relativeUrl)
+); 
+
+
+/**
+ * Defines metadata used to create the title and the meta tags.
+ */
+export interface MetaData {
+    title : string
+    author : string
+    description : string
+    keywords : string[]
+    websiteName : string
+}
 
 /**
  * Performs a server side rendering on the base page
  * @param req 
  * @param res 
  */
-export function serverRender(req, res, data? : Partial<AppState>) {
+export function serverRender(req, res, meta: MetaData, data? : Partial<AppState>) {
     var ctx = data || {};
 
     let state : AppState = {...initialState, ...data};
@@ -51,14 +78,16 @@ export function serverRender(req, res, data? : Partial<AppState>) {
 
     res.render('base.html', { 
         renderedHtml: html, 
+        meta: meta,
         initialState: store.getState(),
-        getAsset: getAsset
+        getAsset: getAsset,
+        getAbsoluteUrl : getAbsoluteUrl
     });
 }
 
 /** 
  * Performs a client side render. Basically just exports the raw template.
  * */
-export function clientRender(req : express.Request, res : express.Response) {
-    res.render("base.html", { getAsset });
+export function clientRender(req : express.Request, res : express.Response, meta: MetaData) {
+    res.render("base.html", { meta, getAsset, getAbsoluteUrl });
 }

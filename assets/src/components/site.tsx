@@ -98,7 +98,7 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps, Portfolio
                         &copy; 2017 Carlos Fernandez
 
                         <aside>
-                            <a href="/rss.xml"><i className="fa fa-rss" aria-hidden="true"/></a>
+                            <a rel="alternate" type="application/rss+xml" href="/rss.xml"><i className="fa fa-rss" aria-hidden="true"/></a>
                             <a href="https://github.com/CarlosFdez"><i className="fa fa-github" aria-hidden="true"/></a>
                             <a href="https://twitter.com/MeSoSupe"><i className="fa fa-twitter" aria-hidden="true"/></a>
                             <a href="https://www.youtube.com/channel/UCNxCpInDAfcdp-PHZO4PtOA"><i className="fa fa-youtube-play" aria-hidden="true"/></a>
