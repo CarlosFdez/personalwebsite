@@ -52,6 +52,7 @@ const getAbsoluteUrl = (relativeUrl) => (
  */
 export interface MetaData {
     title : string
+    path: string
     author : string
     description : string
     keywords : string[]

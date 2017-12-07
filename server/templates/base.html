@@ -17,11 +17,11 @@
 
     <meta property="og:title" content="{{ meta.title }}"/>
     <meta property="og:description" content="{{ meta.description }}"/>
-    <meta property="og:url" content="{{ CANONICAL }}">
+    <meta property="og:url" content="{{ getAbsoluteUrl(meta.path) }}">
     <meta property="og:site_name" content="{{ meta.websiteName }}"/>
     <meta property="og:image" content="{{ getAbsoluteUrl('assets/static/LogoDiamond_192.png') }}"/>
 
-    <link rel="canonical" itemprop="url" href="{{ awgawgawg }}}"/>
+    <link rel="canonical" itemprop="url" href="{{ getAbsoluteUrl(meta.path) }}"/>
     <link rel="shortcut icon" type="image/png" href="/assets/static/LogoDiamond_48.png"/>
     <link rel="alternate" type="application/rss+xml" title="{{meta.title}}" href="{{ getAbsoluteUrl('rss.xml') }}"/>
 
