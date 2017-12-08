@@ -4,13 +4,14 @@ import * as path from 'path';
 import * as url from 'url';
 
 import * as React from 'react';
-import { StaticRouter } from 'react-router'
-import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router';
+import { renderToString } from 'react-dom/server';
 import { createStore } from "redux";
-import { Provider } from 'react-redux'
-import { AppState, reducer, initialState } from "../assets/src/store";
+import { Provider } from 'react-redux';
+import * as DocumentTitle from 'react-document-title';
 
-import { PortfolioSite } from '../assets/src/components'
+import { AppState, reducer, initialState } from "../assets/src/store";
+import { PortfolioSite } from '../assets/src/components';
 
 /**
  * Returns a function that returns the path to an asset in the build folder, using the manifest for cache busting
@@ -51,7 +52,6 @@ const getAbsoluteUrl = (relativeUrl) => (
  * Defines metadata used to create the title and the meta tags.
  */
 export interface MetaData {
-    title : string
     path: string
     author : string
     description : string
@@ -76,9 +76,11 @@ export function serverRender(req, res, meta: MetaData, data? : Partial<AppState>
                 <PortfolioSite/>
             </StaticRouter>
         </Provider>);
+    const title = DocumentTitle.rewind()
 
     res.render('base.html', { 
         renderedHtml: html, 
+        title: title,
         meta: meta,
         initialState: store.getState(),
         getAsset: getAsset,
@@ -90,5 +92,8 @@ export function serverRender(req, res, meta: MetaData, data? : Partial<AppState>
  * Performs a client side render. Basically just exports the raw template.
  * */
 export function clientRender(req : express.Request, res : express.Response, meta: MetaData) {
-    res.render("base.html", { meta, getAsset, getAbsoluteUrl });
+    res.render("base.html", { 
+        title: "Carlos Fernandez", 
+        meta, getAsset, getAbsoluteUrl
+    });
 }

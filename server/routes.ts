@@ -2,21 +2,20 @@ import * as path from 'path';
 import * as express from 'express';
 import * as fs from 'fs-extra';
 
-import { AsyncRouter } from './lib/asyncrouter'
-import { slugRouteRule  } from './lib/index'
+import { AsyncRouter } from './lib/asyncrouter';
+import { slugRouteRule  } from './lib/index';
 
-import { createSlug } from '../shared/slug'
+import { createSlug } from '../shared/slug';
 import { ApiClient, HttpError } from '../apiclient';
 import { loaded } from '../assets/src/store';
 
-import { MetaData, serverRender, clientRender } from './render'
+import { MetaData, serverRender, clientRender } from './render';
 
 
 import * as env from './environment';
 
 const createMeta = (path : string, overrides : Partial<MetaData> = {}) => {
     const defaultMeta : MetaData = {
-        title: "Carlos Fernandez",
         path: null,
         author: "Carlos Fernandez",
         description: "I'm a software developer living in South Florida. " +
@@ -63,8 +62,7 @@ router.getAsync(`/blog/${slugRouteRule('article_id')}`, async (req, res) => {
 // fallback global rendering.
 // This is most likely a 404, so we still use server side rendering
 router.use((req, res) => {
-    // todo: this is triggering on lookups for favicon.png
-    // rethink this? 
+    // todo: check what kind of data is being requested?
     serverRender(req, res, createMeta(req.path));
 });
 

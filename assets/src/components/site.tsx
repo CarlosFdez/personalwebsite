@@ -1,14 +1,15 @@
 import * as React from "react";
 import { withRouter, Route, NavLink, Switch } from 'react-router-dom';
-import { connect, Dispatch } from 'react-redux'
-import { AppState } from '../store';
+import { connect, Dispatch } from 'react-redux';
+import * as DocumentTitle from 'react-document-title';
 
+import { AppState } from '../store';
 import { NotFound, ApplicationError } from './pages/errors';
 import { HomePage } from './pages/home';
 import { BlogPage } from './pages/blog';
 import { BlogArticlePage } from './pages/blogarticle';
 
-import { HttpError } from '../../../apiclient'
+import { HttpError } from '../../../apiclient';
 
 const PortfolioMain = (props) => {
     let error = props.error;
@@ -91,7 +92,9 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps, Portfolio
                     <div className="header-gap"></div>
                 </header>
                 <main>
-                    <PortfolioMain error={error}/>
+                    <DocumentTitle title="Carlos Fernandez">
+                        <PortfolioMain error={error}/>
+                    </DocumentTitle>
                 </main>
                 <footer className="main-footer">
                     <div className="content">

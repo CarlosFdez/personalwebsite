@@ -1,4 +1,6 @@
 import { ApiClient } from '../../../apiclient'
+import { ThunkAction } from 'redux-thunk';
+import { AppState } from './state';
 var api = new ApiClient('/');
 
 export function error(err) {
@@ -9,7 +11,9 @@ export function error(err) {
     }
 }
 
-export function fetchBlogBriefs() {
+type AsyncAction = ThunkAction<Promise<void>, AppState, any>;
+
+export function fetchBlogBriefs() : AsyncAction {
     return async (dispatch) => {
         try {
             let articles = await api.getBlogBriefs();
@@ -23,7 +27,7 @@ export function fetchBlogBriefs() {
     }
 }
 
-export function fetchBlogArticle(id: string) {
+export function fetchBlogArticle(id: string) : AsyncAction {
     return async (dispatch) => {
         try {
             let article = await api.getBlogArticle(id);

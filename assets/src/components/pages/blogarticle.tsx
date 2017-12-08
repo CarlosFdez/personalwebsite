@@ -1,14 +1,15 @@
 import * as React from "react";
-import { connect, Dispatch } from 'react-redux'
+import { connect, Dispatch } from 'react-redux';
 import { RouteComponentProps} from 'react-router';
+import * as DocumentTitle from 'react-document-title';
 
 import { DateLine } from '../common';
 
-import { BlogEntryFull } from '../../../../apiclient'
-import { getIdFromSlug } from '../../../../shared/slug'
+import { BlogEntryFull } from '../../../../apiclient';
+import { getIdFromSlug } from '../../../../shared/slug';
 import { AppState, Loadable } from '../../store';
 
-import { fetchBlogArticle } from '../../store/actions'
+import { fetchBlogArticle } from '../../store/actions';
 
 const BlogArticle = (props : BlogEntryFull) => (
     <section>
@@ -56,7 +57,9 @@ export class BlogArticlePage extends React.Component<BlogArticlePageProps> {
         }
 
         return (
-            <BlogArticle {...this.props.article.data}/>
+            <DocumentTitle title={ this.props.article.data.title }>
+                <BlogArticle {...this.props.article.data}/>
+            </DocumentTitle>
         )
     }
 }
