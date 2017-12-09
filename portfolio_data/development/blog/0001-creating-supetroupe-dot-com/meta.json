@@ -1,4 +1,10 @@
 {
     "title": "Building the portfolio",
-    "published": "2017-11-25T18:25:00.000Z"
+    "published": "2017-11-25T18:25:00.000Z",
+    "keywords": [
+        "programming",
+        "react", "reactjs",
+        "typescript",
+        "node"
+    ]
 }

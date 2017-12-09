@@ -11,6 +11,7 @@ export interface BlogEntry {
     localId: string;
     title: string;
     published: Date;
+    keywords: string[];
     brief: string;
 }
 

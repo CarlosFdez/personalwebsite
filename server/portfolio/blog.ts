@@ -131,6 +131,7 @@ export class BlogEngine implements PortfolioItemEngine<BlogEntry, BlogEntryFull>
                 localId: name,
                 title: meta.title,
                 published: new Date(meta.published),
+                keywords: meta.keywords,
                 brief: brief
             };
             console.log(`Imported blog entry ${id} ${name}`);

@@ -53,7 +53,8 @@ router.getAsync(`/blog/${slugRouteRule('article_id')}`, async (req, res) => {
     let id = req.params.article_id;
     var data = await api.getBlogArticle(id);
     let meta = createMeta(`/blog/${createSlug(data._id, data.title)}`, { 
-        description: data.brief
+        description: data.brief,
+        keywords: data.keywords
     });
     
     serverRender(req, res, meta, { article: loaded(data) });
