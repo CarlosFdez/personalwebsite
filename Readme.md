@@ -61,4 +61,4 @@ The portfolio isn't finished yet and is still an ongoing project.
 - It needs to be a better social network bridge. Either updates to the home or a /bridge path needs to be created.
 - Decide if we want to switch to stream rendering. If we do, we have to use some other mechanism for title setting other than `react-document-title`. I'm going to wait for future react versions to see what becomes common practice.
 
-Also, wait to see if the type packages for redux and react-document-title improve. We're not using those because they have certain issues (redux @connect decorator fails, react-document-title doesn't list rewind). 
+Also, wait to see if the @types packages for redux and react-document-title improve. We're not using those because they have certain issues (redux @connect decorator fails, react-document-title doesn't list rewind).
