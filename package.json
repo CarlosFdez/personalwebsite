@@ -58,7 +58,7 @@
     "redux-thunk": "^2.2.0",
     "remarkable": "^1.7.1",
     "rss": "^1.2.2",
-    "ts-node": "^5.0.0",
+    "ts-node": "^4.1.0",
     "typescript": "^2.7.2"
   }
 }
