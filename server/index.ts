@@ -1,22 +1,29 @@
+/**
+ * The main entry point for the server. 
+ * Executing this file will start up the web server, serving
+ * asset files, rendered pages, and portfolio assets.
+ * 
+ * It is recommended to use njinx to server /assets/build and /assets/static.
+ * Doing so will have the user bypass express for loading the asset files.
+ * 
+ * PORT and NODE_ENV are configurable. The port can be supplied by using
+ * yarn run start PORT_NUMBER.
+ */
+
+import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
-import * as path from 'path';
-import * as fs from 'fs';
-import { promisify } from 'util';
+
+import * as env from './environment';
 
 import { Portfolio } from './portfolio';
+
 import routes from './routes';
 import * as apiroutes from './apiroutes';
-
-import { ApiClient } from '../apiclient';
-
-import * as render from './render'
-
-import * as env from './environment'
 import { createAssetRouter } from './portfolio/assetrouter';
 
-// shim to allow async iterators to work on the server
-(<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
+// Load any required polyfills
+import './polyfill';
 
 
 console.log(`Running in ${(env.settings.mode)} mode`);
@@ -56,8 +63,8 @@ let server = app.listen(port, () => {
     console.log();
 });
 
+
 // shut down server on a SIGTERM (normal kill command)
 // or SIGINT (forced kill command)
-process
-    .on('SIGTERM', () => server.close())
-    .on('SIGINT', () => server.close());
+process.on('SIGTERM', () => server.close());
+process.on('SIGINT', () => server.close());

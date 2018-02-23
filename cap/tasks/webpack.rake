@@ -2,7 +2,7 @@ namespace :webpack do
     task :build do
         desc "Runs a webpack build, populating assets/build locally"
 
-        sh 'npm run build'
+        sh 'yarn run build'
     end
 
     task :upload do

@@ -1,32 +1,12 @@
 import * as React from "react";
-import { withRouter, Route, NavLink, Switch } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { connect, Dispatch } from 'react-redux';
 import * as DocumentTitle from 'react-document-title';
 
 import { AppState } from '../store';
-import { NotFound, ApplicationError } from './pages/errors';
-import { HomePage } from './pages/home';
-import { BlogPage } from './pages/blog';
-import { BlogArticlePage } from './pages/blogarticle';
+import { AppRouter } from './routes'
 
 import { HttpError } from '../../../apiclient';
-
-const PortfolioMain = (props) => {
-    let error = props.error;
-    if (error && error['statusCode'] == 404) {
-        return <NotFound/>;
-    } else if (error) {
-        return <ApplicationError/>;
-    }
-
-    return (
-        <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/blog" component={BlogPage}/>
-            <Route path="/blog/:id" component={BlogArticlePage}/>
-            <Route component={NotFound}/>
-        </Switch>);
-}
 
 interface PortfolioSiteProps {
     error?: any
@@ -42,8 +22,11 @@ interface PortfolioSiteState {
     loading: boolean
 }
 
-// without withRouter, connect prevents react-router from working...
-@withRouter
+/** 
+ * The main component of the site. 
+ * This component displays navigations and the subcomponents that define pages.
+ */
+@(withRouter as any)
 @connect((state : AppState) => ({ error: state.error }))
 export class PortfolioSite extends React.Component<PortfolioSiteProps, PortfolioSiteState> {
     header: HTMLDivElement;
@@ -93,7 +76,7 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps, Portfolio
                 </header>
                 <main>
                     <DocumentTitle title="Carlos Fernandez">
-                        <PortfolioMain error={error}/>
+                        <AppRouter error={error}/>
                     </DocumentTitle>
                 </main>
                 <footer className="main-footer">

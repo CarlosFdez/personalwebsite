@@ -4,10 +4,10 @@ The code behind my personal site.
 It consists of a node.js server running express to render a frontend packaged by webpack. Server side rendering is used to support site indexers. Portfolio data is indexed and cached using MongoDB.
 
 ## How to run
-If for whatever ~~odd~~ reason you want to use my portfolio engine, you can start by opening a terminal in the project root and using `npm install`. Make sure a mongodb server is set up accessible from 	`localhost:27017/personalwebsite`. You can do this by making sure mongod is in your path and running `mongod --dbpath path/to/personalwebsite.`
+If for whatever ~~odd~~ reason you want to use my portfolio engine, you can start by opening a terminal in the project root and running `yarn`. Make sure a mongodb server is set up and accessible from `localhost:27017/personalwebsite`. You can do this by making sure mongod is in your path and running `mongod --dbpath path/to/personalwebsite.`
 
 ### Commands
-The following are the supported npm commands. A command can be executed by running `npm run <nameofcommand>`. 
+The following are the supported npm commands. A command can be executed by running `yarn run <nameofcommand>`. 
 - **build-dev**: (*Development*) Executes webpack to compile the contents of assets/src, and dumps the results in assets/build. It watches for changes and recompiles if that's the case.
 - **debug**: (*Development*) Runs the server, but opens the debugger on a separate port
 - **start**: (*Production*) Runs the server to begin serving files.
@@ -15,7 +15,7 @@ The following are the supported npm commands. A command can be executed by runni
 - **portfolio *env***: (*All*) Indexes the portfolio data. The argument *env* dictates which subfolder of portfolio_data to import. Building the portfolio needs to be done every time data is changed. MongoDB needs to be installed in order for it to work.
 
 ### Running in Development mode
-First build the portfolio for dev mode by running `npm run portfolio development`. Afterwards , build-dev and debug need to be running in two separate terminal windows. Have two terminals open and use `npm run build-dev` in one to build assets and `npm run start` in the other to run the express server.
+First build the portfolio for dev mode by running `yarn run portfolio development`. Afterwards , build-dev and debug need to be running in two separate terminal windows. Have two terminals open and use `yarn run build-dev` in one to build assets and `yarn run start` in the other to run the express server.
 
 Afterwards open a web browser at `127.0.0.1:5000` to view it in all its glory.
 

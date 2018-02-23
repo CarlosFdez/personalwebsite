@@ -1,3 +1,12 @@
+/**
+ * This file defines the server side routes, which are executed
+ * the first time a visitor loads a page. There is where initial data
+ * is loaded, and server side rendering begins.
+ * 
+ * The rest of the routing is deferred to assets/src/components/routes.tsx,
+ * which is the client side routing.
+ */
+
 import * as path from 'path';
 import * as express from 'express';
 import * as fs from 'fs-extra';

@@ -7,7 +7,7 @@ namespace :build do
         desc "Runs npm install to setup and update dependencies"
         on roles :all do
             within release_path do
-                execute :npm, 'install', '--production', '--silent', '--no-progress'
+                execute :yarn, '--production', '--silent', '--no-progress'
             end
         end
     end
@@ -20,7 +20,7 @@ namespace :build do
                 # later on we will link to a separate repository for portfolio data
                 execute "ln", "-sf", "development", "portfolio_data/production"
 
-                execute :npm, :run, :portfolio, :production
+                execute :yarn, :run, :portfolio, :production
             end
         end
     end

@@ -2,7 +2,7 @@
  * Defines code compiled by webpack and imported by the browser.
  * The output gets exported to the build folder.
  * 
- * Do not import this code from the server side. 
+ * Do not import this file from the server side. 
  * Import the components directly for server side rendering.
  * 
  * Gets exported as app.js
@@ -43,8 +43,8 @@ let store = createStore(
 const supportsHistory = 'pushState' in window.history;
 
 // This is the client side start script, so we use a client side router
-// ConnectedRouter is the normal one - used to capture navigation
-// BrowserRouter is a fallback for forced refreshing
+// ConnectedRouter is the normal one - used to capture navigation events
+// BrowserRouter is a fallback for forced refreshing on older browsers
 if (supportsHistory) {
     ReactDOM.hydrate(
         <Provider store={store}>
