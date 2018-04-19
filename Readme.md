@@ -8,10 +8,11 @@ If for whatever ~~odd~~ reason you want to use my portfolio engine, you can star
 
 ### Commands
 The following are the supported npm commands. A command can be executed by running `yarn run <nameofcommand>`. 
-- **build-dev**: (*Development*) Executes webpack to compile the contents of assets/src, and dumps the results in assets/build. It watches for changes and recompiles if that's the case.
-- **debug**: (*Development*) Runs the server, but opens the debugger on a separate port
-- **start**: (*Production*) Runs the server to begin serving files.
 - **build**: (*Production*) Executes webpack to compile the contents of assets/src, and dumps the results in assets/build.  
+- **build-dev**: (*Development*) Executes webpack to compile the contents of assets/src, and dumps the results in assets/build. It watches for changes and recompiles if that's the case.
+- **start**: (*Production*) Runs the server to begin serving files.
+- **start-dev**: (*Development*) Runs the server to begin serving files.
+- **debug**: (*Development*) Runs the server, but opens the debugger on a separate port.
 - **portfolio *env***: (*All*) Indexes the portfolio data. The argument *env* dictates which subfolder of portfolio_data to import. Building the portfolio needs to be done every time data is changed. MongoDB needs to be installed in order for it to work.
 
 ### Running in Development mode

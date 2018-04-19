@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production ./node_modules/.bin/ts-node server/index.ts",
+    "start-dev": "./node_modules/.bin/ts-node server/index.ts",
     "debug": "./node_modules/.bin/ts-node --inspect-brk=9229 server/index.ts",
     "build": "./node_modules/.bin/webpack --config webpack.prod.js",
     "build-dev": "./node_modules/.bin/webpack --watch --config webpack.dev.js",
