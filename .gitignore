@@ -6,3 +6,4 @@ node_modules/
 assets/build/
 webpack-manifest.json
 rss.xml
+_mongodata/
