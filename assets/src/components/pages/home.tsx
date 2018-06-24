@@ -36,7 +36,7 @@ export const HomePage = () => (
         <section>
             <div className="content">
                 <p>
-                    I'm a software developer living in South Florida.
+                    I am a full stack software developer living in South Florida.
                     I enjoy learning new things, but above all I love making tools and experiences for people.
                     When I'm not programming, I'm playing video games or making stupid videos about them.
                 </p>
@@ -66,9 +66,9 @@ export const HomePage = () => (
                         Look at the <em>about</em> section for more information.
                     </Project>
                     <Project name="VideoCrop" href="https://carlosfdez.github.io/videocrop/">
-                        A graphical tool I created to assist with my video editing hobby.
-                        Used to preview footage and cut on keyframes to avoid losing quality due to generational loss.
-                        This allows me to reduce the footage I need to examine during the editing phase, and reduce my hard disk usage as a bonus.
+                        A graphical tool I created to preview and crop videos. 
+                        All cutting is performed on keyframes to avoid quality loss.
+                        This reduces the footage I need to examine during the editing phase.
                         Written in <em>C++</em> and <em>Qt</em>.
                     </Project>
                     <Project name="SpueBox" href="https://github.com/CarlosFdez/SpueBox">
@@ -90,9 +90,20 @@ export const HomePage = () => (
                     These are a few of the projects I've contributed to. Click on any to view it.
                 </p>
                 <ProjectList>
-                    <Project name="MonsterHunter4UDatabase" href="https://github.com/kamegami13/MonsterHunter4UDatabase">
-                        Added a universal search to an existing Android application written in Java that provides data about
-                        the game <em>Monster Hunter 4 Ultimate</em>. Also contributed a few other bug fixes and tweaks.
+                    <Project name="Monster Hunter World Data" href="https://github.com/gatheringhallstudios/MHWorldData">
+                        Spearheaded a data collection project for an upcoming <em>Monster Hunter World</em> application.
+                        Assembles multiple spreadsheets into a SQLite file, with support for localization.
+                        Written in Python, using SQLAlchemy and Marshmallow for persistance and validation.
+                    </Project>
+                    <Project name="MHW Database" href="https://github.com/gatheringhallstudios/MHWorldDatabase">
+                        An in-progress Android application for the game <em>Monster Hunter World</em> to assist
+                        players with finding item locations and optimal equipment. 
+                        Written in Kotlin using the Android Architecture Components.
+                    </Project>
+                    <Project name="MH4U Database" href="https://github.com/kamegami13/MonsterHunter4UDatabase">
+                        Contributed to a successful Android application with 4.7 stars and 100k+ downloads,
+                        that provides data about the game the game <em>Monster Hunter 4 Ultimate</em>.
+                        Largest contribution was a universal search feature.
                     </Project>
                     <Project name="PokeBattle Sim" href="https://github.com/sarenji/pokebattle-sim">
                         Participated in the development of a Pokemon battle system simulator for quick online matches and teambuilding.
