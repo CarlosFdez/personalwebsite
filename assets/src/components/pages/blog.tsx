@@ -39,10 +39,6 @@ export class BlogPage extends React.Component<BlogPageProps> {
         this.tryLoadArticles();
     }
 
-    componentDidUpdate() {
-        this.tryLoadArticles();
-    }
-
     tryLoadArticles() {
         if (!this.props.articles.loaded) {
             this.props.dispatch(fetchBlogBriefs());

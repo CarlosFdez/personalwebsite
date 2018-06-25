@@ -40,10 +40,6 @@ export class BlogArticlePage extends React.Component<BlogArticlePageProps> {
         this.tryLoadArticle();
     }
 
-    componentDidUpdate() {
-        this.tryLoadArticle();
-    }
-
     tryLoadArticle() {
         if (!this.props.article.loaded) {
             let id = this.props.match.params['id'];
