@@ -1,5 +1,6 @@
 import { loaded, initialState, AppState } from './state'
 import { animatedScrollTo } from '../js/scroll'
+import { RouterState } from 'connected-react-router';
 
 // this is from react-router-redux and is used when a new page loads
 const LOCATION_CHANGED = '@@router/LOCATION_CHANGE';
@@ -8,11 +9,17 @@ const LOCATION_CHANGED = '@@router/LOCATION_CHANGE';
 export const reducer = (state=initialState, action) : AppState => {
     switch (action.type) {
         case LOCATION_CHANGED:
-            let path : string = action.payload.location.pathname;
+            let payload = action.payload as RouterState;
+            let path : string = payload.location.pathname;
 
             // if the path is the same, perform a scroll to top
             if (path == state.currentPath) {
                 animatedScrollTo(0, 0.1);
+            }
+
+            // If we're navigating to a new page, scroll to top
+            if (payload.action == "PUSH") {
+                window.scrollTo(0, 0);
             }
 
             // restore initial state whenever a page loads
