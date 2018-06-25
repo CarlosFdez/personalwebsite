@@ -18,7 +18,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 
-import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux'
+import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import createHistory from 'history/createBrowserHistory'
 
 // ... then import our own stuff for the webpack
@@ -36,7 +36,7 @@ const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
 let store = createStore(
-    reducer,
+    connectRouter(history)(reducer),
     preloadedState,
     applyMiddleware(thunk, historyMiddleware, logger));
 

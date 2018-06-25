@@ -9,7 +9,8 @@ import { Route, Switch } from 'react-router-dom';
 
 /**
  * Defines the routing that the website uses.
- * Must be used in a component marked by "withRouter"
+ * Must be used in a component marked by "withRouter".
+ * This component does not include the <Router>. You'll have to wrap it with one.
  */
 export function AppRouter(props) {
     let error = props.error;
