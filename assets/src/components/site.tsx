@@ -25,6 +25,7 @@ interface PortfolioSiteState {
 /** 
  * The main component of the site. 
  * This component displays navigations and the subcomponents that define pages.
+ * Wrap this component in a router so that routing can function.
  */
 @(withRouter as any)
 @connect((state : AppState) => ({ error: state.error }))
@@ -37,8 +38,8 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps, Portfolio
     }
 
     componentDidMount() {
-        this.testScrolling();
-        window.addEventListener('scroll', this.testScrolling.bind(this));
+        this.checkIsScrolling();
+        window.addEventListener('scroll', this.checkIsScrolling.bind(this));
 
         // once we're done remove "loading" at the very end of everything.
         window.setTimeout(() => {
@@ -47,10 +48,14 @@ export class PortfolioSite extends React.Component<PortfolioSiteProps, Portfolio
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.testScrolling);
+        window.removeEventListener('scroll', this.checkIsScrolling);
     }
-
-    testScrolling() {
+    
+    /**
+     * Function that checks if we are scrolling, 
+     * updating the state to reflect it.
+     */
+    checkIsScrolling() {
         let scrolling = window.scrollY > 0;
         this.setState({ ...this.state, scrolling: scrolling });
     }
