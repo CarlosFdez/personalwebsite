@@ -10,7 +10,8 @@ let client : MongoClient;
 
 let options : Partial<MongoClientOptions> = {
     connectTimeoutMS: 5000,
-    reconnectTries: 4
+    reconnectTries: 4,
+    useNewUrlParser: true
 };
 
 /**
@@ -19,7 +20,7 @@ let options : Partial<MongoClientOptions> = {
  * @param retries Number of times to retry. Negative avoids reconstructing the connection pool.
  */
 export async function connect(retries=0) : Promise<Db> {
-    if (!client || !client.isConnected(dbName)) {
+    if (!client || !client.isConnected()) {
         client = null;
         
         if (retries < 0) {
@@ -47,5 +48,6 @@ function close() {
 }
 
 // idea came from https://github.com/alaingalvan/alain.xyz/blob/53a29be04ffa66d0be4513cc9f6a427d4f769910/packages/backend/src/db.ts
+// close the connection automatically when the server closes
 process.on('SIGTERM', close)
 process.on('SIGINT', close);

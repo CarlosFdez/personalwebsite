@@ -4,7 +4,7 @@ The code behind my personal site.
 It consists of a node.js server running express to render a frontend packaged by webpack. Server side rendering is used to support site indexers. Portfolio data is indexed and cached using MongoDB.
 
 ## How to run
-If for whatever ~~odd~~ reason you want to use my portfolio engine, you can start by opening a terminal in the project root and running `yarn`. Make sure a mongodb server is set up and accessible from `localhost:27017/personalwebsite`. You can do this by making sure mongod is in your path and running `mongod --dbpath path/to/personalwebsite.`
+If for whatever ~~odd~~ reason you want to use my portfolio engine, you can start by opening a terminal in the project root and running `yarn`. Make sure a mongodb server is set up and accessible from `localhost:27017/personalwebsite`. You can do this by making sure mongod is in your path and running `mongod --dbpath path/to/personalwebsite`. Make sure the folder exists before running the command.
 
 ### Commands
 The following are the supported npm commands. A command can be executed by running `yarn run <nameofcommand>`. 

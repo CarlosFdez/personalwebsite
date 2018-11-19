@@ -11,7 +11,7 @@ export function error(err) {
     }
 }
 
-type AsyncAction = ThunkAction<Promise<void>, AppState, any>;
+type AsyncAction = ThunkAction<Promise<void>, AppState, void, any>;
 
 export function fetchBlogBriefs() : AsyncAction {
     return async (dispatch) => {

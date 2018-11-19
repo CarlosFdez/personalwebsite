@@ -22,10 +22,6 @@ import routes from './routes';
 import * as apiroutes from './apiroutes';
 import { createAssetRouter } from './portfolio/assetrouter';
 
-// Load any required polyfills
-import './polyfill';
-
-
 console.log(`Running in ${(env.settings.mode)} mode`);
 
 const app = express();
