@@ -5,7 +5,7 @@ import { BlogArticlePage } from './pages/blogarticle';
 
 import { NotFound, ApplicationError } from './pages/errors';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
 /**
  * Defines the routing that the website uses.

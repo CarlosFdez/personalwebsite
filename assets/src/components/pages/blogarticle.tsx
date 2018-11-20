@@ -1,5 +1,6 @@
 import * as React from "react";
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { RouteComponentProps} from 'react-router';
 import * as DocumentTitle from 'react-document-title';
 
@@ -28,34 +29,38 @@ interface BlogArticlePageProps extends RouteComponentProps<any> {
     dispatch: Dispatch<any>
 }
 
-@connect(
+/**
+ * Component class for the blog page used to load and display an article
+ */
+export const BlogArticlePage = connect(
     (state : AppState) => ({ article: state.article })
+) (
+    class BlogArticlePage extends React.Component<BlogArticlePageProps> {
+        constructor(props) {
+            super(props);
+        }
+
+        componentDidMount() {
+            this.tryLoadArticle();
+        }
+
+        tryLoadArticle() {
+            if (!this.props.article.loaded) {
+                let id = this.props.match.params['id'];
+                this.props.dispatch(fetchBlogArticle(id));
+            }
+        }
+
+        render() {
+            if (!this.props.article.loaded) {
+                return null;
+            }
+
+            return (
+                <DocumentTitle title={ this.props.article.data.title }>
+                    <BlogArticle {...this.props.article.data}/>
+                </DocumentTitle>
+            )
+        }
+    }
 )
-export class BlogArticlePage extends React.Component<BlogArticlePageProps> {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-        this.tryLoadArticle();
-    }
-
-    tryLoadArticle() {
-        if (!this.props.article.loaded) {
-            let id = this.props.match.params['id'];
-            this.props.dispatch(fetchBlogArticle(id));
-        }
-    }
-
-    render() {
-        if (!this.props.article.loaded) {
-            return null;
-        }
-
-        return (
-            <DocumentTitle title={ this.props.article.data.title }>
-                <BlogArticle {...this.props.article.data}/>
-            </DocumentTitle>
-        )
-    }
-}

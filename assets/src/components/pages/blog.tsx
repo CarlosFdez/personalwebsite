@@ -1,5 +1,6 @@
 import * as React from "react";
-import { connect, Dispatch } from 'react-redux'
+import { Dispatch } from 'redux'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 
 import { DateLine } from '../common'
@@ -26,38 +27,42 @@ interface BlogPageProps {
     dispatch: Dispatch<any>
 }
 
-@connect(
+/**
+ * Component class for a list of blog articles
+ */
+export const BlogPage = connect(
     (state : AppState) => ({ articles: state.articleList }),
+) (
+    class BlogPage extends React.Component<BlogPageProps> {
+        constructor(props) {
+            super(props);
+            console.log(props);
+        }
+    
+        componentDidMount() {
+            this.tryLoadArticles();
+        }
+    
+        tryLoadArticles() {
+            if (!this.props.articles.loaded) {
+                this.props.dispatch(fetchBlogBriefs());
+            }
+        }
+    
+        render() {
+            if (!this.props.articles.loaded) {
+                return null;
+            }
+    
+            let data = this.props.articles.data
+            let briefs = (data || []).map((item) => (
+                <BlogBrief key={item._id} {...item}/>
+            ));
+            return (
+                <div className="article-list">
+                    { briefs }
+                </div>
+            )
+        }
+    }
 )
-export class BlogPage extends React.Component<BlogPageProps> {
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
-
-    componentDidMount() {
-        this.tryLoadArticles();
-    }
-
-    tryLoadArticles() {
-        if (!this.props.articles.loaded) {
-            this.props.dispatch(fetchBlogBriefs());
-        }
-    }
-
-    render() {
-        if (!this.props.articles.loaded) {
-            return null;
-        }
-
-        let data = this.props.articles.data
-        let briefs = (data || []).map((item) => (
-            <BlogBrief key={item._id} {...item}/>
-        ));
-        return (
-            <div className="article-list">
-                { briefs }
-            </div>
-        )
-    }
-}
