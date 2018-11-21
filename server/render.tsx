@@ -65,10 +65,10 @@ export interface MetaData {
  * @param res 
  */
 export function serverRender(req, res, meta: MetaData, data? : Partial<AppState>) {
-    var ctx = data || {};
+    var ctx = {};
 
     let state : AppState = {...initialState, ...data};
-    let store = createStore<AppState>(reducer, state);
+    let store = createStore(reducer, state);
     
     const html = renderToString(
         <Provider store={store}>
