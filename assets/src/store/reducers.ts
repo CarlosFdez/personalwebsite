@@ -1,16 +1,22 @@
 import { loaded, initialState, AppState } from './state'
 import { animatedScrollTo } from '../js/scroll'
 import { RouterState } from 'connected-react-router';
-
-// this is from react-router-redux and is used when a new page loads
-const LOCATION_CHANGED = '@@router/LOCATION_CHANGE';
+import { ActionTypes } from './actions';
 
 // todo: Split this up if this gets big (can't use combine reducers, it forces a structure)
 export const reducer = (state=initialState, action) : AppState => {
     switch (action.type) {
-        case LOCATION_CHANGED:
+        case ActionTypes.INITIALIZED:
+            return { ...state, finishedInitialLoad: true };
+        
+        case ActionTypes.LOCATION_CHANGED:
             let payload = action.payload as RouterState;
             let path : string = payload.location.pathname;
+
+            // If initial load hasn't finished, update the path and nothing else.
+            if (!state.finishedInitialLoad) {
+                return { ...state, currentPath: path };
+            }
 
             // if the path is the same, perform a scroll to top
             if (path == state.currentPath) {
@@ -23,16 +29,20 @@ export const reducer = (state=initialState, action) : AppState => {
             }
 
             // restore initial state whenever a page loads
-            return { ...initialState, currentPath: path };
+            // We must also set finished initial load in this scenario
+            return {
+                ...initialState, 
+                currentPath: path,
+                finishedInitialLoad: true };
 
-        case "ERROR":
+        case ActionTypes.ERROR:
             // todo: check that we were on the page that created the error
             return { ...state, error: action.data };
 
-        case "ARTICLE_LIST_LOADED":
+        case ActionTypes.ARTICLE_LIST_LOADED:
             return { ...state, articleList: loaded(action.data) };
 
-        case "ARTICLE_LOADED":
+        case ActionTypes.ARTICLE_LOADED:
             return { ...state, article: loaded(action.data) };
 
         default: 

@@ -32,6 +32,9 @@ export interface AppState {
     articleList: Loadable<api.BlogEntry[]> 
 }
 
+// todo: initialState from server should be finishedInitialLoad = false,
+// but from client should be finishedInitialLoad = true. Come up with solution.
+
 /**
  * A constant initial state for the application.
  * All changes are mutations of this instance.

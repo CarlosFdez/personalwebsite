@@ -24,16 +24,22 @@ import createHistory from 'history/createBrowserHistory'
 // ... then import our own stuff for the webpack
 import './css';
 import { PortfolioSite } from "./components";
-import { reducer } from "./store";
+import { reducer, AppState } from "./store";
+import { notifyInitialized } from './store/actions';
 
 
 // Grab the state from the serverside injected global variable, and then allow garbage collection
 // http://redux.js.org/docs/recipes/ServerRendering.html
-const preloadedState = window['__PRELOADED_STATE__'];
+const preloadedState: AppState = {
+    finishedInitialLoad: false,
+    ...window['__PRELOADED_STATE__'] };
 delete window['__PRELOADED_STATE__'];
 
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
+
+console.log("Preloaded state: ");
+console.log(preloadedState);
 
 let store = createStore(
     connectRouter(history)(reducer),
@@ -63,3 +69,6 @@ if (supportsHistory) {
         document.getElementById("website-root"), () => {});
 }
 
+// Load complete, dispatch initialized signal
+console.log("Finished hydration, sending initialization complete signal...");
+store.dispatch(notifyInitialized())
