@@ -71,16 +71,14 @@ export interface MetaData {
  * @param req 
  * @param res 
  */
-export function serverRender(req, res, meta: MetaData, data? : Partial<PortfolioState>) {
-    var ctx = {};
+export function serverRender(req, res: express.Response, meta: MetaData, data? : Partial<PortfolioState>) {
+    var ctx: any = {};
 
     let portfolioState = { ...initialPortfolioState, ...data }
     let state : AppState = {...initialState, portfolio: portfolioState};
 
     let history = createMemoryHistory({initialEntries: [req.url]});
     let store = createStore(createRootReducer(history), state);
-
-    console.log(state);
     
     const html = renderToString(
         <Provider store={store}>
@@ -89,6 +87,11 @@ export function serverRender(req, res, meta: MetaData, data? : Partial<Portfolio
             </StaticRouter>
         </Provider>);
     const title = DocumentTitle.rewind()
+
+    // is404 is populated by the NotFound component
+    if (ctx.is404) {
+        res.status(404);
+    }
 
     res.render('base.html', { 
         renderedHtml: html, 

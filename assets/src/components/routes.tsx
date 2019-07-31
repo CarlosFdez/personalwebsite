@@ -1,6 +1,7 @@
 import * as React from "react";
 import { HomePage } from './home';
 import { BlogPage, BlogArticlePage } from './blog';
+import { NotFound } from './NotFound';
 
 import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
@@ -10,17 +11,6 @@ const ApplicationError = () => (
         <p>
             Unfortunately it seems something broke.
         </p>
-    </section>
-)
-
-const NotFound = () => (
-    <section className="content">
-        <h1>Page not found</h1>
-        <p>
-            It seems you may have taken a wrong turn, or were led into a dead end.<br/>
-            I suggest <a href="javascript:history.back()">going back the way you came.</a>
-        </p>
-        <p>Officially we call this a 404 error...</p>
     </section>
 )
 
