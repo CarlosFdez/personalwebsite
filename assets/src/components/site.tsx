@@ -2,6 +2,7 @@ import * as React from "react";
 import { withRouter, NavLink, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as DocumentTitle from 'react-document-title';
+import { hot } from 'react-hot-loader'
 
 import { AppState } from '../store';
 import { AppRouter } from './routes'
@@ -27,7 +28,7 @@ interface PortfolioSiteState {
  * This component displays navigations and the subcomponents that define pages.
  * Wrap this component in a router so that routing can function.
  */
-export const PortfolioSite = withRouter<any>(connect((state : AppState) => ({ error: state.error })) (
+export const PortfolioSite = hot(module)(withRouter(connect((state : AppState) => ({ error: state.portfolio.error })) (
     class PortfolioSite extends React.Component<PortfolioSiteProps, PortfolioSiteState> {
         header: HTMLDivElement;
     
@@ -99,4 +100,4 @@ export const PortfolioSite = withRouter<any>(connect((state : AppState) => ({ er
             );
         }
     }
-))
+)));

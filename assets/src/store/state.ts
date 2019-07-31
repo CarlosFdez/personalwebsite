@@ -1,4 +1,5 @@
 import * as api from '../../../apiclient'
+import { RouterState } from 'connected-react-router';
 
 /**
  * Simple object that resolves to "data" and "loaded"
@@ -12,10 +13,7 @@ export function loaded<T>(data : T) {
     return new Loadable<T>(data, true);
 }
 
-/**
- * Defines a structure for the state of the application
- */
-export interface AppState {
+export interface PortfolioState {
     error: any
 
     /** 
@@ -32,18 +30,32 @@ export interface AppState {
     articleList: Loadable<api.BlogEntry[]> 
 }
 
+/**
+ * Defines a structure for the state of the application
+ */
+export interface AppState {
+    router: RouterState,
+    portfolio: PortfolioState
+}
+
 // todo: initialState from server should be finishedInitialLoad = false,
 // but from client should be finishedInitialLoad = true. Come up with solution.
 
-/**
- * A constant initial state for the application.
- * All changes are mutations of this instance.
- */
-export const initialState : AppState = {
+
+export const initialPortfolioState: PortfolioState = {
     error: null,
     finishedInitialLoad: false,
     currentPath: '',
     
     article: new Loadable(null),
     articleList: new Loadable(null)
+}
+
+/**
+ * A constant initial state for the application.
+ * All changes are mutations of this instance.
+ */
+export const initialState : AppState = {
+    router: undefined,
+    portfolio: initialPortfolioState
 }

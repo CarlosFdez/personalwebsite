@@ -31,7 +31,7 @@ interface BlogPageProps {
  * Component class for a list of blog articles
  */
 export const BlogPage = connect(
-    (state : AppState) => ({ articles: state.articleList }),
+    (state : AppState) => ({ articles: state.portfolio.articleList }),
 ) (
     class BlogPage extends React.Component<BlogPageProps> {
         constructor(props) {
