@@ -30,16 +30,19 @@ const app = express();
 
 // In development mode, run and build webpack, and enable HMR (hot reloading)
 if (!isProduction) {
-    var webpackConfig = require('../webpack.dev');
+    const devMiddleware = require('webpack-dev-middleware');
+    const hotMiddleware = require('webpack-hot-middleware');
+
+    var webpackConfig = require('../webpack.config')({ mode: env.settings.mode });
     var compiler = webpack(webpackConfig);
     console.log("Loaded webpack config");
     
     // Enable hot module reloading (HMR)
-    app.use(require('webpack-dev-middleware')(compiler, {
+    app.use(devMiddleware(compiler, {
         noInfo: true, 
         publicPath: webpackConfig.output.publicPath
     }))
-    app.use(require('webpack-hot-middleware')(compiler));
+    app.use(hotMiddleware(compiler));
     console.log("Enabled hot module reloading");
 }
 

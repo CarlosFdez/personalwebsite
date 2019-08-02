@@ -39,8 +39,7 @@ function createAssetLoader(manifestLocation) {
     }
 
     return function getAsset(filename : string) {
-        filename = assetMap[filename] || filename;
-        return `/assets/build/${filename}`;
+        return assetMap[filename] || `/assets/build/${filename}`;
     }
 }
 
@@ -52,7 +51,7 @@ const getAsset = createAssetLoader(path.join(__dirname, '../assets/webpack-manif
  */
 const getAbsoluteUrl = (relativeUrl) => (
     url.resolve("http://supetroupe.com", relativeUrl)
-); 
+);
 
 
 /**

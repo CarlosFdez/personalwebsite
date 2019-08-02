@@ -78,16 +78,4 @@ render(PortfolioSite);
 
 // Load complete, dispatch initialized signal
 console.log("Finished hydration, sending initialization complete signal...");
-store.dispatch(notifyInitialized())
-
-// This is needed for Hot Module Replacement
-// Note: We do module as any because of "Property 'hot' does not exist on type 'NodeModule'."
-// The above error does not happen on initial compile, only recompilations...
-if ((module as any).hot) {
-    // note: THIS FAILS if 'webpack-hot-middleware/client' is not enabled in webpack
-    console.log("Preparing hot module reloading");
-    (module as any).hot.accept('./components', () => {
-        console.log("Re-rendering site using new main site component");
-        render(require("./components").PortfolioSite);
-    });
-}
+store.dispatch(notifyInitialized());
