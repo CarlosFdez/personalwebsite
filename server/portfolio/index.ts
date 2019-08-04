@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as RSS from 'rss';
 import * as fs from 'fs-extra';
 
-import { PortfolioItemEngine, PortfolioAsset } from './types';
 import { BlogEngine } from './blog';
 import * as env from '../environment';
 

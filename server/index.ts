@@ -13,6 +13,7 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
+import * as webpack from 'webpack';
 
 import * as env from './environment';
 
@@ -22,13 +23,28 @@ import routes from './routes';
 import * as apiroutes from './apiroutes';
 import { createAssetRouter } from './portfolio/assetrouter';
 
-// Load any required polyfills
-import './polyfill';
-
-
+const isProduction = env.settings.mode == env.Mode.Production
 console.log(`Running in ${(env.settings.mode)} mode`);
 
 const app = express();
+
+// In development mode, run and build webpack, and enable HMR (hot reloading)
+if (!isProduction) {
+    const devMiddleware = require('webpack-dev-middleware');
+    const hotMiddleware = require('webpack-hot-middleware');
+
+    var webpackConfig = require('../webpack.config')({ mode: env.settings.mode });
+    var compiler = webpack(webpackConfig);
+    console.log("Loaded webpack config");
+    
+    // Enable hot module reloading (HMR)
+    app.use(devMiddleware(compiler, {
+        noInfo: true, 
+        publicPath: webpackConfig.output.publicPath
+    }))
+    app.use(hotMiddleware(compiler));
+    console.log("Enabled hot module reloading");
+}
 
 // initialize basic routing. Route these with njinx instead for better performance
 const assetRoot = path.join(__dirname, '../assets/');

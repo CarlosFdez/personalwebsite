@@ -23,13 +23,13 @@ import { MetaData, serverRender, clientRender } from './render';
 
 import * as env from './environment';
 
+// Creates meta data that will then be applied to meta tags on the server render
 const createMeta = (path : string, overrides : Partial<MetaData> = {}) => {
     const defaultMeta : MetaData = {
         path: null,
         author: "Carlos Fernandez",
         description: "I'm a software developer living in South Florida. " +
-            "I enjoy learning new things, but above all I love making tools and experiences for people. " +
-            "When I'm not programming, I'm playing video games or making stupid videos about them.",
+            "I enjoy learning new things, but above all I love making tools and experiences. ",
         keywords: ['programmer'],
         websiteName: "Carlos Fernandez"
     };

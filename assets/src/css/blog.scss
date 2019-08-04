@@ -1,4 +1,4 @@
-// BLOG SPECIFIC RULES
+// Blog system styles and includes
 
 @import '_variables';
 @import '_mixins';
@@ -77,5 +77,19 @@
 
     img {
         max-width: 100%;
+    }
+}
+
+.article-sidebar {
+    left: 100%;
+    position: relative;
+
+    .sidebar-contents {
+        position: absolute; /* used to avoid shifting content */
+        top: 0!important;
+    }
+
+    .sidebar-contents.scrolling {
+        position: fixed;
     }
 }

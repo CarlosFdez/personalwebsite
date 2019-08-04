@@ -10,7 +10,10 @@ import { createStore } from "redux";
 import { Provider } from 'react-redux';
 import * as DocumentTitle from 'react-document-title';
 
-import { AppState, reducer, initialState } from "../assets/src/store";
+import * as env from './environment';
+
+import { createMemoryHistory } from 'history';
+import { AppState, PortfolioState, initialState, initialPortfolioState, createRootReducer } from "../assets/src/store";
 import { PortfolioSite } from '../assets/src/components';
 
 /**
@@ -18,22 +21,25 @@ import { PortfolioSite } from '../assets/src/components';
  * @param manifestLocation
  */
 function createAssetLoader(manifestLocation) {
-    // loads the manifest data synchronously.
+    // loads the manifest data synchronously..
     // Manifest data lets us capture the hash for cache busting
     var assetMap = {};
 
-    try {
-        let data = fs.readFileSync(manifestLocation, 'utf8');
-        assetMap = JSON.parse(data);
-        console.log("loaded webpack manifest for asset mapping");
-    } catch (err) {
-        console.error("Failed to load webpack manifest for asset mapping");
-        console.error(err);
+    if (env.settings.isProduction) {
+        try {
+            let data = fs.readFileSync(manifestLocation, 'utf8');
+            assetMap = JSON.parse(data);
+            console.log("loaded webpack manifest for asset mapping");
+        } catch (err) {
+            console.error("Failed to load webpack manifest for asset mapping");
+            console.error(err);
+        }
+    } else {
+        console.log("Skipping manifest, unused in development mode");
     }
 
     return function getAsset(filename : string) {
-        filename = assetMap[filename] || filename;
-        return `/assets/build/${filename}`;
+        return assetMap[filename] || `/assets/build/${filename}`;
     }
 }
 
@@ -45,7 +51,7 @@ const getAsset = createAssetLoader(path.join(__dirname, '../assets/webpack-manif
  */
 const getAbsoluteUrl = (relativeUrl) => (
     url.resolve("http://supetroupe.com", relativeUrl)
-); 
+);
 
 
 /**
@@ -64,11 +70,14 @@ export interface MetaData {
  * @param req 
  * @param res 
  */
-export function serverRender(req, res, meta: MetaData, data? : Partial<AppState>) {
-    var ctx = data || {};
+export function serverRender(req, res: express.Response, meta: MetaData, data? : Partial<PortfolioState>) {
+    var ctx: any = {};
 
-    let state : AppState = {...initialState, ...data};
-    let store = createStore<AppState>(reducer, state);
+    let portfolioState = { ...initialPortfolioState, ...data }
+    let state : AppState = {...initialState, portfolio: portfolioState};
+
+    let history = createMemoryHistory({initialEntries: [req.url]});
+    let store = createStore(createRootReducer(history), state);
     
     const html = renderToString(
         <Provider store={store}>
@@ -77,6 +86,11 @@ export function serverRender(req, res, meta: MetaData, data? : Partial<AppState>
             </StaticRouter>
         </Provider>);
     const title = DocumentTitle.rewind()
+
+    // is404 is populated by the NotFound component
+    if (ctx.is404) {
+        res.status(404);
+    }
 
     res.render('base.html', { 
         renderedHtml: html, 

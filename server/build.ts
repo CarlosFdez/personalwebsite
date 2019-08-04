@@ -5,10 +5,6 @@ import * as path from 'path';
 
 import { Portfolio } from './portfolio';
 
-// shim to allow async iterators to work on the server
-(<any>Symbol).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");
-
-
 // All the test methods are deprecated, so we make one here
 // Try catching a lot of code for one little thing is tedious
 async function directoryExists(pathTest : string) {

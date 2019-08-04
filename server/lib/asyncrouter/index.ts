@@ -11,7 +11,7 @@ export * from './types';
 export function wrapHandler(fn: t.AsyncAnyHandler) : RequestHandler {
     return (...args) => {
         let promise = (fn as any)(...args);
-        let next = args[args.length - 1];
+        let next = args[2];
         if (promise) { 
             promise.catch((err) => next(err));
         }

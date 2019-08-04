@@ -1,11 +1,18 @@
 import * as React from "react";
-import { HomePage } from './pages/home';
-import { BlogPage } from './pages/blog';
-import { BlogArticlePage } from './pages/blogarticle';
+import { HomePage } from './home';
+import { BlogPage, BlogArticlePage } from './blog';
+import { NotFound } from './NotFound';
 
-import { NotFound, ApplicationError } from './pages/errors';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
-import { Route, Switch } from 'react-router-dom';
+const ApplicationError = () => (
+    <section className="content">
+        <h1>Error</h1>
+        <p>
+            Unfortunately it seems something broke.
+        </p>
+    </section>
+)
 
 /**
  * Defines the routing that the website uses.
