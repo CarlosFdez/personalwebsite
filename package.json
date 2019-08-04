@@ -70,7 +70,7 @@
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "remarkable": "^1.7.3",
+    "remarkable": "^1.7.4",
     "rss": "^1.2.2",
     "source-map-loader": "^0.2.4",
     "time-fix-plugin": "^2.0.6",
