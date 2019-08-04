@@ -20,7 +20,7 @@ const ProjectList = (props) => (
 )
 
 const Project = (props) => (
-    <a className="project" href={props.href}>
+    <a className="project" href={props.href} target="_blank">
         <span className="project-title">
             {props.name}
             <span className="href">{props.href}</span>
@@ -36,12 +36,9 @@ export const HomePage = () => (
         <section>
             <div className="content">
                 <p>
-                    I am a full stack software developer living in South Florida.
-                    I enjoy learning new things, but above all I love making tools and experiences for people.
-                    When I'm not programming, I'm playing video games or making stupid videos about them.
-                </p>
-                <p>
-                    I learned to program in highschool in 2004, and earned a bachelor's degree in Computer Science in 2013.
+                    I am a full stack software developer living in South Florida. 
+                    I've been programming since 2004, earning my bachelor's degree in Computer Science in 2013.
+                    Recently most of my work has been in either Web or Android development, but I can do a little bit of everything.
                 </p>
                 <div className="social-media-links">
                     <SocialMediaButton name="Github" href="https://github.com/CarlosFdez"/>
@@ -58,27 +55,32 @@ export const HomePage = () => (
             <div className="content">
                 <h2>Personal Programming Projects</h2>
                 <p>
-                    These are a few of the projects I've created. Click on any to view it.
+                    These are a few of the projects I've created.
                 </p>
                 <ProjectList>
+                    <Project name="Computer Vision for Game Stream Broadcasting">
+                        A set of video game broadcasting dashboards and overlays using ReactJS via NodeCG.
+                        Live footage is analyzed by a separate Python process using OpenCV, and the result is communicated via a websocket.
+                        Currently being used for an automated Sekiro death timer and for Smash Bros match analysis.
+                    </Project>
                     <Project name="Portfolio" href="https://github.com/CarlosFdez/personalwebsite">
                         This is the website you're looking at. 
+                        A personal portfolio built using ReactJS and hosted on a DigitalOcean virtual machine.
                         Look at the <em>about</em> section for more information.
                     </Project>
                     <Project name="VideoCrop" href="https://carlosfdez.github.io/videocrop/">
-                        A graphical tool I created to preview and crop videos. 
-                        All cutting is performed on keyframes to avoid quality loss.
-                        This reduces the footage I need to examine during the editing phase.
-                        Written in <em>C++</em> and <em>Qt</em>.
+                        A graphical tool created to preview and crop videos to reduce the amount of footage to work with while editing videos.
+                        Quality loss is avoided by cutting on keyframes.
+                        Written in C++ and Qt.
                     </Project>
                     <Project name="SpueBox" href="https://github.com/CarlosFdez/SpueBox">
-                        A custom bot for the discord chat client.
+                        A custom built bot (chat command parser) for the discord voice chat client.
                         It's used primarily to play audio clips from various online sources (including Youtube) in voice chat rooms.
-                        Written in <em>Python</em> using the <em>discord.py</em> library.
+                        Written in Python using the discord.py library.
                     </Project>
                     <Project name="tmibot.js" href="https://github.com/CarlosFdez/tmibot.js">
-                        A node library used to create chatbots for Twitch.
-                        Wraps the existing <em>tmi.js</em> library to add command parsing.
+                        A NodeJS library used to create chatbots for Twitch.
+                        Wraps the existing tmi.js library to support bot-style command parsing.
                     </Project>
                 </ProjectList>
             </div>
@@ -87,28 +89,27 @@ export const HomePage = () => (
             <div className="content">
                 <h2>Programming Contributions</h2>
                 <p>
-                    These are a few of the projects I've contributed to. Click on any to view it.
+                    These are a few of the projects I've contributed to.
                 </p>
                 <ProjectList>
-                    <Project name="Monster Hunter World Data" href="https://github.com/gatheringhallstudios/MHWorldData">
-                        Spearheaded a data collection project for an upcoming <em>Monster Hunter World</em> application.
-                        Assembles multiple spreadsheets into a SQLite file, with support for localization.
-                        Written in Python, using SQLAlchemy and Marshmallow for persistance and validation.
-                    </Project>
-                    <Project name="MHW Database" href="https://github.com/gatheringhallstudios/MHWorldDatabase">
-                        An in-progress Android application for the game <em>Monster Hunter World</em> to assist
-                        players with finding item locations and optimal equipment. 
+                    <Project name="MHWorld Database" href="https://github.com/gatheringhallstudios/MHWorldDatabase">
+                        An open source Android application built as an assistant for the videogame <em>Monster Hunter World</em>.
                         Written in Kotlin using the Android Architecture Components.
+                        Uses the MHWorldData project's exported SQLite file as a data source.
+                    </Project>
+                    <Project name="MHWorldData" href="https://github.com/gatheringhallstudios/MHWorldData">
+                        Spearheaded a data collection project for the <em>MHWorld Database</em> project.
+                        Assembles multiple human editable spreadsheets (including translations) into a SQLite file, with support for data validation.
+                        Written in Python, using SQLAlchemy and Marshmallow for persistance and validation.
                     </Project>
                     <Project name="MH4U Database" href="https://github.com/kamegami13/MonsterHunter4UDatabase">
                         Contributed to a successful Android application with 4.7 stars and 100k+ downloads,
-                        that provides data about the game the game <em>Monster Hunter 4 Ultimate</em>.
-                        Largest contribution was a universal search feature.
+                        that provides data about the video game <em>Monster Hunter 4 Ultimate</em>.
+                        My largest contribution to this project was the universal search feature.
                     </Project>
                     <Project name="PokeBattle Sim" href="https://github.com/sarenji/pokebattle-sim">
-                        Participated in the development of a Pokemon battle system simulator for quick online matches and teambuilding.
-                        The simulator was written in <em>CoffeeScript</em>, ran on <em>NodeJS</em>, and used <em>Backbone</em> for the front end.
-                        The project was dropped due to growing responsibilities and competition from <em>Pokemon Showdown</em>.
+                        Participated in the development of a now defunct Pokemon battle system simulator for quick online player vs player matches and teambuilding.
+                        The simulator was written in CoffeeScript running on NodeJS, and used BackboneJS to structure the front end.
                     </Project>
                 </ProjectList>
             </div>
