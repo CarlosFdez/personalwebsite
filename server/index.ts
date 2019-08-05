@@ -13,7 +13,6 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
-import * as webpack from 'webpack';
 
 import * as env from './environment';
 
@@ -30,6 +29,7 @@ const app = express();
 
 // In development mode, run and build webpack, and enable HMR (hot reloading)
 if (!isProduction) {
+    const webpack = require('webpack');
     const devMiddleware = require('webpack-dev-middleware');
     const hotMiddleware = require('webpack-hot-middleware');
 
